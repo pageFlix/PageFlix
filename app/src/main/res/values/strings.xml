@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">pageFlix</string>
+    <string name="customer">Customer</string>
+    <string name="librarian">Librarian</string>
+    <string name="back">Back</string>
+    <string name="email">Email</string>
+</resources>
