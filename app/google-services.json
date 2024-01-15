@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "571559524765",
+    "firebase_url": "https://pageflix-ec4cf-default-rtdb.firebaseio.com",
+    "project_id": "pageflix-ec4cf",
+    "storage_bucket": "pageflix-ec4cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571559524765:android:b6ef7c22d9ac20cb68d774",
+        "android_client_info": {
+          "package_name": "com.example.pageflix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeHz0Pz_wOPuU1aboVpnugfRp5jDgAmfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571559524765:android:ae588fb9eeb67a2168d774",
+        "android_client_info": {
+          "package_name": "com.pageflix.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeHz0Pz_wOPuU1aboVpnugfRp5jDgAmfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
