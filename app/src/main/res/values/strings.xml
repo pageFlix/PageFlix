@@ -4,4 +4,6 @@
     <string name="librarian">Librarian</string>
     <string name="back">Back</string>
     <string name="email">Email</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_out">Sign out</string>
 </resources>

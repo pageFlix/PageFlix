@@ -13,7 +13,10 @@ public class LoginCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_customer);
     }
-
+    public void registerCustomer(View v){
+        Intent intent = new Intent(this, registerCustomer.class);// from Login Customer screen to registerCustomer screen
+        startActivity(intent);
+    }
     public void backToFirstScreen(View v){
         Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
         startActivity(intent);

@@ -18,9 +18,9 @@ public class FirstScreen extends AppCompatActivity {
             Intent intent = new Intent(this, LoginCustomer.class);// from first screen to LoginCustomer screen
             startActivity(intent);
     }
-    //Here we move to Librarian screen
+    //Here we move to com.example.pageflix.LoginLibrarian.Librarian screen
     public void CustomerLibrarianButtom(View v){
-        Intent intent = new Intent(this, LoginLibrarian.class);// from first screen to Login Librarian screen
+        Intent intent = new Intent(this, LoginLibrarian.class);// from first screen to Login com.example.pageflix.LoginLibrarian.Librarian screen
         startActivity(intent);
     }
 }

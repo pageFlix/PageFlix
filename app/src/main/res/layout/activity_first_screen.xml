@@ -11,10 +11,12 @@
         android:layout_height="760dp"
         android:scaleType="centerCrop"
         android:src="@drawable/type1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/button"
@@ -35,11 +37,14 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginBottom="285dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="244dp"
         android:onClick="CustomerLibrarianButtom"
         android:text="@string/librarian"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.568" />
 </androidx.constraintlayout.widget.ConstraintLayout>

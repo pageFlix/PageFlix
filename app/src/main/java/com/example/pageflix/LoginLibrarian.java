@@ -13,8 +13,13 @@ public class LoginLibrarian extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_librarian);
     }
-    public void backToFirstScreen(View v){
-        Intent intent = new Intent(this, FirstScreen.class);// from Login Librarian screen to First screen
+    public void registerLibrarian(View v){
+        Intent intent = new Intent(this, registerLibrarian.class);// from Login Customer screen to registerLibrarian screen
         startActivity(intent);
     }
+    public void backToFirstScreen(View v){
+        Intent intent = new Intent(this, FirstScreen.class);// from Login com.example.pageflix.LoginLibrarian.Librarian screen to First screen
+        startActivity(intent);
+    }
+
 }
