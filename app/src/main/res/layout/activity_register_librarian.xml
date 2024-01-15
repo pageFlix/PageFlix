@@ -1,57 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:gravity="center"
+android:background="@drawable/type5"
+tools:context=".registerLibrarian">
+<androidx.cardview.widget.CardView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".registerLibrarian">
-    <EditText
-        android:id="@+id/edEmail"
-        android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    app:cardCornerRadius="30dp"
+    app:cardElevation="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:ems="10"
-        android:hint="E-mail"
-        android:inputType="text"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:padding="24dp"
+        android:background="@drawable/color_boarder">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="registerLibrarian screen"
+            android:textColor="@color/coralPink"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textSize="36sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/sapphire"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/edEmail"
+            android:background="@drawable/color_boarder"
+            android:layout_marginTop="40dp"
+            android:padding="8dp"
+            android:hint="E-mail"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="8dp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/edName"
+            android:background="@drawable/color_boarder"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/baseline_enhanced_encryption_24"
+            android:drawablePadding="8dp"
+            android:textColor="@color/black"/>
 
-    <EditText
-        android:id="@+id/edName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="text"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edEmail" />
+        <Button
+            android:id="@+id/Sign_Up"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/sapphire"
+            android:onClick="signupButton"
+            android:text="@string/sign_up"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            app:cornerRadius="20dp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="204dp"
-        android:onClick="signupButton"
-        android:text="@string/sign_up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edName" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="640dp"
-        android:onClick="backToPreviousScreen"
-        android:text="@string/back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.097"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+<Button
+    android:id="@+id/back"
+    android:layout_width="118dp"
+    android:layout_height="60dp"
+    android:layout_gravity="left"
+    android:backgroundTint="@color/grey"
+    android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+    android:onClick="backToPreviousScreen"
+    android:text="Back"
+    android:textSize="18sp"
+    app:cornerRadius="20dp" />
+</LinearLayout>
