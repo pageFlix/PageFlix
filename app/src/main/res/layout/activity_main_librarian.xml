@@ -8,5 +8,26 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/type5"
-    tools:context=".mainLibrarian"
-/>
+    tools:context=".mainLibrarian">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:padding="50dp"
+        android:text="Librarian main screen"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="304dp"
+        android:onClick="backToFirstScreen"
+        android:text="@string/sign_out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</LinearLayout>

@@ -17,4 +17,7 @@ public class mainCustomer extends AppCompatActivity {
         Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
         startActivity(intent);
     }
+
+    public static class user {
+    }
 }

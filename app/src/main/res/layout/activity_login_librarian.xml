@@ -44,7 +44,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/edName"
+                android:id="@+id/edPassword"
                 android:background="@drawable/color_boarder"
                 android:layout_marginTop="20dp"
                 android:padding="8dp"
@@ -53,12 +53,14 @@
                 android:drawableLeft="@drawable/baseline_enhanced_encryption_24"
                 android:drawablePadding="8dp"
                 android:textColor="@color/black"/>
+
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/sapphire"
+                android:onClick="loginButton"
                 android:text="Login"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
