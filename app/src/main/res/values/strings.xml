@@ -9,4 +9,6 @@
     <string name="add_book">Add Book</string>
     <string name="author">Author</string>
     <string name="category">Category</string>
+    <string name="remove_book">Remove Book</string>
+    <string name="librarian_main_screen">Librarian main screen</string>
 </resources>

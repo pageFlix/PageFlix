@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:padding="50dp"
-        android:text="Librarian main screen"
+        android:text="@string/librarian_main_screen"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/black"
         android:textSize="30sp" />
@@ -70,7 +70,7 @@
             android:layout_marginBottom="0dp"
             android:backgroundTint="@color/sapphire"
             android:onClick="removeBook"
-            android:text="Remove Book"
+            android:text="@string/remove_book"
             android:textSize="18sp"
             app:cornerRadius="20dp" />
     </LinearLayout>

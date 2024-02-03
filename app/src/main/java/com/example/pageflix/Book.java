@@ -22,5 +22,29 @@ public class Book {
         this.year = year;
         this.count = count;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getCount() {
+        return count;
+    }
 }
 

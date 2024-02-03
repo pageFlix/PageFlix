@@ -21,11 +21,12 @@ public class mainLibrarian extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_librarian);
     }
-    private void init(){
-    }
-    //Button for Adding books - send to relevant screen
     public void addBook(View v){
         Intent intent = new Intent(this, screenAddBook.class);// from Login Customer screen to First screen
+        startActivity(intent);
+    }
+    public void inStock(View v){
+        Intent intent = new Intent(this, inStockScreen.class);// from Login Customer screen to First screen
         startActivity(intent);
     }
     public void backToPreviousScreen(View v){
