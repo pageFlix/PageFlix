@@ -6,4 +6,7 @@
     <string name="email">Email</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_out">Sign out</string>
+    <string name="add_book">Add Book</string>
+    <string name="author">Author</string>
+    <string name="category">Category</string>
 </resources>

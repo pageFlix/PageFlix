@@ -19,15 +19,71 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/black"
         android:textSize="30sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/inStock"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+       android:backgroundTint="@color/sapphire"
+        android:onClick="inStock"
+        android:text="In Stock"
+        android:textSize="18sp"
+        app:cornerRadius="20dp" />
+    <Button
+        android:id="@+id/outofstock"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/sapphire"
+        android:onClick="outOfStock"
+        android:text="out of stock"
+        android:textSize="18sp"
+        app:cornerRadius="20dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/addBook"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="0dp"
+        android:backgroundTint="@color/sapphire"
+        android:onClick="addBook"
+        android:text="@string/add_book"
+        android:textSize="18sp"
+        app:cornerRadius="20dp" />
+        <Button
+            android:id="@+id/removeBook"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="@color/sapphire"
+            android:onClick="removeBook"
+            android:text="Remove Book"
+            android:textSize="18sp"
+            app:cornerRadius="20dp" />
+    </LinearLayout>
     <Button
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="304dp"
+        android:layout_marginTop="220dp"
         android:onClick="backToFirstScreen"
         android:text="@string/sign_out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:cornerRadius="20dp"/>
 </LinearLayout>
