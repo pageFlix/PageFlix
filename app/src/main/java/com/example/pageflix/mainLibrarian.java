@@ -25,6 +25,10 @@ public class mainLibrarian extends AppCompatActivity {
         Intent intent = new Intent(this, screenAddBook.class);// from Login Customer screen to First screen
         startActivity(intent);
     }
+    public void removeBook(View v){
+        Intent intent = new Intent(this, screenRemoveBook.class);// from Login Customer screen to First screen
+        startActivity(intent);
+    }
     public void inStock(View v){
         Intent intent = new Intent(this, inStockScreen.class);// from Login Customer screen to First screen
         startActivity(intent);
