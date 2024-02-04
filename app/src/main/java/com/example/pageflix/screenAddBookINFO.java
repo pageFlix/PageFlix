@@ -36,7 +36,7 @@ public class screenAddBookINFO extends AppCompatActivity {
     public void addBook(View v) {
         String description = edDescription.getText().toString();
         String category = edCategory.getText().toString();
-        Book newBook = new Book( author,  category,  year,  description,  title, 1);
+        Book newBook = new Book( title,author,  year, 1, category, description);
         if (!TextUtils.isEmpty(description) &&  !TextUtils.isEmpty(category)) {
             bookDB.push().setValue(newBook);
             Intent intent = new Intent(this, mainLibrarian.class);

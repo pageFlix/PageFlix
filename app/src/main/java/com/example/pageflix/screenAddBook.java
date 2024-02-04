@@ -124,7 +124,7 @@ public class screenAddBook extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Please add book description ", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), screenAddBookINFO.class);
                         intent.putExtra("title", title);
-                        intent.putExtra("author'", author);
+                        intent.putExtra("author", author);
                         intent.putExtra("year", year);
                         startActivity(intent);
                     }
