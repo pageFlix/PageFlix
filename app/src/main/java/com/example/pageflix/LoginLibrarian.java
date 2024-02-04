@@ -71,7 +71,7 @@ public class LoginLibrarian extends AppCompatActivity {
                 for(DataSnapshot ds : snapshot.getChildren()){
                     String emailFromDatabase = ds.child("email").getValue(String.class);
                     // if finds that user with 'x' email is Librarian open his main screen
-                    if (email.equals(emailFromDatabase)) {
+                    if (email.equalsIgnoreCase(emailFromDatabase)) {
                          flag = false;
                         Intent intent = new Intent(getApplicationContext(), mainLibrarian.class);
                         startActivity(intent);
