@@ -13,9 +13,11 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 public class screenAddBookINFO extends AppCompatActivity {
     private EditText edDescription, edCategory;
-    private String title, author, year;
+    private String title, author, year, libID;
     private String USER_KEY = "Books"; // DataBase name for Librarians
     DatabaseReference bookDB;
     @Override
@@ -30,6 +32,7 @@ public class screenAddBookINFO extends AppCompatActivity {
         title = getIntent().getStringExtra("title");
         author = getIntent().getStringExtra("author");
         year = getIntent().getStringExtra("year");
+        libID = getIntent().getStringExtra("libID");
         bookDB = FirebaseDatabase.getInstance().getReference(USER_KEY);
     }
     //    add in Books -> author, title, year, description , publication year
@@ -38,7 +41,9 @@ public class screenAddBookINFO extends AppCompatActivity {
         String category = edCategory.getText().toString();
         Book newBook = new Book( title,author,  year, 1, category, description);
         if (!TextUtils.isEmpty(description) &&  !TextUtils.isEmpty(category)) {
-            bookDB.push().setValue(newBook);
+            DatabaseReference newBookRef = bookDB.push(); // Pushing userMap to a new child node under bookDB
+            newBookRef.setValue(newBook); // Setting userMap to the new child node
+            newBookRef.child("LibraryID").push().setValue(libID); // Setting LibraryID under the new child node
             Intent intent = new Intent(this, mainLibrarian.class);
             startActivity(intent);
         }

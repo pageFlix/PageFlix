@@ -29,7 +29,7 @@ public class mainLibrarian extends AppCompatActivity {
         Intent intent = new Intent(this, inStockScreen.class);// from Login Customer screen to First screen
         startActivity(intent);
     }
-    public void backToPreviousScreen(View v){
+    public void signOut(View v){
         Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
         startActivity(intent);
     }

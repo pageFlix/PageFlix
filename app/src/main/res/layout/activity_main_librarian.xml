@@ -75,11 +75,11 @@
             app:cornerRadius="20dp" />
     </LinearLayout>
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/signOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="220dp"
-        android:onClick="backToFirstScreen"
+        android:onClick="signOut"
         android:text="@string/sign_out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
