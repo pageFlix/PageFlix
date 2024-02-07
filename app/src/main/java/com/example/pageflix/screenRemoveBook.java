@@ -19,8 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class screenRemoveBook extends AppCompatActivity {
     private EditText edAuthor, edTitle, edPublicationYear;
-    private DatabaseReference dbRef;
-    private String USER_KEY = "Books"; // DataBase name for Librarians
+    private DatabaseReference libDB, bookDB;
+    private String BOOKS = "Books"; // DataBase name for Librarians
     private String LibrarianID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,39 +33,49 @@ public class screenRemoveBook extends AppCompatActivity {
         edTitle = findViewById(R.id.edTitle);
         edPublicationYear = findViewById(R.id.edPublicationYear);
         LibrarianID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
-        dbRef = FirebaseDatabase.getInstance().getReference("Librarian").child(LibrarianID);
+        libDB = FirebaseDatabase.getInstance().getReference("Librarian").child(LibrarianID).child("BooksID");
+        bookDB = FirebaseDatabase.getInstance().getReference(BOOKS);
     }
     /*
     Steps:
-    1: Check in LibrarianID root if book exist
-        if not print to user
-    2: else:  count -1
-    3: find this book in global Book DB : count-1
-    4: print success
-     */
+    1: find  book in global Book DB by Author, Title, PublicationYear if false -> exit print "not found"
+    2: check in bookID root -> LibraryID if (LibraryID == this.LibrarianID   && count > 0): true- count -1 in all three place => bookDB in total count and sub count(in LibraryID) AND Librarian DB count -1
+    else "not found"
+*/
     public void removeBook(View v){
         String author = edAuthor.getText().toString();
         String title = edTitle.getText().toString();
         String year = edPublicationYear.getText().toString();
         if (!TextUtils.isEmpty(author) &&  !TextUtils.isEmpty(title) && !TextUtils.isEmpty(year)) {
-            checkBookInLocalDB(title, author, year, new CallbackFlag(){
+            checkBookInGlobalDB(title, author, year, new CallbackFlag(){
                 @Override
-                public void checkBook(boolean bookFound, DatabaseReference db, int currentCount1) {
-                    if(bookFound){
-                        checkBookInGlobalDB(title, author, year, new CallbackFlag(){
-                            @Override
-                            public void checkBook(boolean bookFound, DatabaseReference db, int currentCount2) {
-                                if(bookFound) {
-                                    Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    Toast.makeText(getApplicationContext(), "not Success", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                public void checkBook(boolean bookFound, DatabaseReference db, int totalCount) {
+                    if(!bookFound){
+                        Toast.makeText(getApplicationContext(), "This Book Not Exist", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        Toast.makeText(getApplicationContext(), "This Book Not Exist", Toast.LENGTH_SHORT).show();
+                        String bookKey = db.getKey();
+                        libDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.hasChild(bookKey)) {
+                                    int countBookInLib = snapshot.child(bookKey).child("count").getValue(Integer.class);
+                                    if(countBookInLib >0 && totalCount>0) {
+                                        decreaseCount(db, totalCount);
+                                        decreaseCount(db.child("LibraryID").child(LibrarianID), countBookInLib);
+                                        decreaseCount(snapshot.child(bookKey).getRef(), countBookInLib);
+                                        Toast.makeText(getApplicationContext(), "Book removed", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getApplicationContext(), "No more copies of this book available", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "You don't have access to remove this book", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {}
+                        });
                     }
                 }
             });
@@ -74,69 +84,36 @@ public class screenRemoveBook extends AppCompatActivity {
             Toast.makeText(this, "Write Author, Year and Title", Toast.LENGTH_SHORT).show();
         }
     }
-    private void checkBookInLocalDB(String title,String author, String year,CallbackFlag callback) {
-        DatabaseReference booksRef = dbRef.child("Books"); // Reference to the 'Books' node
-        ValueEventListener vListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean flag = false;
-                DatabaseReference bookToUpdateRef;
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    String titleFromDatabase = ds.child("title").getValue(String.class); // Access 'title' directly
-                    String authorFromDatabase = ds.child("author").getValue(String.class); // Access 'title' directly
-                    String yearFromDatabase = ds.child("year").getValue(String.class); // Access 'title' directly
-                    if (title.equals(titleFromDatabase) && author.equals(authorFromDatabase)
-                            && year.equals(yearFromDatabase)) {
-                        //book count ++
-                        flag = true; // Set flag to true if title exists
-                        bookToUpdateRef = ds.getRef(); // Reference to the book node
-                        int currentCount = ds.child("count").getValue(Integer.class); // Get current count
-                        if (currentCount > 0){
-                            decreaseCount(bookToUpdateRef,currentCount);
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(), "Book count  is 0", Toast.LENGTH_SHORT).show();
-                        }
-                        break; // No need to continue checking once found
-                    }
-                }
-                if (callback != null){ callback.checkBook(flag,null,0);}
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-        booksRef.addListenerForSingleValueEvent(vListener);
-    }
     private void decreaseCount(DatabaseReference dataBase, int CurrentCount){
-        dataBase.child("count").setValue(CurrentCount - 1); // Increment count by 1
+            dataBase.child("count").setValue(CurrentCount - 1); // Increment count by 1
     }
     private void checkBookInGlobalDB(String title,String author, String year,CallbackFlag callback) {
-        DatabaseReference bookDB = FirebaseDatabase.getInstance().getReference(USER_KEY);
+        DatabaseReference bookDB = FirebaseDatabase.getInstance().getReference(BOOKS);
         ValueEventListener vListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 DatabaseReference bookToUpdateRef = null;
-                boolean flag = false;
+                int totalCount = 0;
+                boolean bookFound = false;
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    String titleFromDatabase = ds.child("title").getValue(String.class); // Access 'title' directly
-                    String authorFromDatabase = ds.child("author").getValue(String.class); // Access 'title' directly
-                    String yearFromDatabase = ds.child("year").getValue(String.class); // Access 'title' directly
-                    if (title.equals(titleFromDatabase) && author.equals(authorFromDatabase)
-                            && year.equals(yearFromDatabase)) {
+                    Book book = ds.getValue(Book.class);
+                    if (book!=null && title.equals(book.getTitle()) && author.equals(book.getAuthor())
+                            && year.equals(book.getYear()) && book.getCount() > 0) {
                         //book count ++
-                        flag = true; // Set flag to true if title exists
+//                        bookToUpdateRef = ds.getRef(); // Reference to the book node
+//                        currentCount = ds.child("count").getValue(Integer.class); // Get current count
+//                        decreaseCount(bookToUpdateRef, currentCount);
+//                        String bookKey = ds.getKey();
                         bookToUpdateRef = ds.getRef(); // Reference to the book node
-                        int currentCount = ds.child("count").getValue(Integer.class); // Get current count
-                        decreaseCount(bookToUpdateRef, currentCount);
-                        break; // No need to continue checking once found
+                        bookFound = true;
+                        totalCount = book.getCount();
+                        break;
                     }
                 }
                 if (callback != null) {
-                    callback.checkBook(flag, bookToUpdateRef, 0);
+                    callback.checkBook(bookFound, bookToUpdateRef, totalCount);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }

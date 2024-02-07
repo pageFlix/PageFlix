@@ -55,6 +55,7 @@ public class inStockScreen extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String bookKey = ds.getKey();
                     int countBookInLib = ds.child("count").getValue(Integer.class);
+
                     if (countBookInLib > 0) {
                         DatabaseReference bookDB = FirebaseDatabase.getInstance().getReference("Books").child(bookKey);
                         bookDB.addListenerForSingleValueEvent(new ValueEventListener() {
