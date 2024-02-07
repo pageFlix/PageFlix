@@ -15,14 +15,6 @@ public class Book {
         this.title = title;
         this.count = count;
     }
-
-    public Book(String title, String author, String year, int count) {
-        this.title = title;
-        this.author = author;
-        this.year = year;
-        this.count = count;
-    }
-
     public String getTitle() {
         return title;
     }

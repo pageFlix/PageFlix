@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class inStockScreen extends AppCompatActivity {
@@ -26,7 +28,7 @@ public class inStockScreen extends AppCompatActivity {
     private DatabaseReference dbRef;
     private String LibrarianID;
     private String USER_KEY = "Librarian";
-    private String BOOK_KEY = "Books";
+    private String BOOK_KEY = "BooksID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,6 @@ public class inStockScreen extends AppCompatActivity {
         listView.setAdapter(adapter);
         LibrarianID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
         dbRef = FirebaseDatabase.getInstance().getReference(USER_KEY).child(LibrarianID).child(BOOK_KEY);
-        ;
     }
 
     private void getDataFromDB() {
@@ -52,21 +53,33 @@ public class inStockScreen extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (listData.size() > 0) listData.clear();// check if list clean
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    Book book = ds.getValue(Book.class);
-                    assert book != null;// check if not empty
-                    if (book.count > 0) {
-                        listData.add("Title: " + book.title + "\nAuthor: " + book.author + "\nYear: " + book.year + "\nCount: " + book.count);
+                    String bookKey = ds.getKey();
+                    int countBookInLib = ds.child("count").getValue(Integer.class);
+                    if (countBookInLib > 0) {
+                        DatabaseReference bookDB = FirebaseDatabase.getInstance().getReference("Books").child(bookKey);
+                        bookDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Book book = dataSnapshot.getValue(Book.class);
+                                if (book != null) {
+                                    listData.add("Title: " + book.getTitle() + "\nAuthor: " + book.getAuthor() + "\nYear: " + book.getYear() + "\nCount: " + countBookInLib);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
                     }
                 }
-                adapter.notifyDataSetChanged();
             }
-
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
-        dbRef.addValueEventListener(vListener);
+        dbRef.addListenerForSingleValueEvent(vListener);
     }
+
 
     public void backToPreviousScreen(View v) {
         Intent intent = new Intent(this, mainLibrarian.class);// from Login Customer screen to First screen
