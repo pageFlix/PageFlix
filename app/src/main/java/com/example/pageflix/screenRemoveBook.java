@@ -50,11 +50,11 @@ public class screenRemoveBook extends AppCompatActivity {
         if (!TextUtils.isEmpty(author) &&  !TextUtils.isEmpty(title) && !TextUtils.isEmpty(year)) {
             checkBookInLocalDB(title, author, year, new CallbackFlag(){
                 @Override
-                public void checkBook(boolean bookFound, DatabaseReference db) {
+                public void checkBook(boolean bookFound, DatabaseReference db, int currentCount1) {
                     if(bookFound){
                         checkBookInGlobalDB(title, author, year, new CallbackFlag(){
                             @Override
-                            public void checkBook(boolean bookFound, DatabaseReference db) {
+                            public void checkBook(boolean bookFound, DatabaseReference db, int currentCount2) {
                                 if(bookFound) {
                                     Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
                                 }
@@ -100,7 +100,7 @@ public class screenRemoveBook extends AppCompatActivity {
                         break; // No need to continue checking once found
                     }
                 }
-                if (callback != null){ callback.checkBook(flag,null);}
+                if (callback != null){ callback.checkBook(flag,null,0);}
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -133,7 +133,7 @@ public class screenRemoveBook extends AppCompatActivity {
                     }
                 }
                 if (callback != null) {
-                    callback.checkBook(flag, bookToUpdateRef);
+                    callback.checkBook(flag, bookToUpdateRef, 0);
                 }
             }
 

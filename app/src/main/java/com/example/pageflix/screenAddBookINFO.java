@@ -14,12 +14,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class screenAddBookINFO extends AppCompatActivity {
     private EditText edDescription, edCategory;
     private String title, author, year, libID;
-    private String USER_KEY = "Books"; // DataBase name for Librarians
-    DatabaseReference bookDB;
+    private String BOOKS = "Books"; // DataBase name for Librarians
+    DatabaseReference bookDB, libDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,17 +34,28 @@ public class screenAddBookINFO extends AppCompatActivity {
         author = getIntent().getStringExtra("author");
         year = getIntent().getStringExtra("year");
         libID = getIntent().getStringExtra("libID");
-        bookDB = FirebaseDatabase.getInstance().getReference(USER_KEY);
+        bookDB = FirebaseDatabase.getInstance().getReference(BOOKS);
+        libDB = FirebaseDatabase.getInstance().getReference("Librarian").child(libID);
     }
-    //    add in Books -> author, title, year, description , publication year
+    //    add in Books -> author, title, year, description , publication year + LibraryID
     public void addBook(View v) {
         String description = edDescription.getText().toString();
         String category = edCategory.getText().toString();
         Book newBook = new Book( title,author,  year, 1, category, description);
         if (!TextUtils.isEmpty(description) &&  !TextUtils.isEmpty(category)) {
-            DatabaseReference newBookRef = bookDB.push(); // Pushing userMap to a new child node under bookDB
-            newBookRef.setValue(newBook); // Setting userMap to the new child node
-            newBookRef.child("LibraryID").push().setValue(libID); // Setting LibraryID under the new child node
+            DatabaseReference newBookRef = bookDB.push();// create newBookRef for add data after adding book info
+            newBookRef.setValue(newBook); // add data
+            String bookID = newBookRef.getKey(); // get relevant Book key
+            HashMap<String, Integer> bookCount = new HashMap<>();// create count : 1
+            bookCount.put("count", 1);
+
+            Map<String, Object> BookUpdates = new HashMap<>();// to avoid unique key creation
+            Map<String, Object> LibraryIDupdates = new HashMap<>();// to avoid unique key creation
+            BookUpdates.put("LibraryID/"  + libID,bookCount);
+            LibraryIDupdates.put("BooksID/" + bookID, bookCount);
+
+            newBookRef.updateChildren(BookUpdates);
+            if (bookID != null){libDB.updateChildren(LibraryIDupdates);}
             Intent intent = new Intent(this, mainLibrarian.class);
             startActivity(intent);
         }
