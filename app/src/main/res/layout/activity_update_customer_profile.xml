@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/type3"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".registerCustomer">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="313dp"
+        android:layout_height="537dp"
+        android:layout_margin="40dp"
+        android:scrollbarThumbHorizontal="@android:drawable/btn_default"
+        android:visibility="visible"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:isScrollContainer="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/color_boarder"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Update Profile"
+                    android:textAlignment="center"
+                    android:textColor="@color/sapphire"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/color_boarder"
+                    android:drawableLeft="@drawable/baseline_email_24"
+                    android:drawablePadding="8dp"
+                    android:hint="E-mail"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/color_boarder"
+                    android:drawableLeft="@drawable/baseline_enhanced_encryption_24"
+                    android:drawablePadding="8dp"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edFirstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/color_boarder"
+                    android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                    android:drawablePadding="8dp"
+                    android:hint="First name"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edLastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/color_boarder"
+                    android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                    android:drawablePadding="8dp"
+                    android:hint="Last name"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/color_boarder"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                    android:drawablePadding="8dp"
+                    android:focusable="false"
+                    android:hint="Birthday"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/cityAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/color_boarder"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                    android:drawablePadding="8dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="City"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/streetAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/color_boarder"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                    android:drawablePadding="8dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="Street"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/color_boarder"
+                    android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                    android:drawablePadding="8dp"
+                    android:hint="Number"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/edCellphoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/color_boarder"
+                    android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                    android:drawablePadding="8dp"
+                    android:hint="Cellphone number"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+
+    <Button
+        android:id="@+id/Update"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/coralPink"
+        android:onClick="Update_button"
+        android:rotationX="7"
+        android:text="Update"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="20sp"
+        app:cornerRadius="20dp" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:backgroundTint="@color/grey"
+        android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+        android:onClick="backToPreviousScreen"
+        android:text="Back"
+        android:textSize="18sp"
+        app:cornerRadius="13dp" />
+</LinearLayout>
