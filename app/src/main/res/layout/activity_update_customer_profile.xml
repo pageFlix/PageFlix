@@ -7,7 +7,7 @@
     android:background="@drawable/type3"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".registerCustomer">
+    tools:context=".Update_Customer_Profile">
 
 
     <androidx.cardview.widget.CardView

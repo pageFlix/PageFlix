@@ -10,13 +10,15 @@ public class User {
     private String city;
     private String street;
     private String number;
+    private String LibraryName;
+
 
     // Empty constructor (required by Firebase)
     public User() {
     }
 
     // Constructor with parameters
-    public User(String email,String password, String firstName, String lastName, String birthDay, String cellNumber, String city, String street, String number) {
+    public User(String email,String password, String firstName, String lastName, String birthDay, String cellNumber, String city, String street, String number,String LibraryName) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -26,6 +28,15 @@ public class User {
         this.city = city;
         this.street = street;
         this.number = number;
+        this.LibraryName = LibraryName;
+    }
+
+    public String getLibraryName() {
+        return LibraryName;
+    }
+
+    public void setLibraryName(String libraryName) {
+        LibraryName = libraryName;
     }
 
     public String getPassword() {

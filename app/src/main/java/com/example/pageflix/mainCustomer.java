@@ -19,6 +19,10 @@ public class mainCustomer extends AppCompatActivity {
         Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
         startActivity(intent);
     }
+    public void signOut(View v){
+        Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
+        startActivity(intent);
+    }
     public void Update_Profile(View v) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String userId = mAuth.getCurrentUser().getUid();
@@ -29,6 +33,5 @@ public class mainCustomer extends AppCompatActivity {
     }
 
 
-    public static class user {
-    }
+
 }

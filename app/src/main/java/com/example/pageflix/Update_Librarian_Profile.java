@@ -1,6 +1,5 @@
 package com.example.pageflix;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,11 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
 import java.util.List;
 
-public class Update_Customer_Profile extends AppCompatActivity {
-    private EditText edEmail, edPassword, edCellphoneNumber, edNumber, edFirstname, edLastname, edBirthday;
+public class Update_Librarian_Profile extends AppCompatActivity {
+    private EditText edEmail, edPassword, edLibraryname, edCellphoneNumber, edNumber;
     private AutoCompleteTextView cityAutoComplete, streetAutoComplete;
     private ArrayAdapter<String> cityAdapter, streetAdapter;
     private FirebaseAuth fbAuth;
@@ -43,30 +40,21 @@ public class Update_Customer_Profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_customer_profile);
+        setContentView(R.layout.activity_update_librarian_profile);
 
 
         // Initialize FirebaseAuth and DatabaseReference
         fbAuth = FirebaseAuth.getInstance();
-        dbRef = FirebaseDatabase.getInstance().getReference().child("Customer");
+        dbRef = FirebaseDatabase.getInstance().getReference().child("Librarian");
 
         // Retrieve references to EditText fields
         edEmail = findViewById(R.id.edEmail);
         edPassword = findViewById(R.id.edPassword);
-        edFirstname = findViewById(R.id.edFirstname);
-        edLastname = findViewById(R.id.edLastname);
-        edBirthday = findViewById(R.id.edBirthday);
+        edLibraryname = findViewById(R.id.edLibraryname);
         edCellphoneNumber = findViewById(R.id.edCellphoneNumber);
         edNumber = findViewById(R.id.edNumber);
         cityAutoComplete = findViewById(R.id.cityAutoComplete);
         streetAutoComplete = findViewById(R.id.streetAutoComplete);
-        //////// Set the date listener///
-        edBirthday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
 
         // Set up the adapter
         cityAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line);
@@ -105,9 +93,7 @@ public class Update_Customer_Profile extends AppCompatActivity {
                     if (user != null) {
                         edEmail.setText(user.getEmail());
                         edPassword.setText(user.getPassword());
-                        edFirstname.setText(user.getFirstName());
-                        edLastname.setText(user.getLastName());
-                        edBirthday.setText(user.getBirthDay());
+                        edLibraryname.setText(user.getFirstName());
                         edCellphoneNumber.setText(user.getCellNumber());
                         cityAutoComplete.setText(user.getCity());
                         streetAutoComplete.setText(user.getStreet());
@@ -122,27 +108,6 @@ public class Update_Customer_Profile extends AppCompatActivity {
                 // Handle error
             }
         });
-    }
-
-    private void showDatePickerDialog() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                Update_Customer_Profile.this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Update the EditText with the selected date
-                        String birthday = dayOfMonth + "/" + (month + 1) + "/" + year;
-                        edBirthday.setText(birthday);
-                    }
-                },
-                year, month, dayOfMonth);
-
-        datePickerDialog.show();
     }
 
     private void setAutoCompleteFocusChangeListener(AutoCompleteTextView autoCompleteTextView) {
@@ -174,98 +139,43 @@ public class Update_Customer_Profile extends AppCompatActivity {
     }
 
 
-//    public void Update_button(View v) {
-//        Log.d("UpdateButton", "Button clicked");
-//        String email = this.edEmail.getText().toString();
-//        String password = this.edPassword.getText().toString();
-//        String lastName = this.edLastname.getText().toString();
-//        String firstName = this.edFirstname.getText().toString();
-//        String birthDay = this.edBirthday.getText().toString();
-//        String cellNumber = this.edCellphoneNumber.getText().toString();
-//        String city = this.cityAutoComplete.getText().toString();
-//        String street = this.streetAutoComplete.getText().toString();
-//        String number = this.edNumber.getText().toString();
-//
-//        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(birthDay) &&
-//                !TextUtils.isEmpty(cellNumber) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(street) && !TextUtils.isEmpty(number)) {
-//            // Get the current user's ID
-//            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//
-//            // Fetch the current user's data from the database
-//            dbRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    if (dataSnapshot.exists()) {
-//                        User user = dataSnapshot.getValue(User.class);
-//                        if (user != null) {
-//                            // Update the user object with the new values
-//                            user.setEmail(email);
-//                            user.setPassword(password);
-//                            user.setLastName(lastName);
-//                            user.setFirstName(firstName);
-//                            user.setBirthDay(birthDay);
-//                            user.setCellNumber(cellNumber);
-//                            user.setCity(city);
-//                            user.setStreet(street);
-//                            user.setNumber(number);
-//
-//                            // Update the user's profile in the database
-//                            updateUserProfile(userId, user);
-//                            Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
-//                            startActivity(intent);
-//                            Toast.makeText(getApplicationContext(), "Update Successful!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    // Handle error
-//                }
-//            });
-//        } else {
-//            Toast.makeText(this, "Please fill in all the required fields", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-public void Update_button(View v) {
-    Log.d("UpdateButton", "Button clicked");
-    String email = this.edEmail.getText().toString();
-    String newPassword = this.edPassword.getText().toString(); // Get the new password
-    String lastName = this.edLastname.getText().toString();
-    String firstName = this.edFirstname.getText().toString();
-    String birthDay = this.edBirthday.getText().toString();
-    String cellNumber = this.edCellphoneNumber.getText().toString();
-    String city = this.cityAutoComplete.getText().toString();
-    String street = this.streetAutoComplete.getText().toString();
-    String number = this.edNumber.getText().toString();
+    public void Update_button(View v) {
+        Log.d("UpdateButton", "Button clicked");
+        String email = this.edEmail.getText().toString();
+        String newPassword = this.edPassword.getText().toString(); // Get the new password
+        String librariName = this.edLibraryname.getText().toString();
+        String cellNumber = this.edCellphoneNumber.getText().toString();
+        String city = this.cityAutoComplete.getText().toString();
+        String street = this.streetAutoComplete.getText().toString();
+        String number = this.edNumber.getText().toString();
 
-    if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(newPassword) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(birthDay) &&
-            !TextUtils.isEmpty(cellNumber) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(street) && !TextUtils.isEmpty(number)) {
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(newPassword) && !TextUtils.isEmpty(librariName) &&
+                !TextUtils.isEmpty(cellNumber) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(street) && !TextUtils.isEmpty(number)) {
 
-        // Get the current user
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            // Get the current user
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Update the user's password
-        currentUser.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    // Password updated successfully, now update the rest of the profile
-                    updateUserProfile(currentUser.getUid(), newPassword, email, lastName, firstName, birthDay, cellNumber, city, street, number);
-                } else {
-                    // Failed to update password
-                    Toast.makeText(Update_Customer_Profile.this, "Failed to update password", Toast.LENGTH_SHORT).show();
+            // Update the user's password
+            currentUser.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        // Password updated successfully, now update the rest of the profile
+                        updateUserProfile(currentUser.getUid(), newPassword, email,librariName, cellNumber, city, street, number);
+                    } else {
+                        // Failed to update password
+                        Toast.makeText(Update_Librarian_Profile.this, "Failed to update password", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
-    } else {
-        Toast.makeText(this, "Please fill in all the required fields", Toast.LENGTH_SHORT).show();
+            });
+        } else {
+            Toast.makeText(this, "Please fill in all the required fields", Toast.LENGTH_SHORT).show();
+        }
     }
-}
 
-    private void updateUserProfile(String userId, String newPassword, String email, String lastName, String firstName, String birthDay, String cellNumber, String city, String street, String number) {
+    private void updateUserProfile(String userId, String newPassword, String email, String libraryName, String cellNumber, String city, String street, String number) {
         // Create a User object with the updated information
-        User updatedUser = new User(email, newPassword, lastName, firstName, birthDay, cellNumber, city, street, number,null);
+        User updatedUser = new User(email, newPassword, null, null, null, cellNumber, city, street, number,libraryName);
 
         // Update the user's profile in the database
         dbRef.child(userId).setValue(updatedUser)
@@ -274,15 +184,14 @@ public void Update_button(View v) {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             // Update successful
-                            Toast.makeText(Update_Customer_Profile.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Update_Librarian_Profile.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
                         } else {
                             // Update failed
-                            Toast.makeText(Update_Customer_Profile.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Update_Librarian_Profile.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-
     // Fetch city names from the API asynchronously
     private class FetchCityNamesTask extends AsyncTask<Void, Void, List<String>> {
         @Override
@@ -314,7 +223,7 @@ public void Update_button(View v) {
                     }
                 });
             } else {
-                Toast.makeText(Update_Customer_Profile.this, "Failed to fetch city names", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Update_Librarian_Profile.this, "Failed to fetch city names", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -335,7 +244,7 @@ public void Update_button(View v) {
                 streetAdapter.addAll(streets);
                 streetAdapter.notifyDataSetChanged();
             } else {
-                Toast.makeText(Update_Customer_Profile.this, "Failed to fetch streets in the selected city", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Update_Librarian_Profile.this, "Failed to fetch streets in the selected city", Toast.LENGTH_SHORT).show();
             }
         }
     }

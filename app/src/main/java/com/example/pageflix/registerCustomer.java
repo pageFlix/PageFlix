@@ -159,7 +159,7 @@ public class registerCustomer extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        User user = new User(email,password, FirstName, LastName ,BirthDay, CellNumber, City, Street, Number);
+                        User user = new User(email,password, FirstName, LastName ,BirthDay, CellNumber, City, Street, Number,null);
                         createUserInDatabase(user.getEmail(),user.getPassword(), user.getFirstName(), user.getLastName(), user.getBirthDay(), user.getCellNumber(), user.getCity(),user.getStreet(),user.getNumber());
                         Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
                         startActivity(intent);
