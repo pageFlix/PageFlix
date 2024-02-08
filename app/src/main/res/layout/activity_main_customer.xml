@@ -21,6 +21,19 @@
         android:textColor="@color/black"
         android:textSize="30sp" />
     <Button
+        android:id="@+id/Update_Profile"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/sapphire"
+        android:onClick="Update_Profile"
+        android:text="Update Profile"
+        android:textSize="18sp"
+        app:cornerRadius="20dp" />
+
+    <Button
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,5 +44,7 @@
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </LinearLayout>

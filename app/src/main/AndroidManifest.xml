@@ -15,6 +15,9 @@
         android:theme="@style/Theme.PageFlix"
         tools:targetApi="31">
         <activity
+            android:name=".Update_Customer_Profile"
+            android:exported="false" />
+        <activity
             android:name=".screenRemoveBook"
             android:exported="false" />
         <activity
@@ -37,7 +40,8 @@
             android:exported="false" />
         <activity
             android:name=".registerCustomer"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".LoginLibrarian"
             android:exported="false" />
