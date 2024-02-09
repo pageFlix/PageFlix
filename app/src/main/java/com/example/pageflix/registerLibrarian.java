@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class registerLibrarian extends AppCompatActivity {
+
     private static final String CITY_RESOURCE_ID = "5c78e9fa-c2e2-4771-93ff-7f400a12f7ba";
 
     private EditText edEmail, edPassword, edLibraryname, edCellphoneNumber, edNumber;
@@ -107,13 +108,13 @@ public class registerLibrarian extends AppCompatActivity {
 
     public void signupButton(View v) {
         Log.d("SignUpButton", "Button clicked");
-        String email = edEmail.getText().toString();
-        String password = edPassword.getText().toString();
-        String LibraryName = edLibraryname.getText().toString();
-        String CellNumber = edCellphoneNumber.getText().toString();
-        String City = cityAutoComplete.getText().toString();
-        String Street = streetAutoComplete.getText().toString();
-        String Number = edNumber.getText().toString();
+        String email = this.edEmail.getText().toString();
+        String password = this.edPassword.getText().toString();
+        String LibraryName = this.edLibraryname.getText().toString();
+        String CellNumber = this.edCellphoneNumber.getText().toString();
+        String City = this.cityAutoComplete.getText().toString();
+        String Street = this.streetAutoComplete.getText().toString();
+        String Number = this.edNumber.getText().toString();
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(LibraryName) &&
                 !TextUtils.isEmpty(CellNumber) && !TextUtils.isEmpty(City)&& !TextUtils.isEmpty(Street)  && !TextUtils.isEmpty(Number)) {
@@ -121,7 +122,8 @@ public class registerLibrarian extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        createUserInDatabase(email, LibraryName, CellNumber, City, Street, Number);
+                        User user = new User(email,password, null, null ,null, CellNumber, City, Street, Number,LibraryName);
+                        createUserInDatabase(user.getEmail(),user.getLibraryName(), user.getCellNumber(), user.getCity(),user.getStreet(),user.getNumber());
                         Intent intent = new Intent(getApplicationContext(), mainLibrarian.class);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "User Sign Up Successful!", Toast.LENGTH_SHORT).show();

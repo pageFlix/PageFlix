@@ -15,8 +15,12 @@
         android:theme="@style/Theme.PageFlix"
         tools:targetApi="31">
         <activity
-            android:name=".BookPopupActivity"
+            android:name=".Update_Customer_Profile"
             android:exported="false" />
+        <activity
+            android:name=".Update_Librarian_Profile"
+            android:label="Update Librarian Profile" />
+
         <activity
             android:name=".screenRemoveBook"
             android:exported="false" />
@@ -40,7 +44,8 @@
             android:exported="false" />
         <activity
             android:name=".registerCustomer"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".LoginLibrarian"
             android:exported="false" />
