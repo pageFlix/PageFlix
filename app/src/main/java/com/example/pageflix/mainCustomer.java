@@ -1,23 +1,91 @@
 package com.example.pageflix;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class mainCustomer extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private BookAdapter adapter;
+    private List<Book> bookList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_customer);
-    }
-    public void backToFirstScreen(View v){
-        Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
-        startActivity(intent);
+
+        // Initialize RecyclerView
+        setupRecyclerView();
+
+        // Setup Firebase Database
+        setupFirebaseDatabase();
     }
 
-    public static class user {
+    // Initialize RecyclerView
+    private void setupRecyclerView() {
+        recyclerView = findViewById(R.id.recyclerView);
+        adapter = new BookAdapter(bookList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    // Setup Firebase Database
+    private void setupFirebaseDatabase() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference booksRef = database.getReference("Books");
+
+        // Limit to 1000 books
+        booksRef.limitToFirst(1000).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Handle data changes
+                handleDataChange(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle database errors
+                handleDatabaseError(databaseError);
+            }
+        });
+    }
+
+    // Handle data changes from Firebase database
+    private void handleDataChange(DataSnapshot dataSnapshot) {
+        // Clear the list before adding new data
+        bookList.clear();
+
+        // Iterate through each book in the dataSnapshot
+        for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
+            // Convert each book to a Book object and add it to the list
+            Book book = bookSnapshot.getValue(Book.class);
+            if (book != null) {
+                book.ID = bookSnapshot.getKey();
+                bookList.add(book);
+            }
+        }
+
+        // Notify adapter about data changes
+        adapter.notifyDataSetChanged();
+    }
+
+    // Handle Firebase database errors
+    private void handleDatabaseError(DatabaseError databaseError) {
+        // Log error message
+        Log.e("Error", "Failed to read value.", databaseError.toException());
+    }
+
+
 }

@@ -20,7 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginLibrarian extends AppCompatActivity {
+public class
+LoginLibrarian extends AppCompatActivity {
     private EditText edEmail ,edPassword;
     private FirebaseAuth fbAuth; // for email+password connection
     private String USER_KEY = "Librarian";//DataBase name for Librarians

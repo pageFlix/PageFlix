@@ -124,7 +124,7 @@ public class registerCustomer extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         createUserInDatabase(email, FirstName, LastName , CellNumber, City, Street, Number);
-                        Intent intent = new Intent(getApplicationContext(), mainLibrarian.class);
+                        Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "User Sign Up Successful!", Toast.LENGTH_SHORT).show();
                     } else {

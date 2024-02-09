@@ -11,4 +11,6 @@
     <string name="category">Category</string>
     <string name="remove_book">Remove Book</string>
     <string name="librarian_main_screen">Librarian main screen</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

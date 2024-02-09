@@ -15,6 +15,9 @@
         android:theme="@style/Theme.PageFlix"
         tools:targetApi="31">
         <activity
+            android:name=".BookPopupActivity"
+            android:exported="false" />
+        <activity
             android:name=".screenRemoveBook"
             android:exported="false" />
         <activity

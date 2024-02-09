@@ -1,0 +1,24 @@
+<!-- library_item_background.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- When library item is selected -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#9F5294FF" /> <!-- Set background color when selected -->
+            <corners android:radius="8dp" /> <!-- Set corner radius for a rounded look -->
+        </shape>
+    </item>
+    <!-- When library item is pressed -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#80FFFFFF" /> <!-- Set semi-transparent background color when pressed -->
+            <corners android:radius="8dp" /> <!-- Set corner radius for a rounded look -->
+        </shape>
+    </item>
+    <!-- Default state -->
+    <item android:state_selected="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" /> <!-- Set default background color -->
+            <corners android:radius="8dp" /> <!-- Set corner radius for a rounded look -->
+        </shape>
+    </item>
+</selector>

@@ -3,7 +3,7 @@ package com.example.pageflix;
 import com.google.firebase.database.Exclude;
 
 public class Book {
-    public String title, author, category, year, description;
+    public String title, author, category, year, description, ID;
     public int count;
     public Book() {
     }
@@ -45,6 +45,18 @@ public class Book {
 
     public int getCount() {
         return count;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", category='" + category + '\'' +
+                ", year='" + year + '\'' +
+                ", description='" + description + '\'' +
+                ", count=" + count +
+                '}';
     }
 }
 
