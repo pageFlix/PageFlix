@@ -20,7 +20,10 @@
         <activity
             android:name=".Update_Librarian_Profile"
             android:label="Update Librarian Profile" />
+        <activity
+            android:name=".BookPopupActivity"
 
+            android:label="BookPopupActivity" />
         <activity
             android:name=".screenRemoveBook"
             android:exported="false" />
