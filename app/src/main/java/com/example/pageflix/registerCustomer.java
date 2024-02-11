@@ -206,7 +206,7 @@ public class registerCustomer extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         User user = new User(email,password, FirstName, LastName ,BirthDay, CellNumber, City, Street, Number,null);
                         createUserInDatabase(user.getEmail(),user.getPassword(), user.getFirstName(), user.getLastName(), user.getBirthDay(), user.getCellNumber(), user.getCity(),user.getStreet(),user.getNumber());
-                        Intent intent = new Intent(getApplicationContext(), SearchBooks.class);
+                        Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "User Sign Up Successful!", Toast.LENGTH_SHORT).show();
                     } else {
@@ -224,7 +224,6 @@ public class registerCustomer extends AppCompatActivity {
         String userId = fbAuth.getCurrentUser().getUid();
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("email", email);
-        userMap.put("password", password);
         userMap.put("FistName", FisrtName);
         userMap.put("LastName", LastName);
         userMap.put("BirthDay", BirthDay);
