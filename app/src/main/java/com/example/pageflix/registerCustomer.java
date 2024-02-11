@@ -1,5 +1,7 @@
 package com.example.pageflix;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -19,6 +21,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,6 +37,7 @@ import java.util.List;
 
 public class registerCustomer extends AppCompatActivity {
     private static final String CITY_RESOURCE_ID = "5c78e9fa-c2e2-4771-93ff-7f400a12f7ba";
+    private static final int RC_SIGN_IN = 123;
 
     private EditText edEmail, edPassword, edCellphoneNumber, edNumber, edFirstname , edLastname, edBirthday ;
 
@@ -49,6 +55,10 @@ public class registerCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_customer);
         init();
+        fbAuth = FirebaseAuth.getInstance();
+
+
+
         edBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +83,41 @@ public class registerCustomer extends AppCompatActivity {
         new FetchCityNamesTask().execute();
 
         Log.d("ActivityLifecycle", "registerLibrarian activity created");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign-In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                // Google Sign-In failed
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        // Get user's email from Google account
+        String email = acct.getEmail();
+
+        // Fill in email field
+        edEmail.setText(email);
+
+        // Password field can be left empty or disabled
+        // You can also hide the password field if you don't need it for Google Sign-In
+
+        // Additional actions if needed...
+
+        // Proceed with the sign-up process...
     }
 
     private void showDatePickerDialog() {
@@ -161,7 +206,7 @@ public class registerCustomer extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         User user = new User(email,password, FirstName, LastName ,BirthDay, CellNumber, City, Street, Number,null);
                         createUserInDatabase(user.getEmail(),user.getPassword(), user.getFirstName(), user.getLastName(), user.getBirthDay(), user.getCellNumber(), user.getCity(),user.getStreet(),user.getNumber());
-                        Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
+                        Intent intent = new Intent(getApplicationContext(), SearchBooks.class);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "User Sign Up Successful!", Toast.LENGTH_SHORT).show();
                     } else {

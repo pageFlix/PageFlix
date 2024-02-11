@@ -18,6 +18,9 @@
             android:name=".Update_Customer_Profile"
             android:exported="false" />
         <activity
+            android:name=".SearchBooks"
+            android:exported="false" />
+        <activity
             android:name=".Update_Librarian_Profile"
             android:label="Update Librarian Profile" />
         <activity
@@ -42,6 +45,7 @@
         <activity
             android:name=".mainCustomer"
             android:exported="false" />
+
         <activity
             android:name=".registerLibrarian"
             android:exported="false" />

@@ -175,7 +175,7 @@ public class Update_Librarian_Profile extends AppCompatActivity {
 
     private void updateUserProfile(String userId, String newPassword, String email, String libraryName, String cellNumber, String city, String street, String number) {
         // Create a User object with the updated information
-        User updatedUser = new User(email, newPassword, null, null, null, cellNumber, city, street, number,libraryName);
+        User updatedUser = new User(email, null, null, null, null, cellNumber, city, street, number,libraryName);
 
         // Update the user's profile in the database
         dbRef.child(userId).setValue(updatedUser)
