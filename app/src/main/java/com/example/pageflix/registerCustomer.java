@@ -168,8 +168,8 @@ public class registerCustomer extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        User user = new User(email,password, FirstName, LastName ,BirthDay, CellNumber, City, Street, Number,null);
-                        createUserInDatabase(user.getEmail(),user.getPassword(), user.getFirstName(), user.getLastName(), user.getBirthDay(), user.getCellNumber(), user.getCity(),user.getStreet(),user.getNumber());
+                        User user = new User(email, FirstName, LastName ,BirthDay, CellNumber, City, Street, Number,null);
+                        createUserInDatabase(user.getEmail(), user.getFirstName(), user.getLastName(), user.getBirthDay(), user.getCellNumber(), user.getCity(),user.getStreet(),user.getNumber());
                         Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "User Sign Up Successful!", Toast.LENGTH_SHORT).show();
@@ -183,7 +183,7 @@ public class registerCustomer extends AppCompatActivity {
         }
     }
 
-    private void createUserInDatabase(String email,String password, String FisrtName, String LastName,String BirthDay, String CellNumber, String City, String street, String Number) {
+    private void createUserInDatabase(String email, String FisrtName, String LastName,String BirthDay, String CellNumber, String City, String street, String Number) {
         dbRef = FirebaseDatabase.getInstance().getReference().child(USER_KEY);
         String userId = fbAuth.getCurrentUser().getUid();
         HashMap<String, Object> userMap = new HashMap<>();

@@ -56,19 +56,6 @@
                     android:textColor="@color/black" />
 
                 <EditText
-                    android:id="@+id/edPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/color_boarder"
-                    android:drawableLeft="@drawable/baseline_enhanced_encryption_24"
-                    android:drawablePadding="8dp"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:padding="8dp"
-                    android:textColor="@color/black" />
-
-                <EditText
                     android:id="@+id/edFirstname"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"

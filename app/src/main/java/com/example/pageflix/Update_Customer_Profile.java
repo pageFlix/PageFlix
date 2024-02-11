@@ -33,7 +33,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Update_Customer_Profile extends AppCompatActivity {
-    private EditText edEmail, edPassword, edCellphoneNumber, edNumber, edFirstname, edLastname, edBirthday;
+    private EditText edEmail, edCellphoneNumber, edNumber, edFirstname, edLastname, edBirthday;
     private AutoCompleteTextView cityAutoComplete, streetAutoComplete;
     private ArrayAdapter<String> cityAdapter, streetAdapter;
     private FirebaseAuth fbAuth;
@@ -52,7 +52,6 @@ public class Update_Customer_Profile extends AppCompatActivity {
 
         // Retrieve references to EditText fields
         edEmail = findViewById(R.id.edEmail);
-        edPassword = findViewById(R.id.edPassword);
         edFirstname = findViewById(R.id.edFirstname);
         edLastname = findViewById(R.id.edLastname);
         edBirthday = findViewById(R.id.edBirthday);
@@ -104,7 +103,6 @@ public class Update_Customer_Profile extends AppCompatActivity {
                     User user = dataSnapshot.getValue(User.class);
                     if (user != null) {
                         edEmail.setText(user.getEmail());
-                        edPassword.setText(user.getPassword());
                         edFirstname.setText(user.getFirstName());
                         edLastname.setText(user.getLastName());
                         edBirthday.setText(user.getBirthDay());
@@ -230,7 +228,6 @@ public class Update_Customer_Profile extends AppCompatActivity {
 public void Update_button(View v) {
     Log.d("UpdateButton", "Button clicked");
     String email = this.edEmail.getText().toString();
-    String newPassword = this.edPassword.getText().toString(); // Get the new password
     String lastName = this.edLastname.getText().toString();
     String firstName = this.edFirstname.getText().toString();
     String birthDay = this.edBirthday.getText().toString();
@@ -239,33 +236,21 @@ public void Update_button(View v) {
     String street = this.streetAutoComplete.getText().toString();
     String number = this.edNumber.getText().toString();
 
-    if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(newPassword) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(birthDay) &&
+    if (!TextUtils.isEmpty(email)  && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(birthDay) &&
             !TextUtils.isEmpty(cellNumber) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(street) && !TextUtils.isEmpty(number)) {
 
         // Get the current user
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        updateUserProfile(currentUser.getUid(), email, lastName, firstName, birthDay, cellNumber, city, street, number);
 
-        // Update the user's password
-        currentUser.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    // Password updated successfully, now update the rest of the profile
-                    updateUserProfile(currentUser.getUid(), newPassword, email, lastName, firstName, birthDay, cellNumber, city, street, number);
-                } else {
-                    // Failed to update password
-                    Toast.makeText(Update_Customer_Profile.this, "Failed to update password", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     } else {
         Toast.makeText(this, "Please fill in all the required fields", Toast.LENGTH_SHORT).show();
     }
 }
 
-    private void updateUserProfile(String userId, String newPassword, String email, String lastName, String firstName, String birthDay, String cellNumber, String city, String street, String number) {
+    private void updateUserProfile(String userId, String email, String lastName, String firstName, String birthDay, String cellNumber, String city, String street, String number) {
         // Create a User object with the updated information
-        User updatedUser = new User(email, null, lastName, firstName, birthDay, cellNumber, city, street, number,null);
+        User updatedUser = new User(email, lastName, firstName, birthDay, cellNumber, city, street, number,null);
 
         // Update the user's profile in the database
         dbRef.child(userId).setValue(updatedUser)

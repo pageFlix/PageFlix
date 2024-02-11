@@ -121,7 +121,7 @@ public class registerLibrarian extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        User user = new User(email,password, null, null ,null, CellNumber, City, Street, Number,LibraryName);
+                        User user = new User(email, null, null ,null, CellNumber, City, Street, Number,LibraryName);
                         createUserInDatabase(user.getEmail(),user.getLibraryName(), user.getCellNumber(), user.getCity(),user.getStreet(),user.getNumber());
                         Intent intent = new Intent(getApplicationContext(), mainLibrarian.class);
                         startActivity(intent);

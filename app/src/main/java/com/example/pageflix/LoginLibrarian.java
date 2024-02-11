@@ -142,7 +142,7 @@ LoginLibrarian extends AppCompatActivity {
                         public void onCancelled(@NonNull DatabaseError error) {}
                     };dbRef2.addValueEventListener(vListener2);
                     Toast.makeText(getApplicationContext(), "User Sign In Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
+                    Intent intent = new Intent(getApplicationContext(), mainLibrarian.class);
                     startActivity(intent);
                 }
             }

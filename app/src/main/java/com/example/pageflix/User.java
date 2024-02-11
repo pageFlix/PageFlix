@@ -2,7 +2,6 @@ package com.example.pageflix;
 
 public class User {
     private String email;
-    private String password;
     private String firstName;
     private String lastName;
     private String birthDay;
@@ -18,9 +17,8 @@ public class User {
     }
 
     // Constructor with parameters
-    public User(String email,String password, String firstName, String lastName, String birthDay, String cellNumber, String city, String street, String number,String LibraryName) {
+    public User(String email, String firstName, String lastName, String birthDay, String cellNumber, String city, String street, String number,String LibraryName) {
         this.email = email;
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDay = birthDay;
@@ -37,14 +35,6 @@ public class User {
 
     public void setLibraryName(String libraryName) {
         LibraryName = libraryName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     // Getter and setter methods
