@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class registerCustomer extends AppCompatActivity {
-    private static final String CITY_RESOURCE_ID = "5c78e9fa-c2e2-4771-93ff-7f400a12f7ba";
     private static final int RC_SIGN_IN = 123;
 
     private EditText edEmail, edPassword, edCellphoneNumber, edNumber, edFirstname , edLastname, edBirthday ;
