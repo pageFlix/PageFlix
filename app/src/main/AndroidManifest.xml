@@ -34,10 +34,10 @@
             android:name=".inStockScreen"
             android:exported="false" />
         <activity
-            android:name=".screenAddBookINFO"
+            android:name=".addBook.screenAddBookINFO"
             android:exported="false" />
         <activity
-            android:name=".screenAddBook"
+            android:name=".addBook.screenAddBook"
             android:exported="false" />
         <activity
             android:name=".mainLibrarian"

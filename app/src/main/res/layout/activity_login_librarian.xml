@@ -65,6 +65,18 @@
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
             <TextView
+                android:id="@+id/signInWithGoogle"
+                android:layout_width="190dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/color_boarder"
+                android:drawableLeft="@drawable/googleg_standard_color_18"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="Sign in with Google"
+                android:textSize="18sp" />
+            <TextView
                 android:id="@+id/signupText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +86,6 @@
                 android:text="Not yet registered?"
                 android:textColor="@color/coralPink"
                 android:textSize="18sp" />
-
             <Button
                 android:id="@+id/Sign_Up"
                 android:layout_width="90dp"

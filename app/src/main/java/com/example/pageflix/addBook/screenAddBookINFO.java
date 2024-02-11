@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.addBook;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pageflix.Book;
+import com.example.pageflix.R;
+import com.example.pageflix.mainLibrarian;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

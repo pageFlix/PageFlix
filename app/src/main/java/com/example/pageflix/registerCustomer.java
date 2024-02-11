@@ -36,8 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class registerCustomer extends AppCompatActivity {
-    private static final int RC_SIGN_IN = 123;
-
     private EditText edEmail, edPassword, edCellphoneNumber, edNumber, edFirstname , edLastname, edBirthday ;
 
     private AutoCompleteTextView cityAutoComplete, streetAutoComplete;
@@ -84,40 +82,7 @@ public class registerCustomer extends AppCompatActivity {
         Log.d("ActivityLifecycle", "registerLibrarian activity created");
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign-In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                // Google Sign-In failed
-                Log.w(TAG, "Google sign in failed", e);
-            }
-        }
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
-        // Get user's email from Google account
-        String email = acct.getEmail();
-
-        // Fill in email field
-        edEmail.setText(email);
-
-        // Password field can be left empty or disabled
-        // You can also hide the password field if you don't need it for Google Sign-In
-
-        // Additional actions if needed...
-
-        // Proceed with the sign-up process...
-    }
 
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();

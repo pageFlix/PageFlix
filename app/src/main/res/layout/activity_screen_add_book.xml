@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/type3"
-    tools:context=".screenAddBook">
+    tools:context=".addBook.screenAddBook">
 
         <androidx.cardview.widget.CardView
             android:layout_width="313dp"
