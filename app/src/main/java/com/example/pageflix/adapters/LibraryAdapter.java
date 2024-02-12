@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,6 +6,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pageflix.R;
+import com.example.pageflix.entities.Library;
+
 import java.util.List;
 
 // Adapter for library RecyclerView
@@ -13,7 +17,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
 
     private final List<Library> libraries;
     private int selectedItem ;
-    LibraryAdapter(List<Library> libraries) {
+    public LibraryAdapter(List<Library> libraries) {
         this.libraries = libraries;
         this.selectedItem = 0 ;
     }
@@ -28,7 +32,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Library library = libraries.get(position);
-        holder.libraryNameTextView.setText(library.LibraryName);
+        holder.libraryNameTextView.setText(library.getLibraryName());
         holder.libraryDistanceView.setText("Distance: ");
         final int clickedPosition = position;
 

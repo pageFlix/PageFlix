@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.pageflix.CallbackFlag;
+import com.example.pageflix.R;
+import com.example.pageflix.entities.Book;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.adapters;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pageflix.Book;
-import com.example.pageflix.BookPopupActivity;
+import com.example.pageflix.activities.BookPopupActivity;
 import com.example.pageflix.R;
+import com.example.pageflix.entities.Book;
 
 import java.util.List;
 

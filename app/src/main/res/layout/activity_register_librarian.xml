@@ -8,7 +8,7 @@ android:layout_height="match_parent"
 android:orientation="vertical"
 android:gravity="center"
 android:background="@drawable/type5"
-tools:context=".registerLibrarian">
+tools:context=".activities.registerLibrarian">
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/type1"
-    tools:context=".FirstScreen">
+    tools:context=".activities.FirstScreen">
     <Button
         android:id="@+id/customer_button"
         android:layout_width="180dp"

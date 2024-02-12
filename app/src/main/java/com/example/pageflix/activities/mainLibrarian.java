@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.example.pageflix.R;
 import com.example.pageflix.addBook.screenAddBook;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.internal.bind.ArrayTypeAdapter;

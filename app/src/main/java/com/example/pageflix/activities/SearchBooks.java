@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pageflix.R;
+import com.example.pageflix.adapters.BookAdapter;
+import com.example.pageflix.entities.Book;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

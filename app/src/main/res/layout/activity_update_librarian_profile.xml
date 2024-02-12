@@ -7,7 +7,7 @@
     android:background="@drawable/type3"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Update_Librarian_Profile">
+    tools:context=".activities.Update_Librarian_Profile">
 
 
     <androidx.cardview.widget.CardView

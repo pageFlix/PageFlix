@@ -1,6 +1,4 @@
-package com.example.pageflix;
-
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+package com.example.pageflix.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -21,9 +19,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pageflix.services.AddressApiService;
+import com.example.pageflix.R;
+import com.example.pageflix.entities.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

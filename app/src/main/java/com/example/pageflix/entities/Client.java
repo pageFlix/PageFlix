@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.entities;
 //Constructor fo Client class to keep all Client info
 public class Client {
     public String email, name;

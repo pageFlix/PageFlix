@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/type5"
-    tools:context=".mainLibrarian">
+    tools:context=".activities.mainLibrarian">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.pageflix.CallbackFlag;
 import com.example.pageflix.R;
-import com.example.pageflix.mainLibrarian;
+import com.example.pageflix.activities.mainLibrarian;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

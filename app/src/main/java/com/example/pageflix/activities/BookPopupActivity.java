@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.pageflix.R;
+import com.example.pageflix.services.RentService;
+import com.example.pageflix.adapters.LibraryAdapter;
+import com.example.pageflix.entities.Library;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BookPopupActivity extends Activity {
 
@@ -31,7 +35,7 @@ public class BookPopupActivity extends Activity {
     private String bookID ;
     private LibraryAdapter adapter ;
     private List<Library> libraries;
-    private RentAPI rentAPI ;
+    private RentService rentService;
 
     private List<String> libIDs ;
     @Override
@@ -40,25 +44,36 @@ public class BookPopupActivity extends Activity {
         setContentView(R.layout.popup_book_details);
         libraries = new ArrayList<>();
         libIDs = new ArrayList<>() ;
-        this.rentAPI = new RentAPI() ;
+        this.rentService = new RentService() ;
         initViews();
         setBookProps();
         getLibrariesWithBook();
         setListeners();
     }
 
-    // Setup Firebase Database
-
+    //-----Adding each of the libraries containing the selected book.      -----//
+    //-----Libs which do not contain the book will be not added to the list-----//
     public void getLibrariesWithBook() {
-        Log.d("shit", "bookID= " + bookID) ;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference booksRef = database.getReference("Books");
         booksRef.child(bookID).child("LibraryID").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot libIDsSnap : dataSnapshot.getChildren()) {
-                    getLibraryByID(libIDsSnap.getKey());
-                    Log.d("shit", "LibID: " + libIDsSnap.getKey()) ;
+                    // Access the value of libIDsSnap
+                    Object value = libIDsSnap.getValue();
+
+                    if (value instanceof Map) {
+                        // If the value is a Map, try to extract the "count" value
+                        Object countObject = ((Map<?, ?>) value).get("count");
+                        if (countObject instanceof Long) {
+                            // Convert to Integer if necessary
+                            Integer countValue = ((Long) countObject).intValue();
+                            if(countValue > 0){
+                                gertAndAddToList(libIDsSnap.getKey());
+                            }
+                        }
+                    }
                 }
             }
 
@@ -71,7 +86,7 @@ public class BookPopupActivity extends Activity {
 
     }
 
-    private void getLibraryByID(String id){
+    private void gertAndAddToList(String id){
         DatabaseReference librariesRef = FirebaseDatabase.getInstance().getReference("Librarian") ;
             librariesRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -83,7 +98,6 @@ public class BookPopupActivity extends Activity {
                             libraries.add(library) ;
                         }
                     } else {
-                        Log.e("shit","libraries not found by the id's") ;
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -130,7 +144,7 @@ public class BookPopupActivity extends Activity {
             public void onClick(View v) {
                 int selectedLibIndex = adapter.getSelectedItem() ;
                 if(selectedLibIndex != -1){
-                    rentAPI.rent(libraries.get(selectedLibIndex).ID, bookID) ;
+                    rentService.rent(libraries.get(selectedLibIndex).ID, bookID) ;
                 }else{
                     Toast.makeText(getApplicationContext(), "Please choose library", Toast.LENGTH_SHORT).show();
                 }

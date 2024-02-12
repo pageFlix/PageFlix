@@ -1,7 +1,13 @@
-package com.example.pageflix;
+package com.example.pageflix.entities;
 
 public class Library {
-    String LibraryName, CellNumber, City, Street, Number, email, ID;
+    String LibraryName;
+    String CellNumber;
+    String City;
+    String Street;
+    String Number;
+    String email;
+    public String ID;
 
     public Library(String libraryName, String cellNumber, String city, String street, String number, String email) {
         LibraryName = libraryName;

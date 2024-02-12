@@ -1,8 +1,9 @@
-package com.example.pageflix;
+package com.example.pageflix.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pageflix.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -31,22 +33,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-
-public class LoginCustomer extends AppCompatActivity {
+public class
+LoginLibrarian extends AppCompatActivity {
     private EditText edEmail ,edPassword;
     private FirebaseAuth fbAuth; // for email+password connection
     private String CUSTOMER_KEY = "Customer";//DataBase name for Customers
-    private String LIB_KEY = "Librarian";//
-
+    private String LIB_KEY = "Librarian";//DataBase name for Librarians
     private DatabaseReference dbRef;
     private TextView textView;
     private GoogleSignInClient client;
     private GoogleSignInOptions options;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_customer);
+        setContentView(R.layout.activity_login_librarian);
         init();
         initGoogle();
     }
@@ -104,7 +104,7 @@ public class LoginCustomer extends AppCompatActivity {
     private void checkGoogleUser(FirebaseUser user) {
         assert user != null;
         String email = user.getEmail();
-        dbRef = FirebaseDatabase.getInstance().getReference(LIB_KEY);
+        dbRef = FirebaseDatabase.getInstance().getReference(CUSTOMER_KEY);
         ValueEventListener vListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,14 +113,14 @@ public class LoginCustomer extends AppCompatActivity {
                     String emailFromDatabase = ds.child("email").getValue(String.class);
                     assert email != null;
                     if (email.equalsIgnoreCase(emailFromDatabase)) {
-                        Toast.makeText(getApplicationContext(), "This email not related to Customer account ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "This email not related to Librarian account ", Toast.LENGTH_SHORT).show();
                         emailFound = true;
                         break;
                     }
                 }
                 // If email is found, return from the function
                 if (!emailFound) {
-                    DatabaseReference dbRef2 = FirebaseDatabase.getInstance().getReference(CUSTOMER_KEY);
+                    DatabaseReference dbRef2 = FirebaseDatabase.getInstance().getReference(LIB_KEY);
                     ValueEventListener vListener2 = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -143,7 +143,7 @@ public class LoginCustomer extends AppCompatActivity {
                         public void onCancelled(@NonNull DatabaseError error) {}
                     };dbRef2.addValueEventListener(vListener2);
                     Toast.makeText(getApplicationContext(), "User Sign In Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
+                    Intent intent = new Intent(getApplicationContext(), mainLibrarian.class);
                     startActivity(intent);
                 }
             }
@@ -153,7 +153,6 @@ public class LoginCustomer extends AppCompatActivity {
         client.signOut();
     }
     //<>google auth==========================================================================================================================================================================
-
     public void loginButton(View v){
         String email = edEmail.getText().toString();
         String password = edPassword.getText().toString();
@@ -164,8 +163,8 @@ public class LoginCustomer extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        //find all Customers
-                        dbRef = FirebaseDatabase.getInstance().getReference(CUSTOMER_KEY);
+                        //find all Librarians
+                        dbRef = FirebaseDatabase.getInstance().getReference(LIB_KEY);
                         checkUserTypeAndRedirect(email);
                     }
                     else {
@@ -186,16 +185,16 @@ public class LoginCustomer extends AppCompatActivity {
                 boolean flag = true;
                 for(DataSnapshot ds : snapshot.getChildren()){
                     String emailFromDatabase = ds.child("email").getValue(String.class);
-                    // if finds that user with 'x' email is customer open his main screen
+                    // if finds that user with 'x' email is Librarian open his main screen
                     if (email.equalsIgnoreCase(emailFromDatabase)) {
-                        flag = false;
-                        Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
+                         flag = false;
+                        Intent intent = new Intent(getApplicationContext(), mainLibrarian.class);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "User Sign In Successful", Toast.LENGTH_SHORT).show();
                     }
                 }
                 if (flag){
-                    Toast.makeText(getApplicationContext(), "This email not related to Customer account ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "This email not related to Librarian account ", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -207,12 +206,13 @@ public class LoginCustomer extends AppCompatActivity {
         dbRef.addValueEventListener(vListener);
     }
 
-    public void registerCustomer(View v){
-        Intent intent = new Intent(this, registerCustomer.class);// from Login Customer screen to registerCustomer screen
+    public void registerLibrarian(View v){
+        Intent intent = new Intent(this, registerLibrarian.class);// from Login Customer screen to registerLibrarian screen
         startActivity(intent);
     }
     public void backToFirstScreen(View v){
-        Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
+        Intent intent = new Intent(this, FirstScreen.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
         startActivity(intent);
     }
+
 }

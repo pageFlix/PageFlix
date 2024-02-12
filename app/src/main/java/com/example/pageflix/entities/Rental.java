@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.entities;
 
 public class Rental {
     public String customerID, libraryID, bookID ;

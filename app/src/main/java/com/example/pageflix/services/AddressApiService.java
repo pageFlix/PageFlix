@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.services;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -29,7 +29,7 @@ public class AddressApiService {
     /*
     fetching cities names of all the cities in israel, this function is using gov api for cities in israel.
      */
-    static List<String> fetchCityNames() {
+    public static List<String> fetchCityNames() {
         try {
             String apiUrl = API_BASE_URL + "?resource_id=" + CityRESOURCE_ID;
             URL url = new URL(apiUrl);
@@ -81,7 +81,7 @@ public class AddressApiService {
 /*
 fetching streets name of the chosen city, this function is using gov api for streets in israel.
  */
-    static List<String> fetchStreetsInCity(String cityName) {
+    public static List<String> fetchStreetsInCity(String cityName) {
         try {
             Log.d("fetchStreetsInCity", "city name: " + cityName);
 

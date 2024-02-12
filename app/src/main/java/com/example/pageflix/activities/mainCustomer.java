@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.pageflix.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class mainCustomer extends AppCompatActivity {

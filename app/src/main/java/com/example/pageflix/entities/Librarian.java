@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.entities;
 //Constructor fo Librarian class to keep all Librarian info
 public class Librarian {
     public String email, name;

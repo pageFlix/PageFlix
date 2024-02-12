@@ -7,12 +7,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pageflix.Book;
+import com.example.pageflix.entities.Book;
 import com.example.pageflix.R;
-import com.example.pageflix.mainLibrarian;
+import com.example.pageflix.activities.mainLibrarian;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
