@@ -62,7 +62,6 @@ public class BookPopupActivity extends Activity {
                 for (DataSnapshot libIDsSnap : dataSnapshot.getChildren()) {
                     // Access the value of libIDsSnap
                     Object value = libIDsSnap.getValue();
-
                     if (value instanceof Map) {
                         // If the value is a Map, try to extract the "count" value
                         Object countObject = ((Map<?, ?>) value).get("count");

@@ -20,8 +20,6 @@ public class RentService {
 
         initDBSettings(libID, bookID);
         synchronizedUpdate(); ;
-        updateRental();
-
     }
     public void initDBSettings(String libID, String bookID){
         db = FirebaseDatabase.getInstance() ;

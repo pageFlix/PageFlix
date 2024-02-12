@@ -74,9 +74,12 @@ public class SearchBooks extends AppCompatActivity {
         for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
             // Convert each book to a Book object and add it to the list
             Book book = bookSnapshot.getValue(Book.class);
-            if (book != null) {
-                book.ID = bookSnapshot.getKey();
-                bookList.add(book);
+            Integer count = bookSnapshot.child("count").getValue(Integer.class) ;
+            if (book != null && count != null) {
+                if(count > 0) {
+                    book.ID = bookSnapshot.getKey();
+                    bookList.add(book);
+                }
             }
         }
 
