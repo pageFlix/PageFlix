@@ -121,8 +121,8 @@ public class screenAddBook extends AppCompatActivity{
                     String titleFromDatabase = ds.child("title").getValue(String.class); // Access 'title' directly
                     String authorFromDatabase = ds.child("author").getValue(String.class); // Access 'title' directly
                     String yearFromDatabase = ds.child("year").getValue(String.class); // Access 'title' directly
-                    if (title.equals(titleFromDatabase) && author.equals(authorFromDatabase)
-                            && year.equals(yearFromDatabase)) {
+                    if (title.equalsIgnoreCase(titleFromDatabase) && author.equalsIgnoreCase(authorFromDatabase)
+                            && year.equalsIgnoreCase(yearFromDatabase)) {
                         //book count ++
                         flag = true; // Set flag to true if title exists
                         bookToUpdateRef = ds.getRef(); // Reference to the book node
@@ -150,9 +150,7 @@ public class screenAddBook extends AppCompatActivity{
                 DatabaseReference bookToUpdateRef;
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String bookKeyFromDatabase = ds.getKey();
-                    Toast.makeText(getApplicationContext(),  bookKeyFromDatabase, Toast.LENGTH_SHORT).show();
                     if (bookKey.equals(bookKeyFromDatabase)) {
-                        Toast.makeText(getApplicationContext(), "localllll", Toast.LENGTH_SHORT).show();
                         //book count ++
                         flag = true; // Set flag to true if title exists
                         bookToUpdateRef = ds.getRef(); // Reference to the book node
