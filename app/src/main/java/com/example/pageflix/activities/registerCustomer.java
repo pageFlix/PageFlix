@@ -253,6 +253,9 @@ public class registerCustomer extends AppCompatActivity {
             }
         }
     }
-
+    public void backToPreviousScreen(View v){
+        Intent intent = new Intent(this, LoginCustomer.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
+        startActivity(intent);
+    }
 
 }

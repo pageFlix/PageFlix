@@ -210,5 +210,8 @@ public class registerLibrarian extends AppCompatActivity {
         }
     }
 
-
+    public void backToPreviousScreen(View v){
+        Intent intent = new Intent(this, LoginLibrarian.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
+        startActivity(intent);
+    }
 }

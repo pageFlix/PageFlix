@@ -1,5 +1,6 @@
 package com.example.pageflix.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -235,5 +236,9 @@ public class Update_Librarian_Profile extends AppCompatActivity {
                 Toast.makeText(Update_Librarian_Profile.this, "Failed to fetch streets in the selected city", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    public void backToPreviousScreen(View v){
+        Intent intent = new Intent(this, mainLibrarian.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
+        startActivity(intent);
     }
 }

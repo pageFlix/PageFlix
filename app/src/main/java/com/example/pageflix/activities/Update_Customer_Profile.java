@@ -1,6 +1,7 @@
 package com.example.pageflix.activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -325,5 +326,9 @@ public void Update_button(View v) {
                 Toast.makeText(Update_Customer_Profile.this, "Failed to fetch streets in the selected city", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    public void backToPreviousScreen(View v){
+        Intent intent = new Intent(this, mainCustomer.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
+        startActivity(intent);
     }
 }
