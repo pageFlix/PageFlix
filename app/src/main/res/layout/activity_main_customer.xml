@@ -50,12 +50,36 @@
             android:text="Search Books"
             android:textSize="18sp"
             app:cornerRadius="20dp" />
+        <Button
+            android:id="@+id/rent_books"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/sapphire"
+            android:onClick="listRentBooks"
+            android:text="My books"
+            android:textSize="18sp"
+            app:cornerRadius="20dp" />
+        <Button
+            android:id="@+id/historyOrders"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/sapphire"
+            android:onClick="historyOrders"
+            android:text="History"
+            android:textSize="18sp"
+            app:cornerRadius="20dp" />
 
         <Button
             android:id="@+id/signOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="20dp"
             android:onClick="signOut"
             android:text="@string/sign_out"
             app:cornerRadius="20dp"

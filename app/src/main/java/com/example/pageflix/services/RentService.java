@@ -9,6 +9,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
+
 public class RentService {
     FirebaseDatabase db ;
     FirebaseAuth fbAuth ;
@@ -95,7 +97,11 @@ public class RentService {
 
     private void updateRental() {
         DatabaseReference rentalRef = rentalsRef.push();
-        Rental rental = new Rental(libID, customerID, bookID);
+        // Get current date and time
+        Date currentDate = new Date();
+        // Convert Date object to milliseconds since epoch
+        long currentTimeMillis = currentDate.getTime();
+        Rental rental = new Rental(libID, customerID, bookID,currentTimeMillis);
         rentalRef.setValue(rental).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
