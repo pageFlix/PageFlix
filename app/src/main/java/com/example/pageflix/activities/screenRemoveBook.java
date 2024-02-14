@@ -100,8 +100,8 @@ public class screenRemoveBook extends AppCompatActivity {
                 boolean bookFound = false;
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Book book = ds.getValue(Book.class);
-                    if (book!=null && title.equals(book.getTitle()) && author.equals(book.getAuthor())
-                            && year.equals(book.getYear()) && book.getCount() > 0) {
+                    if (book!=null && title.equalsIgnoreCase(book.getTitle()) && author.equalsIgnoreCase(book.getAuthor())
+                            && year.equalsIgnoreCase(book.getYear()) && book.getCount() > 0) {
                         //book count ++
 //                        bookToUpdateRef = ds.getRef(); // Reference to the book node
 //                        currentCount = ds.child("count").getValue(Integer.class); // Get current count
