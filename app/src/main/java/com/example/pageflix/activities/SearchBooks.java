@@ -92,6 +92,4 @@ public class SearchBooks extends AppCompatActivity {
         // Log error message
         Log.e("Error", "Failed to read value.", databaseError.toException());
     }
-
-
 }

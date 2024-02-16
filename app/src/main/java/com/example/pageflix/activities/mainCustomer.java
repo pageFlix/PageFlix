@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.pageflix.R;
+import com.example.pageflix.historyCustomer;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class mainCustomer extends AppCompatActivity {
@@ -41,7 +42,10 @@ public class mainCustomer extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void historyOrders(View v) {
+        Intent intent = new Intent(this , historyCustomer.class);
+        startActivity(intent);
+    }
 
 
 }

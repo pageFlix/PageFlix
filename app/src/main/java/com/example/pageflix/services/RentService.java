@@ -10,12 +10,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RentService {
     FirebaseDatabase db ;
     FirebaseAuth fbAuth ;
 
-    DatabaseReference librarianRef, bookLibCountRef, bookTotalCountRef, customerRef, rentalsRef ;
+    DatabaseReference librarianRef, bookLibCountRef, bookTotalCountRef, customerRef, rentalsRef , db_refToRentalsDB;
 
     String customerID, libID, bookID ;
     public void rent(String libID, String bookID) {
@@ -34,7 +36,7 @@ public class RentService {
         bookTotalCountRef = db.getReference("Books").child(bookID).child("count") ;
         rentalsRef = db.getReference("rentals") ;
         customerRef = db.getReference("Customer").child(customerID).child("Books").child(bookID).child("count");
-
+        db_refToRentalsDB = db.getReference().child("rentalsConnection");
     }
 
 
@@ -108,5 +110,16 @@ public class RentService {
 
             }
         });
+        String rentKEY = rentalRef.getKey();
+        DatabaseReference rentalConnectionRef = db_refToRentalsDB.child(customerID);
+        assert rentKEY != null;
+        Map<String, Object> map = new HashMap<>();// to avoid unique key creation
+        map.put(Long.toString(currentTimeMillis), rentKEY);
+        rentalConnectionRef.updateChildren(map);
+
+         rentalConnectionRef = db_refToRentalsDB.child(libID);
+         map.clear();
+         map.put(Long.toString(currentTimeMillis), rentKEY);
+        rentalConnectionRef.updateChildren(map);
     }
 }
