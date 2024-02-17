@@ -22,9 +22,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +53,7 @@ public class historyCustomer extends AppCompatActivity {
     public void init(){
         listView = findViewById(R.id.listView);
         listData = new ArrayList<>();
-         keys = new ArrayList<>();
+        keys = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
         CustomerID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
@@ -73,8 +76,9 @@ public class historyCustomer extends AppCompatActivity {
                 // Sort the keys in ascending order
                 Collections.sort(keys);
                 Collections.reverse(keys);
+// Create a list to hold the rental data
+                List<String> rentalDataList = new ArrayList<>();
 
-                // Iterate over the sorted keys and add corresponding data to listData
                 for (Long key : keys) {
                     String order = snapshot.child(String.valueOf(key)).getValue(String.class);
                     assert order != null;
@@ -83,42 +87,46 @@ public class historyCustomer extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Rental rental = snapshot.getValue(Rental.class);
                             assert rental != null;
-                            final String idBook = rental.getBookID();
-                            final String idLibrary = rental.getLibraryID();
+                            String idBook = rental.getBookID();
+                            String idLibrary = rental.getLibraryID();
                             Date currentDate = new Date(rental.getTimestamp());
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                             String formattedDate = dateFormat.format(currentDate);
 
+                            // Fetch book information
                             bookInfo(idBook, new BookInfoCallback() {
                                 @Override
                                 public void onBookInfoReceived(Book book) {
+                                    // Fetch library information
                                     libraryInfo(idLibrary, new LibraryInfoCallback() {
                                         @Override
                                         public void onLibraryInfoReceived(User library) {
-                                            listData.add("Title: " + book.getTitle() + "\nLibraryName: " + library.getLibraryName()+"\nDate: "+formattedDate);
-                                            adapter.notifyDataSetChanged();
-                                        }
+                                            // Construct the string with book title, library name, and date
+                                            String data = "Title: " + book.getTitle() + "\nLibraryName: " + library.getLibraryName() + "\nDate: " + formattedDate;
+                                            // Add the string to rentalDataList
+                                            rentalDataList.add(data);
 
-                                        @Override
-                                        public void onLibraryInfoNotFound() {
-                                            // Handle the case where the library info is not found
-                                        }
+                                            // Check if all rental data has been collected
+                                            if (rentalDataList.size() == keys.size()) {
+                                                // Sort rentalDataList based on dates
+                                                Collections.sort(rentalDataList, new Comparator<String>() {
+                                                    DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                                    @Override
+                                                    public int compare(String o1, String o2) {
+                                                        try {
+                                                            return f.parse(o2.split("\nDate: ")[1]).compareTo(f.parse(o1.split("\nDate: ")[1]));
+                                                        } catch (ParseException e) {
+                                                            throw new IllegalArgumentException(e);
+                                                        }
+                                                    }
+                                                });
 
-                                        @Override
-                                        public void onLibraryInfoError(String errorMessage) {
-                                            // Handle error retrieving library info
+                                                // Update adapter with sorted data
+                                                listData.addAll(rentalDataList);
+                                                adapter.notifyDataSetChanged();
+                                            }
                                         }
                                     });
-                                }
-
-                                @Override
-                                public void onBookInfoNotFound() {
-                                    // Handle the case where the book info is not found
-                                }
-
-                                @Override
-                                public void onBookInfoError(String errorMessage) {
-                                    // Handle error retrieving book info
                                 }
                             });
                         }
@@ -129,6 +137,8 @@ public class historyCustomer extends AppCompatActivity {
                         }
                     });
                 }
+
+
             }
 
             @Override
@@ -148,16 +158,12 @@ public class historyCustomer extends AppCompatActivity {
                     Book book = snapshot.getValue(Book.class);
                     // Invoke the callback with the retrieved book
                     callback.onBookInfoReceived(book);
-                } else {
-                    // Handle the case where the book with the given ID does not exist
-                    callback.onBookInfoNotFound();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle errors in reading the book data
-                callback.onBookInfoError(error.getMessage());
             }
         };
         bookRef.addListenerForSingleValueEvent(bookListener);
@@ -172,16 +178,12 @@ public class historyCustomer extends AppCompatActivity {
                     User library = snapshot.getValue(User.class);
                     // Invoke the callback with the retrieved library
                     callback.onLibraryInfoReceived(library);
-                } else {
-                    // Handle the case where the library with the given ID does not exist
-                    callback.onLibraryInfoNotFound();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle errors in reading the library data
-                callback.onLibraryInfoError(error.getMessage());
             }
         };
         libraryRef.addListenerForSingleValueEvent(libraryListener);
