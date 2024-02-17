@@ -1,20 +1,48 @@
 package com.example.pageflix.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.history.historyCustomer;
+import com.example.pageflix.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class mainCustomer extends AppCompatActivity {
-
+    private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_customer);
+        showWelcomeText();
+    }
+    private void showWelcomeText(){
+        textView = findViewById(R.id.textviewname);
+        FirebaseAuth user = FirebaseAuth.getInstance();
+        String userId = user.getCurrentUser().getUid();
+        DatabaseReference DBref = FirebaseDatabase.getInstance().getReference("Customer").child(userId);
+        DBref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                textView.setText("Welcome "+ user.getFirstName());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     public void backToFirstScreen(View v) {
         Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
@@ -46,5 +74,8 @@ public class mainCustomer extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void myBooks(View v) {
+        Intent intent = new Intent(this , customerBooks.class);
+        startActivity(intent);
+    }
 }

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".activities.historyCustomer">
+    tools:context=".activities.history.historyCustomer">
 
     <ListView
         android:id="@+id/listView"

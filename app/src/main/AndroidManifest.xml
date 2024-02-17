@@ -15,10 +15,13 @@
         android:theme="@style/Theme.PageFlix"
         tools:targetApi="31">
         <activity
-            android:name=".activities.historyLibrary"
+            android:name=".activities.customerBooks"
             android:exported="false" />
         <activity
-            android:name=".activities.historyCustomer"
+            android:name=".activities.history.historyLibrary"
+            android:exported="false" />
+        <activity
+            android:name=".activities.history.historyCustomer"
             android:exported="false" />
         <activity
             android:name=".activities.SearchBooks$customeListrBooks"

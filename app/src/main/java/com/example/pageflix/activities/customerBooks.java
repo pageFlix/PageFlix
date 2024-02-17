@@ -21,28 +21,27 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class customerListBooks extends AppCompatActivity {
+public class customerBooks extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private List<String> listData;
-    private DatabaseReference db_customer;
-    private String CustomerID;
-    private String CUSTOMER_KEY = "Customer";
-    private  String RENTALS = "rentals";
-
+    private DatabaseReference dbRef;
+    private String customerID;
+    private String USER_KEY = "Customer";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_list_books);
-        init();;
+        setContentView(R.layout.activity_customer_books);
+        init();
+        getDataFromDB();
     }
     public void init(){
         listView = findViewById(R.id.listView);
         listData = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
-        CustomerID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
-        db_customer = FirebaseDatabase.getInstance().getReference(CUSTOMER_KEY).child("Books");
+        customerID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
+        dbRef = FirebaseDatabase.getInstance().getReference(USER_KEY).child(customerID).child("Books");
     }
     private void getDataFromDB() {
         ValueEventListener vListener = new ValueEventListener() {
@@ -55,7 +54,7 @@ public class customerListBooks extends AppCompatActivity {
 
                     if (countBookInLib > 0) {
                         DatabaseReference bookDB = FirebaseDatabase.getInstance().getReference("Books").child(bookKey);
-                        bookDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                        bookDB.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Book book = dataSnapshot.getValue(Book.class);
@@ -75,11 +74,10 @@ public class customerListBooks extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         };
-        db_customer.addListenerForSingleValueEvent(vListener);
+        dbRef.addValueEventListener(vListener);
     }
-
     public void backToPreviousScreen(View v) {
-        Intent intent = new Intent(this, mainCustomer.class);
+        Intent intent = new Intent(this, mainCustomer.class);// from Login Customer screen to First screen
         startActivity(intent);
     }
 }

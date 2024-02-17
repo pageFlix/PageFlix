@@ -11,15 +11,17 @@
     tools:context=".activities.mainCustomer">
 
     <TextView
+        android:id="@+id/textviewname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:padding="50dp"
+        android:layout_marginBottom="100dp"
         android:text="Customer main screen"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/black"
-        android:textSize="30sp" />
+        android:textStyle="bold|italic"
+        android:textSize="32sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,3 +95,5 @@
 
 
 </LinearLayout>
+
+
