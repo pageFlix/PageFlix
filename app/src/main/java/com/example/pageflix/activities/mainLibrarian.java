@@ -50,6 +50,9 @@ public class mainLibrarian extends AppCompatActivity {
         intent.putExtra("userId", userId);
         startActivity(intent);
     }
-
+    public void historyOrders(View v) {
+        Intent intent = new Intent(this , historyLibrary.class);
+        startActivity(intent);
+    }
 
 }

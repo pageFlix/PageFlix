@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.pageflix.R;
-import com.example.pageflix.historyCustomer;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class mainCustomer extends AppCompatActivity {

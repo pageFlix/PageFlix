@@ -85,11 +85,23 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="0dp"
+            android:layout_marginBottom="20dp"
             android:layout_weight="1"
             android:backgroundTint="@color/sapphire"
             android:onClick="Update_Profile"
             android:text="Update Profile"
+            android:textSize="18sp"
+            app:cornerRadius="20dp" />
+        <Button
+            android:id="@+id/historyOrders"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/sapphire"
+            android:onClick="historyOrders"
+            android:text="History"
             android:textSize="18sp"
             app:cornerRadius="20dp" />
     </LinearLayout>

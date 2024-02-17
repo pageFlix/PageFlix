@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.interfaces;
 
 import com.google.firebase.database.DatabaseReference;
 

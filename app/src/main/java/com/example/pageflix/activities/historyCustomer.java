@@ -1,4 +1,4 @@
-package com.example.pageflix;
+package com.example.pageflix.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,13 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.pageflix.activities.mainCustomer;
-import com.example.pageflix.activities.registerLibrarian;
+import com.example.pageflix.R;
 import com.example.pageflix.entities.Book;
 import com.example.pageflix.entities.Rental;
 import com.example.pageflix.entities.User;
+import com.example.pageflix.interfaces.BookInfoCallback;
+import com.example.pageflix.interfaces.LibraryInfoCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,15 +29,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class historyCustomer extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> listData;
-    private List<Long> keys;
     private DatabaseReference db_rentalsConnection, db_rentals;
     private String CustomerID;
     private String RENTALS_CONNECT = "rentalsConnection";
@@ -53,7 +50,6 @@ public class historyCustomer extends AppCompatActivity {
     public void init(){
         listView = findViewById(R.id.listView);
         listData = new ArrayList<>();
-        keys = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
         CustomerID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
@@ -102,7 +98,7 @@ public class historyCustomer extends AppCompatActivity {
                                         @Override
                                         public void onLibraryInfoReceived(User library) {
                                             // Construct the string with book title, library name, and date
-                                            String data = "Title: " + book.getTitle() + "\nLibraryName: " + library.getLibraryName() + "\nDate: " + formattedDate;
+                                            String data = "Book: " + book.getTitle() + "\nRented from Library: " + library.getLibraryName() + "\nDate: " + formattedDate;
                                             // Add the string to rentalDataList
                                             rentalDataList.add(data);
 

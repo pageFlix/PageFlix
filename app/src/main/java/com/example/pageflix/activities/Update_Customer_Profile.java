@@ -253,7 +253,7 @@ public void Update_button(View v) {
 
     private void updateUserProfile(String userId, String email, String lastName, String firstName, String birthDay, String cellNumber, String city, String street, String number) {
         // Create a User object with the updated information
-        User updatedUser = new User(email, lastName, firstName, birthDay, cellNumber, city, street, number,null);
+        User updatedUser = new User(email, firstName, lastName, birthDay, cellNumber, city, street, number,null);
 
         // Update the user's profile in the database
         dbRef.child(userId).setValue(updatedUser)

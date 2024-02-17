@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.pageflix.CallbackFlag;
 import com.example.pageflix.R;
 import com.example.pageflix.activities.mainLibrarian;
+import com.example.pageflix.interfaces.CallbackFlag;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -111,7 +111,7 @@ public class screenAddBook extends AppCompatActivity{
             Toast.makeText(this, "Write Author, Year and Title", Toast.LENGTH_SHORT).show();
         }
     }
-    private void checkBookInGlobalDB(String title,String author, String year,CallbackFlag callback) {
+    private void checkBookInGlobalDB(String title, String author, String year, CallbackFlag callback) {
         ValueEventListener vListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
