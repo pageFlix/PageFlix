@@ -48,6 +48,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
                 intent.putExtra("title", book.getTitle());
                 intent.putExtra("author", book.getAuthor());
                 intent.putExtra("year", book.getYear());
+                intent.putExtra("description", book.getDescription());
                 intent.putExtra("bookID", book.ID);
 
                 // Start activity to display popup window

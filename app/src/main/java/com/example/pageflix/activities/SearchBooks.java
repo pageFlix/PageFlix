@@ -2,6 +2,8 @@ package com.example.pageflix.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.SearchView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +30,6 @@ public class SearchBooks extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_books);
-
         // Initialize RecyclerView
         setupRecyclerView();
 
@@ -92,4 +93,5 @@ public class SearchBooks extends AppCompatActivity {
         // Log error message
         Log.e("Error", "Failed to read value.", databaseError.toException());
     }
+
 }

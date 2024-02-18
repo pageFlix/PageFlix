@@ -1,11 +1,19 @@
 package com.example.pageflix.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.pageflix.R;
@@ -35,7 +43,13 @@ public class mainCustomer extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-                textView.setText("Welcome "+ user.getFirstName());
+                textView.setText("Welcome \n"+ "\t"+user.getFirstName());
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showPopup(user);
+                    }
+                });
             }
 
             @Override
@@ -43,6 +57,21 @@ public class mainCustomer extends AppCompatActivity {
 
             }
         });
+    }
+    private void showPopup(User user) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("User Data:");
+        builder.setMessage("First Name: "+ user.getFirstName() + "\nLast Name: "+user.getLastName()+"\nEmail: "+user.getEmail()
+                +"\nAddress: "+user.getCity()+", "+user.getStreet()+", "+user.getNumber()
+        +"\nBirth Day: "+user.getBirthDay()+"\nCell Number: "+user.getCellNumber());
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // You can do something when OK button is clicked
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
     public void backToFirstScreen(View v) {
         Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen

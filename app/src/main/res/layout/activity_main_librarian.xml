@@ -17,6 +17,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:padding="50dp"
+        android:drawableRight="@drawable/baseline_useraccount_circle_24"
         android:text="@string/librarian_main_screen"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/black"
