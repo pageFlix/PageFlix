@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -181,6 +182,7 @@ public class LoginCustomer extends AppCompatActivity {
     }
     // check type user email
     private void checkUserTypeAndRedirect(String email) {
+
         ValueEventListener vListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -205,7 +207,7 @@ public class LoginCustomer extends AppCompatActivity {
 
             }
         };
-        dbRef.addValueEventListener(vListener);
+        dbRef.addListenerForSingleValueEvent(vListener) ;
     }
 
     public void registerCustomer(View v){

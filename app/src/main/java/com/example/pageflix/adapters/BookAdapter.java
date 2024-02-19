@@ -78,4 +78,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             yearTextView = itemView.findViewById(R.id.yearTextView);
         }
     }
+    public void setBookList(List<Book> bookList){
+        this.bookList = bookList ;
+        notifyDataSetChanged();
+    }
 }

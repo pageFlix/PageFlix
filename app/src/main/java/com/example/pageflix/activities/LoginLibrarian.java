@@ -203,7 +203,7 @@ LoginLibrarian extends AppCompatActivity {
 
             }
         };
-        dbRef.addValueEventListener(vListener);
+        dbRef.addListenerForSingleValueEvent(vListener);
     }
 
     public void registerLibrarian(View v){

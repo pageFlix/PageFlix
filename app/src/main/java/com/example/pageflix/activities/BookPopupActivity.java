@@ -1,6 +1,7 @@
 package com.example.pageflix.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -144,9 +145,13 @@ public class BookPopupActivity extends Activity {
                 int selectedLibIndex = adapter.getSelectedItem() ;
                 if(selectedLibIndex != -1){
                     rentService.rent(libraries.get(selectedLibIndex).ID, bookID) ;
+
                 }else{
                     Toast.makeText(getApplicationContext(), "Please choose library", Toast.LENGTH_SHORT).show();
                 }
+                Intent intent = new Intent(BookPopupActivity.this, mainCustomer.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
