@@ -55,6 +55,7 @@ public class historyLibrary extends AppCompatActivity {
         LibrarianID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
         db_rentalsConnection = FirebaseDatabase.getInstance().getReference(RENTALS_CONNECT).child(LibrarianID);
         db_rentals = FirebaseDatabase.getInstance().getReference(RENTALS);
+
     }
     private void getDataFromDB() {
         ValueEventListener vListener = new ValueEventListener() {
@@ -88,13 +89,12 @@ public class historyLibrary extends AppCompatActivity {
                             Date currentDate = new Date(rental.getTimestamp());
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                             String formattedDate = dateFormat.format(currentDate);
-
                             // Fetch book information
                             bookInfo(idBook, new BookInfoCallback() {
                                 @Override
                                 public void onBookInfoReceived(Book book) {
                                     // Fetch library information
-                                    libraryInfo(idCustomer, new LibraryInfoCallback() {
+                                    userInfo(idCustomer, new LibraryInfoCallback() {
                                         @Override
                                         public void onLibraryInfoReceived(User library) {
                                             // Construct the string with book title, library name, and date
@@ -165,7 +165,7 @@ public class historyLibrary extends AppCompatActivity {
         bookRef.addListenerForSingleValueEvent(bookListener);
     }
 
-    private void libraryInfo(String idCustomer,  LibraryInfoCallback callback) {
+    private void userInfo(String idCustomer, LibraryInfoCallback callback) {
         DatabaseReference libraryRef = FirebaseDatabase.getInstance().getReference().child("Customer").child(idCustomer);
         ValueEventListener libraryListener = new ValueEventListener() {
             @Override

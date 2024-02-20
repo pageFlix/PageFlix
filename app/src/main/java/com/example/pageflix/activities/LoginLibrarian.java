@@ -149,7 +149,7 @@ LoginLibrarian extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
-        };dbRef.addValueEventListener(vListener);
+        };dbRef.addListenerForSingleValueEvent(vListener);
         client.signOut();
     }
     //<>google auth==========================================================================================================================================================================

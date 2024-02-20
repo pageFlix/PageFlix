@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.borrowedBooks.list_ordered_books;
 import com.example.pageflix.activities.history.historyLibrary;
 import com.example.pageflix.addBook.screenAddBook;
 import com.example.pageflix.entities.User;
@@ -98,5 +99,8 @@ public class mainLibrarian extends AppCompatActivity {
         Intent intent = new Intent(this , historyLibrary.class);
         startActivity(intent);
     }
-
+    public void borrowedBooks(View v) {
+        Intent intent = new Intent(this , list_ordered_books.class);
+        startActivity(intent);
+    }
 }
