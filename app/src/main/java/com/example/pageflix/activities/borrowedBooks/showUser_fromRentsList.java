@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class showUser_fromRentsList extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvEmail);
         tvName = findViewById(R.id.tvName);
         tvPhone = findViewById(R.id.tvPhone);
+        idLibrarian =  FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
     }
     private void getIntentMain(){
         Intent i = getIntent();
@@ -51,13 +53,14 @@ public class showUser_fromRentsList extends AppCompatActivity {
             idCustomer = i.getStringExtra("idCustomer");
             idBook = i.getStringExtra("idBook");
             rentalKey = i.getStringExtra("rentalKey");
+
         }
     }
     public void returnBook(View v){
         updateRentalsDB();
-//        updateLibrarianDB();
-//        updateCustomerDB();
-//        updateBooksDB();
+        updateLibrarianDB();
+        updateCustomerDB();
+        updateBooksDB();
         Toast.makeText(getApplicationContext(), "The book was returned", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, mainLibrarian.class);// from Login Customer screen to First screen
         startActivity(intent);
@@ -68,64 +71,83 @@ public class showUser_fromRentsList extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Rental rental = snapshot.getValue(Rental.class);
+                if (rental != null){
                 rental.setIfReturned(true);
-                db.setValue(rental);
+                db.setValue(rental);}
+                else {
+                    Log.e("updateLibrarianDB", "DataSnapshot is null or does not contain a valid value");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("updateLibrarianDB", "Database error: " + error.getMessage());
 
             }
         });
     }
     private void updateLibrarianDB(){
-        idLibrarian =  FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
-        DatabaseReference db =  FirebaseDatabase.getInstance().getReference(LIBRARIAN).child(idLibrarian).child("BookID").child(idBook);
+        DatabaseReference db =  FirebaseDatabase.getInstance().getReference(LIBRARIAN).child(idLibrarian).child("BooksID").child(idBook).child("count");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int count = snapshot.getValue(Integer.class);
-                db.setValue((-10));
+                if (snapshot.exists() && snapshot.getValue() != null) {
+                    int count = snapshot.getValue(Integer.class);
+                    count++; // Increment count
+                    db.setValue(count);
+                } else {
+                    // Handle the case where the snapshot is null or doesn't contain a valid value
+                    Log.e("updateLibrarianDB", "DataSnapshot is null or does not contain a valid value");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("updateLibrarianDB", "Database error: " + error.getMessage());
 
             }
         });
-    }
+
+        }
     private void updateCustomerDB(){
-        DatabaseReference db =  FirebaseDatabase.getInstance().getReference(CUSTOMER).child(idCustomer).child("Books").child(idBook);
+        DatabaseReference db =  FirebaseDatabase.getInstance().getReference(CUSTOMER).child(idCustomer).child("Books").child(idBook).child("count");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int count = snapshot.getValue(Integer.class);
-                db.setValue((count - 1));
+                if (snapshot.exists() && snapshot.getValue() != null) {
+                    int count = snapshot.getValue(Integer.class);
+                    db.setValue((count - 1));
+                }
+                else {
+                    Log.e("updateLibrarianDB", "DataSnapshot is null or does not contain a valid value");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("updateLibrarianDB", "Database error: " + error.getMessage());
 
             }
         });
     }
     private void updateBooksDB(){
-        DatabaseReference db =  FirebaseDatabase.getInstance().getReference(BOOKS).child(idBook).child("Books").child(idBook);
+        DatabaseReference db =  FirebaseDatabase.getInstance().getReference(BOOKS).child(idBook);
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Book book = snapshot.getValue(Book.class);
-                db.setValue((book.getCount() + 1));
+                db.child("count").setValue((book.getCount() + 1));
                 DatabaseReference db_copy = db.child("LibraryID").child(idLibrarian);
                 db_copy.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int count = snapshot.getValue(Integer.class);
-                        db_copy.setValue((count + 1));
+                        int count = snapshot.child("count").getValue(Integer.class);
+                        db_copy.child("count").setValue((count+1));
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("updateLibrarianDB", "Database error: " + error.getMessage());
 
                     }
                 });
