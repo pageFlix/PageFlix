@@ -1,4 +1,4 @@
-package com.example.pageflix.activities;
+package com.example.pageflix.activities.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -7,17 +7,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.pageflix.R;
-import com.example.pageflix.activities.history.historyCustomer;
+import com.example.pageflix.activities.FirstScreen;
+import com.example.pageflix.activities.Update_Librarian_Profile;
+import com.example.pageflix.activities.borrowedBooks.list_ordered_books;
+import com.example.pageflix.activities.history.historyLibrary;
+import com.example.pageflix.activities.addBook.screenAddBook;
+import com.example.pageflix.activities.inStockScreen;
+import com.example.pageflix.activities.screenRemoveBook;
 import com.example.pageflix.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,24 +27,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class mainCustomer extends AppCompatActivity {
+public class mainLibrarian extends AppCompatActivity {
     private TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_customer);
+        setContentView(R.layout.activity_main_librarian);
         showWelcomeText();
     }
     private void showWelcomeText(){
         textView = findViewById(R.id.textviewname);
         FirebaseAuth user = FirebaseAuth.getInstance();
         String userId = user.getCurrentUser().getUid();
-        DatabaseReference DBref = FirebaseDatabase.getInstance().getReference("Customer").child(userId);
+        DatabaseReference DBref = FirebaseDatabase.getInstance().getReference("Librarian").child(userId);
         DBref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-                textView.setText("Welcome \n"+ "\t"+user.getFirstName());
+                textView.setText("Welcome  \n"+ "\t"+ user.getLibraryName());
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -51,7 +53,6 @@ public class mainCustomer extends AppCompatActivity {
                     }
                 });
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -61,9 +62,9 @@ public class mainCustomer extends AppCompatActivity {
     private void showPopup(User user) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("User Data:");
-        builder.setMessage("First Name: "+ user.getFirstName() + "\nLast Name: "+user.getLastName()+"\nEmail: "+user.getEmail()
+        builder.setMessage("Library Name: "+user.getLibraryName()+"\nEmail: "+user.getEmail()
                 +"\nAddress: "+user.getCity()+", "+user.getStreet()+", "+user.getNumber()
-        +"\nBirth Day: "+user.getBirthDay()+"\nCell Number: "+user.getCellNumber());
+                +"\nCell Number: "+user.getCellNumber());
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -73,8 +74,16 @@ public class mainCustomer extends AppCompatActivity {
         });
         builder.show();
     }
-    public void backToFirstScreen(View v) {
-        Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
+    public void addBook(View v){
+        Intent intent = new Intent(this, screenAddBook.class);// from Login Customer screen to First screen
+        startActivity(intent);
+    }
+    public void removeBook(View v){
+        Intent intent = new Intent(this, screenRemoveBook.class);// from Login Customer screen to First screen
+        startActivity(intent);
+    }
+    public void inStock(View v){
+        Intent intent = new Intent(this, inStockScreen.class);// from Login Customer screen to First screen
         startActivity(intent);
     }
     public void signOut(View v){
@@ -82,29 +91,20 @@ public class mainCustomer extends AppCompatActivity {
         startActivity(intent);
     }
     public void Update_Profile(View v) {
+        Log.d("Update_Profile", "Update profile button clicked");
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String userId = mAuth.getCurrentUser().getUid();
 
-        Intent intent = new Intent(getApplicationContext(), Update_Customer_Profile.class);
+        Intent intent = new Intent(this, Update_Librarian_Profile.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
     }
-    public void Search_books(View v) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String userId = mAuth.getCurrentUser().getUid();
-
-        Intent intent = new Intent(getApplicationContext(), SearchBooks.class);
-        intent.putExtra("userId", userId);
-        startActivity(intent);
-    }
-
     public void historyOrders(View v) {
-        Intent intent = new Intent(this , historyCustomer.class);
+        Intent intent = new Intent(this , historyLibrary.class);
         startActivity(intent);
     }
-
-    public void myBooks(View v) {
-        Intent intent = new Intent(this , customerBooks.class);
+    public void borrowedBooks(View v) {
+        Intent intent = new Intent(this , list_ordered_books.class);
         startActivity(intent);
     }
 }

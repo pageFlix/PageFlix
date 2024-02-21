@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.main.mainCustomer;
 import com.example.pageflix.services.RentService;
 import com.example.pageflix.adapters.LibraryAdapter;
 import com.example.pageflix.entities.Library;

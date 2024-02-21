@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.pageflix.R;
-import com.example.pageflix.activities.mainCustomer;
+import com.example.pageflix.activities.main.mainCustomer;
 import com.example.pageflix.entities.Book;
 import com.example.pageflix.entities.Rental;
 import com.example.pageflix.entities.User;

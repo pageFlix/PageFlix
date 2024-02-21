@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/type3"
+    tools:context=".activities.customerMy_Books.bookReview">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:padding="24dp"
+            android:background="@drawable/color_boarder">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rating: "
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+                <RatingBar
+                    android:id="@+id/bookRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="1"
+                    android:rating="0" />
+            </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edReview"
+                android:background="@drawable/color_boarder"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:hint="Add a book review"
+                android:drawablePadding="8dp"
+                android:gravity="top"
+                android:textColor="@color/black"
+                android:lines="20" />
+            <Button
+                android:id="@+id/addReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/coralPink"
+                android:onClick="addReview"
+                android:text="Add"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:backgroundTint="@color/grey"
+        android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+        android:onClick="backToPreviousScreen"
+        android:text="@string/back"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:cornerRadius="20dp" />
+</LinearLayout>

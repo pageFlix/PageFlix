@@ -1,8 +1,10 @@
 package com.example.pageflix.activities.borrowedBooks;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pageflix.R;
-import com.example.pageflix.activities.borrowedBooks.list_ordered_books;
-import com.example.pageflix.activities.mainLibrarian;
+import com.example.pageflix.activities.main.mainLibrarian;
 import com.example.pageflix.entities.Book;
 import com.example.pageflix.entities.Rental;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,14 +57,30 @@ public class showUser_fromRentsList extends AppCompatActivity {
 
         }
     }
-    public void returnBook(View v){
-        updateRentalsDB();
-        updateLibrarianDB();
-        updateCustomerDB();
-        updateBooksDB();
-        Toast.makeText(getApplicationContext(), "The book was returned", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, mainLibrarian.class);// from Login Customer screen to First screen
-        startActivity(intent);
+    public void returnBook(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to return the book?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        updateRentalsDB();
+                        updateLibrarianDB();
+                        updateCustomerDB();
+                        updateBooksDB();
+                        Toast.makeText(getApplicationContext(), "The book was returned", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(showUser_fromRentsList.this, mainLibrarian.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Do nothing
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
     private void updateRentalsDB(){
         DatabaseReference db =  FirebaseDatabase.getInstance().getReference(RENTALS).child(rentalKey);

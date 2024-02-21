@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/type5"
-    tools:context=".activities.mainLibrarian">
+    tools:context=".activities.main.mainLibrarian">
 
     <TextView
         android:id="@+id/textviewname"
@@ -18,7 +18,6 @@
         android:layout_marginTop="10dp"
         android:padding="50dp"
         android:drawableRight="@drawable/baseline_useraccount_circle_24"
-        android:text="@string/librarian_main_screen"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/black"
         android:textStyle="bold|italic"
@@ -37,6 +36,7 @@
        android:backgroundTint="@color/sapphire"
         android:onClick="inStock"
         android:text="In Stock"
+        android:textAllCaps="false"
         android:textSize="18sp"
         app:cornerRadius="20dp" />
 
@@ -49,6 +49,7 @@
             android:backgroundTint="@color/sapphire"
             android:onClick="borrowedBooks"
             android:text="Borrowed books"
+            android:textAllCaps="false"
             android:textSize="17sp"
             app:cornerRadius="20dp" />
     </LinearLayout>
@@ -65,6 +66,7 @@
         android:backgroundTint="@color/sapphire"
         android:onClick="addBook"
         android:text="@string/add_book"
+        android:textAllCaps="false"
         android:textSize="18sp"
         app:cornerRadius="20dp" />
         <Button
@@ -76,6 +78,7 @@
             android:backgroundTint="@color/sapphire"
             android:onClick="removeBook"
             android:text="@string/remove_book"
+            android:textAllCaps="false"
             android:textSize="18sp"
             app:cornerRadius="20dp" />
     </LinearLayout>
@@ -95,6 +98,7 @@
             android:backgroundTint="@color/sapphire"
             android:onClick="Update_Profile"
             android:text="Update Profile"
+            android:textAllCaps="false"
             android:textSize="18sp"
             app:cornerRadius="20dp" />
         <Button
@@ -107,6 +111,7 @@
             android:backgroundTint="@color/sapphire"
             android:onClick="historyOrders"
             android:text="History"
+            android:textAllCaps="false"
             android:textSize="18sp"
             app:cornerRadius="20dp" />
     </LinearLayout>
@@ -117,6 +122,7 @@
         android:layout_marginTop="220dp"
         android:onClick="signOut"
         android:text="@string/sign_out"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"

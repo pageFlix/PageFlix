@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.login.LoginCustomer;
 
 public class FirstScreen extends AppCompatActivity {
 
