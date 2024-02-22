@@ -43,8 +43,8 @@ public class RentService {
     private void synchronizedUpdate(){
         librarianRef.get().addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
-                Integer libCount = task1.getResult().getValue(Integer.class);
                 bookLibCountRef.get().addOnCompleteListener(task2 -> {
+                    Integer libCount = task1.getResult().getValue(Integer.class);
                     if(task2.isSuccessful()) {
                         Integer booksLibCount = task2.getResult().getValue(Integer.class);
                         bookTotalCountRef.get().addOnCompleteListener(task3 -> {
