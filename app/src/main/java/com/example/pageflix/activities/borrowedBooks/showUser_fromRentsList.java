@@ -23,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class showUser_fromRentsList extends AppCompatActivity {
     private TextView tvEmail,tvName,tvPhone;
     private String idCustomer, idBook, rentalKey,idLibrarian;
@@ -30,6 +33,7 @@ public class showUser_fromRentsList extends AppCompatActivity {
     private  String CUSTOMER = "Customer";
     private  String LIBRARIAN = "Librarian";
     private  String BOOKS = "Books";
+    private  String BLOCK_LIST = "Blocklist";
 
 
     @Override
@@ -170,6 +174,35 @@ public class showUser_fromRentsList extends AppCompatActivity {
                 });
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void blockUser(View v){
+        DatabaseReference db =  FirebaseDatabase.getInstance().getReference(BLOCK_LIST).child(idLibrarian).child(idCustomer);
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    boolean blocked = snapshot.child("block").getValue(boolean.class);
+                    if (blocked == false) {
+                        Map<String, Object> map_block = new HashMap<>();
+                        map_block.put("block", true);
+                        db.updateChildren(map_block);
+                        Toast.makeText(getApplicationContext(), "User is blocked", Toast.LENGTH_SHORT).show();
+                    }
+                    else{//if false
+                        Toast.makeText(getApplicationContext(), "User is already blocked", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Map<String, Object> map_block = new HashMap<>();
+                    map_block.put("block", true);
+                    db.updateChildren(map_block);
+                    Toast.makeText(getApplicationContext(), "User is blocked", Toast.LENGTH_SHORT).show();
+                }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
