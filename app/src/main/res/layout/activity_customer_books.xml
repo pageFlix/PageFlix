@@ -15,6 +15,7 @@
         android:layout_weight="1"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp" />
+
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
