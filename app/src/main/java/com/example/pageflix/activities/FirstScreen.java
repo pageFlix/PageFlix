@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.login.LoginCustomer;
 
 public class FirstScreen extends AppCompatActivity {
 
@@ -14,6 +15,7 @@ public class FirstScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_screen);
+
     }
 //Here we move to Customer screen
     public void CustomerLoginButtom(View v){

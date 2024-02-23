@@ -19,10 +19,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pageflix.activities.login.LoginCustomer;
+import com.example.pageflix.activities.main.mainCustomer;
 import com.example.pageflix.services.AddressApiService;
 import com.example.pageflix.R;
 import com.example.pageflix.entities.User;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

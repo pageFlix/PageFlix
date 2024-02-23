@@ -1,4 +1,4 @@
-package com.example.pageflix.activities;
+package com.example.pageflix.activities.login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,13 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.FirstScreen;
+import com.example.pageflix.activities.main.mainCustomer;
+import com.example.pageflix.activities.registerCustomer;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -151,7 +153,7 @@ public class LoginCustomer extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
-        };dbRef.addValueEventListener(vListener);
+        };dbRef.addListenerForSingleValueEvent(vListener);
         client.signOut();
     }
     //<>google auth==========================================================================================================================================================================

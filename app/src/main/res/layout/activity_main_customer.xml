@@ -8,93 +8,69 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/type3"
-    tools:context=".activities.mainCustomer">
+    tools:context=".activities.main.mainCustomer">
 
-    <TextView
-        android:id="@+id/textviewname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="100dp"
-        android:drawableRight="@drawable/baseline_useraccount_circle_24"
-        android:text="Customer main screen"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="@color/black"
-        android:textStyle="bold|italic"
-        android:textSize="32sp" />
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/Update_Profile"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/sapphire"
-            android:onClick="Update_Profile"
-            android:text="Update Profile"
-            android:textSize="18sp"
-            app:cornerRadius="20dp" />
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/Search_books"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/sapphire"
-            android:onClick="Search_books"
-            android:text="Search Books"
-            android:textSize="18sp"
-            app:cornerRadius="20dp" />
-        <Button
-            android:id="@+id/rent_books"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/sapphire"
-            android:onClick="myBooks"
-            android:text="My books"
-            android:textSize="18sp"
-            app:cornerRadius="20dp" />
-        <Button
-            android:id="@+id/historyOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/sapphire"
-            android:onClick="historyOrders"
-            android:text="History"
-            android:textSize="18sp"
-            app:cornerRadius="20dp" />
-
-        <Button
-            android:id="@+id/signOut"
+        <TextView
+            android:id="@+id/textviewname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:onClick="signOut"
-            android:text="@string/sign_out"
-            app:cornerRadius="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.47"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="20dp"
+            android:drawableRight="@drawable/baseline_useraccount_circle_24"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textColor="@color/black"
+            android:textStyle="bold|italic"
+            android:textSize="32sp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/textviewname"
+            app:layout_constraintBottom_toBottomOf="parent">
 
+            <Button
+                android:id="@+id/Search_books"
+                android:layout_width="150dp"
+                android:layout_height="80dp"
+                android:backgroundTint="@color/sapphire"
+                android:onClick="Search_books"
+                android:text="Search Books"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                app:cornerRadius="20dp" />
 
-
+            <Button
+                android:id="@+id/rent_books"
+                android:layout_width="150dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/sapphire"
+                android:onClick="myBooks"
+                android:text="My books"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                app:cornerRadius="20dp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
-
-

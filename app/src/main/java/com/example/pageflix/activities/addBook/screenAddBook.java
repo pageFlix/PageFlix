@@ -1,4 +1,4 @@
-package com.example.pageflix.addBook;
+package com.example.pageflix.activities.addBook;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.pageflix.R;
-import com.example.pageflix.activities.mainLibrarian;
+import com.example.pageflix.activities.main.mainLibrarian;
 import com.example.pageflix.interfaces.CallbackFlag;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

@@ -43,8 +43,8 @@ public class RentService {
     private void synchronizedUpdate(){
         librarianRef.get().addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
-                Integer libCount = task1.getResult().getValue(Integer.class);
                 bookLibCountRef.get().addOnCompleteListener(task2 -> {
+                    Integer libCount = task1.getResult().getValue(Integer.class);
                     if(task2.isSuccessful()) {
                         Integer booksLibCount = task2.getResult().getValue(Integer.class);
                         bookTotalCountRef.get().addOnCompleteListener(task3 -> {
@@ -103,7 +103,7 @@ public class RentService {
         Date currentDate = new Date();
         // Convert Date object to milliseconds since epoch
         long currentTimeMillis = currentDate.getTime();
-        Rental rental = new Rental(libID, customerID, bookID,currentTimeMillis);
+        Rental rental = new Rental(libID, customerID, bookID,currentTimeMillis,false);
         rentalRef.setValue(rental).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

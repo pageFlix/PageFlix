@@ -1,6 +1,7 @@
 package com.example.pageflix.activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.customerMy_Books.customerBooks;
 import com.example.pageflix.services.RentService;
 import com.example.pageflix.adapters.LibraryAdapter;
 import com.example.pageflix.entities.Library;
@@ -137,23 +140,50 @@ public class BookPopupActivity extends Activity {
         bookDescriptionTextView.setText("Description: " + bookDescription);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         // Rent button click listener
         rentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int selectedLibIndex = adapter.getSelectedItem() ;
-                if(selectedLibIndex != -1){
-                    rentService.rent(libraries.get(selectedLibIndex).ID, bookID) ;
-
-                }else{
-                    Toast.makeText(getApplicationContext(), "Please choose library", Toast.LENGTH_SHORT).show();
+                int selectedLibIndex = adapter.getSelectedItem();
+                if (selectedLibIndex != -1) {
+                    rentService.rent(libraries.get(selectedLibIndex).ID, bookID);
+                    // starting dialogAlert for navigation to library
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BookPopupActivity.this);
+                    builder.setMessage("Do you want to start navigation to " + libraries.get(selectedLibIndex).getLibraryName())
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                // if the yes button was pressed then google maps will start with the
+                                // customer location and the library address
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    // Pass the address data to MapActivity
+                                    navigateToMapActivity(libraries.get(selectedLibIndex));
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(BookPopupActivity.this, customerBooks.class);
+                                    startActivity(intent);
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please choose a library", Toast.LENGTH_SHORT).show();
                 }
-                Intent intent = new Intent(BookPopupActivity.this, mainCustomer.class);
-                startActivity(intent);
-                finish();
             }
         });
     }
 
+    private void navigateToMapActivity(Library library) {
+        //sending the library adrres to MapActivity class to start the navigation
+        Intent intent = new Intent(BookPopupActivity.this, MapActivity.class);
+        // Pass address data to MapActivity
+        intent.putExtra("city", library.getCity());
+        intent.putExtra("street", library.getStreet());
+        intent.putExtra("number", library.getNumber());
+        startActivity(intent);
+    }
 }
+

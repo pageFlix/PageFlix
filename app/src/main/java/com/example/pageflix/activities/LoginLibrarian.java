@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.main.mainLibrarian;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -149,7 +150,7 @@ LoginLibrarian extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
-        };dbRef.addValueEventListener(vListener);
+        };dbRef.addListenerForSingleValueEvent(vListener);
         client.signOut();
     }
     //<>google auth==========================================================================================================================================================================

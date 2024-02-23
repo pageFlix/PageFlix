@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".activities.customerMy_Books.customerBooks">
+    tools:context=".activities.borrowedBooks.list_ordered_books">
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
@@ -15,7 +15,6 @@
         android:layout_weight="1"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp" />
-
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"

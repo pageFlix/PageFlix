@@ -1,15 +1,22 @@
-package com.example.pageflix.activities;
+package com.example.pageflix.activities.customerMy_Books;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.main.mainCustomer;
 import com.example.pageflix.entities.Book;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,9 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class customerBooks extends AppCompatActivity {
+
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private List<String> listData;
+    private List<String> list_temp_bookID;
     private DatabaseReference dbRef;
     private String customerID;
     private String USER_KEY = "Customer";
@@ -34,10 +43,12 @@ public class customerBooks extends AppCompatActivity {
         setContentView(R.layout.activity_customer_books);
         init();
         getDataFromDB();
+        setOnClickIten();
     }
     public void init(){
         listView = findViewById(R.id.listView);
         listData = new ArrayList<>();
+        list_temp_bookID = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
         customerID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
@@ -60,6 +71,7 @@ public class customerBooks extends AppCompatActivity {
                                 Book book = dataSnapshot.getValue(Book.class);
                                 if (book != null) {
                                     listData.add("Title: " + book.getTitle() + "\nAuthor: " + book.getAuthor() + "\nYear: " + book.getYear() + "\nCount: " + countBookInLib);
+                                    list_temp_bookID.add(bookKey);
                                     adapter.notifyDataSetChanged();
                                 }
                             }
@@ -75,6 +87,18 @@ public class customerBooks extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {}
         };
         dbRef.addValueEventListener(vListener);
+    }
+    private void setOnClickIten(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String book = list_temp_bookID.get(position);
+                Intent intent = new Intent(getApplicationContext(), bookReview.class);
+                intent.putExtra("bookID",book);
+                startActivity(intent);
+            }
+        });
+
     }
     public void backToPreviousScreen(View v) {
         Intent intent = new Intent(this, mainCustomer.class);// from Login Customer screen to First screen
