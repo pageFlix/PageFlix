@@ -16,10 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pageflix.R;
-import com.example.pageflix.activities.borrowedBooks.showUser_fromRentsList;
 import com.example.pageflix.activities.customerMy_Books.customerBooks;
-import com.example.pageflix.activities.main.mainCustomer;
-import com.example.pageflix.activities.main.mainLibrarian;
 import com.example.pageflix.services.RentService;
 import com.example.pageflix.adapters.LibraryAdapter;
 import com.example.pageflix.entities.Library;

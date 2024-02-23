@@ -88,44 +88,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/Update_Profile"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/sapphire"
-            android:onClick="Update_Profile"
-            android:text="Update Profile"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            app:cornerRadius="20dp" />
-        <Button
-            android:id="@+id/historyOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/sapphire"
-            android:onClick="historyOrders"
-            android:text="History"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            app:cornerRadius="20dp" />
+
     </LinearLayout>
     <Button
-        android:id="@+id/signOut"
+        android:id="@+id/blocklist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
-        android:onClick="signOut"
-        android:text="@string/sign_out"
+        android:backgroundTint="@color/sapphire"
+        android:onClick="blocklist"
+        android:text="Block List"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cornerRadius="20dp"/>
+        android:textSize="18sp"
+        app:cornerRadius="20dp" />
 </LinearLayout>

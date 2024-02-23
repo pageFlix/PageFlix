@@ -8,6 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +38,54 @@ public class mainLibrarian extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_librarian);
         showWelcomeText();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_lib, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.item_1) {
+            // Show popup for item_1
+            FirebaseAuth user = FirebaseAuth.getInstance();
+            String userId = user.getCurrentUser().getUid();
+            DatabaseReference DBref = FirebaseDatabase.getInstance().getReference("Librarian").child(userId);
+            DBref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user = snapshot.getValue(User.class);
+                    showPopup(user);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            return true;
+        }
+            if (id == R.id.item_2){
+                Log.d("Update_Profile", "Update profile button clicked");
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                String userId = mAuth.getCurrentUser().getUid();
+
+                Intent intent = new Intent(this, Update_Librarian_Profile.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+            }
+        if (id == R.id.item_3){
+            Intent intent = new Intent(this , historyLibrary.class);
+            startActivity(intent);
+        }
+        if (id == R.id.item_4){
+            Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
+            startActivity(intent);
+        }
+            return super.onOptionsItemSelected(item);
     }
     private void showWelcomeText(){
         textView = findViewById(R.id.textviewname);
@@ -86,25 +137,12 @@ public class mainLibrarian extends AppCompatActivity {
         Intent intent = new Intent(this, inStockScreen.class);// from Login Customer screen to First screen
         startActivity(intent);
     }
-    public void signOut(View v){
-        Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
-        startActivity(intent);
-    }
-    public void Update_Profile(View v) {
-        Log.d("Update_Profile", "Update profile button clicked");
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String userId = mAuth.getCurrentUser().getUid();
 
-        Intent intent = new Intent(this, Update_Librarian_Profile.class);
-        intent.putExtra("userId", userId);
-        startActivity(intent);
-    }
-    public void historyOrders(View v) {
-        Intent intent = new Intent(this , historyLibrary.class);
-        startActivity(intent);
-    }
+
     public void borrowedBooks(View v) {
         Intent intent = new Intent(this , list_ordered_books.class);
         startActivity(intent);
     }
+
+
 }
