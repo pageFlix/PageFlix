@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pageflix">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Location permissions -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Location permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -19,15 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PageFlix"
         tools:targetApi="31">
-
-        <!-- Add your Google Maps API key here -->
+        <activity
+            android:name=".adapter_block_item"
+            android:exported="false" />
+        <activity
+            android:name=".activities.blocked_list"
+            android:exported="false" /> <!-- Add your Google Maps API key here -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCvD9cc_MS9Jkef4X12a8KsCHb7kDfXAa4" />
 
         <activity
             android:name=".activities.MapActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activities.customerMy_Books.bookReview"
             android:exported="false" />

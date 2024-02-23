@@ -2,14 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
-        android:id="@+id/item_1"
-        android:title="Profile" />
+    android:id="@+id/item_1"
+    android:title="Profile" />
     <item
         android:id="@+id/item_2"
         android:title="Update Profile"/>
     <item
         android:id="@+id/item_3"
         android:title="Rent History" />
+    <item
+        android:id="@+id/item_5"
+        android:title="Blocked list" />
     <item
         android:id="@+id/item_4"
         android:title="Sign out" />

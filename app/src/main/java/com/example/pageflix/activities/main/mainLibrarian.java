@@ -23,6 +23,7 @@ import com.example.pageflix.activities.history.historyLibrary;
 import com.example.pageflix.activities.addBook.screenAddBook;
 import com.example.pageflix.activities.inStockScreen;
 import com.example.pageflix.activities.screenRemoveBook;
+import com.example.pageflix.activities.blocked_list;
 import com.example.pageflix.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +31,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import androidx.appcompat.widget.Toolbar;
 
 public class mainLibrarian extends AppCompatActivity {
     private TextView textView;
@@ -87,6 +87,10 @@ public class mainLibrarian extends AppCompatActivity {
         }
         if (id == R.id.item_4){
             Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
+            startActivity(intent);
+        }
+        if (id == R.id.item_5){
+            Intent intent = new Intent(this, blocked_list.class);// from Login Customer screen to First screen
             startActivity(intent);
         }
             return super.onOptionsItemSelected(item);
