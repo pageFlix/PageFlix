@@ -22,4 +22,8 @@
     <style name="Theme.PageFlix.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.PageFlix.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="SpinnerPopupTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:popupBackground">#80FFFFFF</item> <!-- Transparent background -->
+        <item name="android:dropDownWidth">match_parent</item> <!-- Match width of the screen -->
+    </style>
 </resources>

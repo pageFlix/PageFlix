@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -40,7 +39,36 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <!-- Your main content here -->
+        <!-- ImageButton -->
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:alpha="0.8"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:srcCompat="@drawable/ic_arrow_down" />
+
+        <!-- Spinner -->
+        <Spinner
+            android:id="@+id/orderSpinner"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:alpha="0.8"
+            android:background="@color/white"
+            android:entries="@array/order_options"
+            android:gravity="center"
+            android:popupBackground="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageButton"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:popupTheme="@style/SpinnerPopupTheme" />
+
+        <!-- Your main content RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -53,8 +81,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/orderSpinner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </LinearLayout>

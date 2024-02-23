@@ -1,7 +1,12 @@
 package com.example.pageflix.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
@@ -21,6 +26,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SearchBooks extends AppCompatActivity {
@@ -29,15 +38,22 @@ public class SearchBooks extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private BookAdapter adapter;
-    private List<Book> allBooksList = new ArrayList<>(), filteredBooks = new ArrayList<>();
+    private final List<Book> allBooksList = new ArrayList<>();
+    private List<Book> filteredBooks = new ArrayList<>();
     private DatabaseReference booksRef;
+    private boolean isArrowUp ;
 
+    private enum ResultsSort { BY_TITLE, BY_YEAR}
+    private enum ResultsOrder{ INCREASING, DECREASING }
+
+    private ResultsOrder currentOrder ;
+    private ResultsSort currentSort ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_books);
         Log.d(TAG, "onCreate: Activity created");
-
+        setOrderSpinnerView();
         // Initialize RecyclerView
         setupRecyclerView();
 
@@ -47,8 +63,52 @@ public class SearchBooks extends AppCompatActivity {
         // Setup SearchView
         setupSearchView();
         getBooksList();
+
     }
 
+    private void setOrderSpinnerView(){
+        this.currentOrder = ResultsOrder.INCREASING ;
+        this.currentSort = ResultsSort.BY_TITLE ;
+        ImageButton imageButton = findViewById(R.id.imageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the state
+                if (currentOrder == ResultsOrder.INCREASING) {
+                    imageButton.setImageResource(R.drawable.ic_arrow_up);
+                    currentOrder = ResultsOrder.DECREASING ;
+                } else {
+                    imageButton.setImageResource(R.drawable.ic_arrow_down);
+                    currentOrder = ResultsOrder.INCREASING ;
+                }
+                reverseListAndNotify();
+            }
+        });
+
+        Spinner orderSpinner = findViewById(R.id.orderSpinner);
+
+        orderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // The item at position 'position' is selected
+                // Perform actions based on the selected item
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                // Example: Log the selected item
+                if (selectedItem.equals("Title")){
+                    currentSort = ResultsSort.BY_TITLE ;
+                }else if(selectedItem.equals("Publication Year")){
+                    currentSort = ResultsSort.BY_YEAR ;
+                }
+                updateListSorting();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Called when no item is selected
+            }
+        });
+
+    }
     // Initialize RecyclerView
     private void setupRecyclerView() {
         recyclerView = findViewById(R.id.recyclerView);
@@ -75,13 +135,8 @@ public class SearchBooks extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty()) {
-                    showAllBooks();
-                } else if (newText.length() >= 1) {
-                    // If the search query has at least one character, filter books
                     filterBooks(newText);
-                }
-                return true;
+                    return true ;
             }
         });
     }
@@ -99,11 +154,14 @@ public class SearchBooks extends AppCompatActivity {
                     // Convert each book to a Book object and add it to the list
                     Book book = bookSnapshot.getValue(Book.class);
                     if (book != null) {
-                        book.ID = bookSnapshot.getKey();
-                        allBooksList.add(book);
+                        if(book.count > 0) {
+                            book.ID = bookSnapshot.getKey();
+                            allBooksList.add(book);
+                        }
                     }
                 }
-                showAllBooks();
+                filterBooks("");
+                adapter.setBookList(filteredBooks);
             }
 
             @Override
@@ -113,20 +171,21 @@ public class SearchBooks extends AppCompatActivity {
             }
         });
     }
-    // Show all books
-    private void showAllBooks() {
-        adapter.setBookList(allBooksList);
-    }
 
     // Filter books based on search text
     private void filterBooks(String searchText) {
         filteredBooks.clear();
-        for(Book b: allBooksList){
-            if(b.getTitle().toLowerCase().contains(searchText.toLowerCase())){
-                filteredBooks.add(b) ;
+        if(searchText.isEmpty()){
+            filteredBooks = new ArrayList<>(allBooksList) ;
+            adapter.setBookList(filteredBooks);
+        }else {
+            for (Book b : allBooksList) {
+                if (b.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredBooks.add(b);
+                }
             }
         }
-        adapter.setBookList(filteredBooks);
+        updateListSorting();
     }
 
     // Handle Firebase database errors
@@ -135,5 +194,26 @@ public class SearchBooks extends AppCompatActivity {
         Log.e(TAG, "handleDatabaseError: Failed to read value.", databaseError.toException());
         // Display a toast message to the user
         Toast.makeText(SearchBooks.this, "Failed to retrieve data.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateListSorting(){
+        switch (currentSort){
+            case BY_TITLE:
+                filteredBooks.sort(new Book.TitleComparator());
+                break ;
+            case BY_YEAR:
+                filteredBooks.sort(new Book.PublicationYearComparator());
+                break ;
+        }
+        Log.d("shit", "Current order:" + currentOrder) ;
+        if(currentOrder == ResultsOrder.DECREASING) {
+            Collections.reverse(filteredBooks);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void reverseListAndNotify(){
+        Collections.reverse(filteredBooks);
+        adapter.notifyDataSetChanged();
     }
 }

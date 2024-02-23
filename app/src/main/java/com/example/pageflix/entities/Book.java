@@ -2,6 +2,8 @@ package com.example.pageflix.entities;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.Comparator;
+
 public class Book {
     public String title, author, category, year, description, ID;
     public int count;
@@ -49,6 +51,22 @@ public class Book {
                 ", description='" + description + '\'' +
                 ", count=" + count +
                 '}';
+    }
+
+    // Comparator for sorting by title
+    public static class TitleComparator implements Comparator<Book> {
+        @Override
+        public int compare(Book b1, Book b2) {
+            return b1.getTitle().compareTo(b2.getTitle());
+        }
+    }
+
+    // Comparator for sorting by publication year
+    public static class PublicationYearComparator implements Comparator<Book> {
+        @Override
+        public int compare(Book b1, Book b2) {
+            return Integer.compare(Integer.parseInt(b1.getYear()), Integer.parseInt(b2.getYear()));
+        }
     }
 }
 
