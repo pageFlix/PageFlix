@@ -9,30 +9,49 @@
     android:gravity="center"
     android:background="@drawable/type5"
     tools:context=".activities.main.mainLibrarian">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/white" />
 
     <TextView
         android:id="@+id/textviewname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:padding="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp"
         android:drawableRight="@drawable/baseline_useraccount_circle_24"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/black"
         android:textStyle="bold|italic"
-        android:textSize="32sp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:textSize="32sp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/textviewname"
+            app:layout_constraintBottom_toBottomOf="parent">
     <Button
         android:id="@+id/inStock"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+
        android:backgroundTint="@color/sapphire"
         android:onClick="inStock"
         android:text="In Stock"
@@ -42,27 +61,18 @@
 
         <Button
             android:id="@+id/borrowedBooks"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginTop="50dp"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
             android:backgroundTint="@color/sapphire"
             android:onClick="borrowedBooks"
             android:text="Borrowed books"
             android:textAllCaps="false"
             android:textSize="17sp"
             app:cornerRadius="20dp" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
     <Button
         android:id="@+id/addBook"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="0dp"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
         android:backgroundTint="@color/sapphire"
         android:onClick="addBook"
         android:text="@string/add_book"
@@ -71,10 +81,9 @@
         app:cornerRadius="20dp" />
         <Button
             android:id="@+id/removeBook"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="0dp"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+
             android:backgroundTint="@color/sapphire"
             android:onClick="removeBook"
             android:text="@string/remove_book"
@@ -82,22 +91,5 @@
             android:textSize="18sp"
             app:cornerRadius="20dp" />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-    </LinearLayout>
-    <Button
-        android:id="@+id/blocklist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/sapphire"
-        android:onClick="blocklist"
-        android:text="Block List"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        app:cornerRadius="20dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
