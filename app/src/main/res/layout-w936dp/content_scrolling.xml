@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.SearchBooks$customeListrBooks"
+    tools:context=".activities.customer_activities.SearchBooks$customeListrBooks"
     tools:showIn="@layout/activity_customer_list_books">
 
     <androidx.core.widget.NestedScrollView

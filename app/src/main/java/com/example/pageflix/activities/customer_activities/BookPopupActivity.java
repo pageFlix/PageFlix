@@ -1,4 +1,4 @@
-package com.example.pageflix.activities;
+package com.example.pageflix.activities.customer_activities;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.MapActivity;
 import com.example.pageflix.activities.customerMy_Books.customerBooks;
+import com.example.pageflix.entities.Review;
 import com.example.pageflix.services.RentService;
 import com.example.pageflix.adapters.LibraryAdapter;
 import com.example.pageflix.entities.Library;
@@ -26,37 +29,45 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class BookPopupActivity extends Activity {
 
+    //----- Views variables -----
     private TextView bookTitleTextView, bookAuthorTextView, bookYearTextView, bookDescriptionTextView;
     private RecyclerView libraryRecyclerView;
-    private Button rentButton;
-
-    private String bookID ;
+    private Button rentButton, reviewsButton;
+    private RatingBar bookRatingBar ;
     private LibraryAdapter adapter ;
-    private List<Library> libraries;
     private RentService rentService;
 
-    private List<String> libIDs ;
+    //----- Data holders -----
+    private List<Library> libraries;
+    private List<Review> bookReviews ;
+
+    //----- Primitives -----
+    private float rating ;
+    private String bookID ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.popup_book_details);
+        setContentView(R.layout.activity_book_popup);
         libraries = new ArrayList<>();
-        libIDs = new ArrayList<>() ;
+        bookReviews = new ArrayList<>() ;
         this.rentService = new RentService() ;
         initViews();
         setBookProps();
         getLibrariesWithBook();
+        getReviews();
         setListeners();
     }
 
-    //-----Adding each of the libraries containing the selected book.      -----//
-    //-----Libs which do not contain the book will be not added to the list-----//
+    /** Adding each of the libraries containing the selected book.
+        Libs which do not contain the book will be not added to the list */
     public void getLibrariesWithBook() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference booksRef = database.getReference("Books");
@@ -72,24 +83,23 @@ public class BookPopupActivity extends Activity {
                         if (countObject instanceof Long) {
                             // Convert to Integer if necessary
                             Integer countValue = ((Long) countObject).intValue();
+                            //----- Only if the book is in the current Library, then ad the library -----
+                            //----- to the list.                                                    -----
                             if(countValue > 0){
-                                gertAndAddToList(libIDsSnap.getKey());
+                                getAndAddToList(libIDsSnap.getKey());
                             }
                         }
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("Error", "Failed to read value.", databaseError.toException());            }
         });
-
-
-
     }
 
-    private void gertAndAddToList(String id){
+    /** Gets a library by id, and adding it to the list of the libraries that hold the current book */
+    private void getAndAddToList(String id){
         DatabaseReference librariesRef = FirebaseDatabase.getInstance().getReference("Librarian") ;
             librariesRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -100,23 +110,73 @@ public class BookPopupActivity extends Activity {
                             library.ID = dataSnapshot.getKey() ;
                             libraries.add(library) ;
                         }
-                    } else {
                     }
                     adapter.notifyDataSetChanged();
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
             }) ;
     }
+
+    /** Gets all of the reviews of the current book and its average rating */
+    private void getReviews(){
+        DatabaseReference reviewsRef = FirebaseDatabase.getInstance().getReference("book_review") ;
+        reviewsRef.child(bookID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int numOfReviews = 0 ;
+                if (snapshot.exists()){
+                    for (DataSnapshot reviewSnap: snapshot.getChildren()) {
+                        Review review = reviewSnap.getValue(Review.class);
+                        getAndSetCustomerName(review, reviewSnap.getKey());
+                        bookReviews.add(review) ;
+                        rating += review.rating ;
+                        numOfReviews++ ;
+                    }
+                    if(numOfReviews == 0){
+                        bookRatingBar.setRating(0);
+                    }else {
+                        rating /= numOfReviews;
+                        bookRatingBar.setRating(rating);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    /** Fits to each review the corresponding customer name */
+    private void getAndSetCustomerName(Review review, String customerID){
+        DatabaseReference customersRef = FirebaseDatabase.getInstance().getReference("Customer") ;
+        customersRef.child(customerID).child("firstName").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    review.customerName = snapshot.getValue(String.class) ;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    /** Initialize the views variables */
     private void initViews(){
         bookTitleTextView = findViewById(R.id.bookTitleTextView);
         bookAuthorTextView = findViewById(R.id.bookAuthorTextView);
         bookYearTextView = findViewById(R.id.bookYearTextView);
         bookDescriptionTextView = findViewById(R.id.bookDescriptionTextView);
         rentButton = findViewById(R.id.rentButton);
+        reviewsButton = findViewById(R.id.viewReviewsButton) ;
+        bookRatingBar = findViewById(R.id.bookRatingBar) ;
         setupRecyclerView();
     }
 
@@ -126,6 +186,8 @@ public class BookPopupActivity extends Activity {
         libraryRecyclerView.setAdapter(adapter);
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    /** Showing the book details in their corresponding elements */
     private void setBookProps(){
         // Retrieve book details from intent
         String bookTitle = getIntent().getStringExtra("title");
@@ -141,7 +203,7 @@ public class BookPopupActivity extends Activity {
     }
 
     private void setListeners() {
-        // Rent button click listener
+        // -----On rent button pressed-----
         rentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,8 +236,19 @@ public class BookPopupActivity extends Activity {
                 }
             }
         });
+
+        //----- On reviews button pressed, open the reviews Activity -----
+        reviewsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BookPopupActivity.this, ReviewsActivity.class);
+                intent.putExtra("reviews", (Serializable) bookReviews);
+                startActivity(intent);
+            }
+        });
     }
 
+    /** When rent occurs, navigate by google maps to the library address */
     private void navigateToMapActivity(Library library) {
         //sending the library adrres to MapActivity class to start the navigation
         Intent intent = new Intent(BookPopupActivity.this, MapActivity.class);

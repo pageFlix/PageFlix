@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pageflix.activities.BookPopupActivity;
+import com.example.pageflix.activities.customer_activities.BookPopupActivity;
 import com.example.pageflix.R;
 import com.example.pageflix.entities.Book;
 

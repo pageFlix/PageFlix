@@ -1,4 +1,4 @@
-package com.example.pageflix.activities;
+package com.example.pageflix.activities.librarian_activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,41 +23,30 @@ import com.example.pageflix.R;
 import com.example.pageflix.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.List;
 
-public class Update_Librarian_Profile extends AppCompatActivity {
-    private EditText edEmail, edLibraryname, edCellphoneNumber, edNumber;
+public class registerLibrarian extends AppCompatActivity {
+
+
+    private EditText edEmail, edPassword, edLibraryname, edCellphoneNumber, edNumber;
     private AutoCompleteTextView cityAutoComplete, streetAutoComplete;
     private ArrayAdapter<String> cityAdapter, streetAdapter;
-    private FirebaseAuth fbAuth;
+
     private DatabaseReference dbRef;
-    private String userId;
+    private FirebaseAuth fbAuth;
+    private String USER_KEY = "Librarian"; // DataBase name for Librarians
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_librarian_profile);
-
-
-        // Initialize FirebaseAuth and DatabaseReference
-        fbAuth = FirebaseAuth.getInstance();
-        dbRef = FirebaseDatabase.getInstance().getReference().child("Librarian");
-
-        // Retrieve references to EditText fields
-        edEmail = findViewById(R.id.edEmail);
-        edLibraryname = findViewById(R.id.edLibraryname);
-        edCellphoneNumber = findViewById(R.id.edCellphoneNumber);
-        edNumber = findViewById(R.id.edNumber);
-        cityAutoComplete = findViewById(R.id.cityAutoComplete);
-        streetAutoComplete = findViewById(R.id.streetAutoComplete);
+        setContentView(R.layout.activity_register_librarian);
+        init();
 
         // Set up the adapter
         cityAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line);
@@ -73,44 +62,13 @@ public class Update_Librarian_Profile extends AppCompatActivity {
 
         // Show the dropdown when the AutoCompleteTextView gains focus
         setAutoCompleteFocusChangeListener(cityAutoComplete);
-        setAutoCompleteFocusChangeListener(streetAutoComplete);
-
         // Fetch city names from the API
         new FetchCityNamesTask().execute();
 
-        // Retrieve user ID
-        userId = fbAuth.getCurrentUser().getUid();
-
-        // Fetch user data from Firebase and populate EditText fields
-        fetchUserData();
+        Log.d("ActivityLifecycle", "registerLibrarian activity created");
     }
 
-    private void fetchUserData() {
-        // Retrieve user data from Firebase Realtime Database using userId
-        dbRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Populate EditText fields with user data
-                    User user = dataSnapshot.getValue(User.class);
-                    if (user != null) {
-                        edEmail.setText(user.getEmail());
-                        edLibraryname.setText(user.getFirstName());
-                        edCellphoneNumber.setText(user.getCellNumber());
-                        cityAutoComplete.setText(user.getCity());
-                        streetAutoComplete.setText(user.getStreet());
-                        edNumber.setText(user.getNumber());
-                        // Similarly, populate other EditText fields
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle error
-            }
-        });
-    }
 
     private void setAutoCompleteFocusChangeListener(AutoCompleteTextView autoCompleteTextView) {
         autoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
@@ -140,49 +98,63 @@ public class Update_Librarian_Profile extends AppCompatActivity {
         });
     }
 
+    private void init() {
+        edEmail = findViewById(R.id.edEmail);
+        edPassword = findViewById(R.id.edPassword);
+        fbAuth = FirebaseAuth.getInstance();
+        edLibraryname = findViewById(R.id.edLibraryname);
+        edCellphoneNumber = findViewById(R.id.Cellphone_number);
+        edNumber = findViewById(R.id.number);
+        cityAutoComplete = findViewById(R.id.cityAutoComplete);
+        streetAutoComplete = findViewById(R.id.streetAutoComplete);
+    }
 
-    public void Update_button(View v) {
-        Log.d("UpdateButton", "Button clicked");
+    public void signupButton(View v) {
+        Log.d("SignUpButton", "Button clicked");
         String email = this.edEmail.getText().toString();
-        String librariName = this.edLibraryname.getText().toString();
-        String cellNumber = this.edCellphoneNumber.getText().toString();
-        String city = this.cityAutoComplete.getText().toString();
-        String street = this.streetAutoComplete.getText().toString();
-        String number = this.edNumber.getText().toString();
+        String password = this.edPassword.getText().toString();
+        String LibraryName = this.edLibraryname.getText().toString();
+        String CellNumber = this.edCellphoneNumber.getText().toString();
+        String City = this.cityAutoComplete.getText().toString();
+        String Street = this.streetAutoComplete.getText().toString();
+        String Number = this.edNumber.getText().toString();
 
-        if (!TextUtils.isEmpty(email)  && !TextUtils.isEmpty(librariName) &&
-                !TextUtils.isEmpty(cellNumber) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(street) && !TextUtils.isEmpty(number)) {
-
-            // Get the current user
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-            updateUserProfile(currentUser.getUid(), email,librariName, cellNumber, city, street, number);
-
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(LibraryName) &&
+                !TextUtils.isEmpty(CellNumber) && !TextUtils.isEmpty(City)&& !TextUtils.isEmpty(Street)  && !TextUtils.isEmpty(Number)) {
+            fbAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        User user = new User(email, null, null ,null, CellNumber, City, Street, Number,LibraryName);
+                        createUserInDatabase(user.getEmail(),user.getLibraryName(), user.getCellNumber(), user.getCity(),user.getStreet(),user.getNumber());
+                        Intent intent = new Intent(getApplicationContext(), mainLibrarian.class);
+                        startActivity(intent);
+                        Toast.makeText(getApplicationContext(), "User Sign Up Successful!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "User Sign Up failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         } else {
-            Toast.makeText(this, "Please fill in all the required fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Write name and Email", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void updateUserProfile(String userId, String email, String libraryName, String cellNumber, String city, String street, String number) {
-        // Create a User object with the updated information
-        User updatedUser = new User(email, null, null, null, cellNumber, city, street, number,libraryName);
+    private void createUserInDatabase(String email, String LibraryName, String CellNumber, String City, String street, String Number) {
+        dbRef = FirebaseDatabase.getInstance().getReference().child(USER_KEY);
+        String userId = fbAuth.getCurrentUser().getUid();
+        HashMap<String, Object> userMap = new HashMap<>();
+        userMap.put("email", email);
+        userMap.put("LibraryName", LibraryName);
+        userMap.put("City", City);
+        userMap.put("Street", street);
+        userMap.put("Number", Number);
+        userMap.put("CellNumber", CellNumber);
 
-        // Update the user's profile in the database
-        dbRef.child(userId).setValue(updatedUser)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            // Update successful
-                            Toast.makeText(Update_Librarian_Profile.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Update failed
-                            Toast.makeText(Update_Librarian_Profile.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+
+        dbRef.child(userId).setValue(userMap);
     }
-    // Fetch city names from the API asynchronously
+
     private class FetchCityNamesTask extends AsyncTask<Void, Void, List<String>> {
         @Override
         protected List<String> doInBackground(Void... voids) {
@@ -213,7 +185,7 @@ public class Update_Librarian_Profile extends AppCompatActivity {
                     }
                 });
             } else {
-                Toast.makeText(Update_Librarian_Profile.this, "Failed to fetch city names", Toast.LENGTH_SHORT).show();
+                Toast.makeText(registerLibrarian.this, "Failed to fetch city names", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -234,12 +206,13 @@ public class Update_Librarian_Profile extends AppCompatActivity {
                 streetAdapter.addAll(streets);
                 streetAdapter.notifyDataSetChanged();
             } else {
-                Toast.makeText(Update_Librarian_Profile.this, "Failed to fetch streets in the selected city", Toast.LENGTH_SHORT).show();
+                Toast.makeText(registerLibrarian.this, "Failed to fetch streets in the selected city", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
     public void backToPreviousScreen(View v){
-        Intent intent = new Intent(this, mainLibrarian.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
+        Intent intent = new Intent(this, LoginLibrarian.class);// from Login com.example.pageflix.activities.librarian_activities.LoginLibrarian.Librarian screen to First screen
         startActivity(intent);
     }
 }

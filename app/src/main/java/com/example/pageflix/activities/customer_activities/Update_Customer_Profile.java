@@ -1,4 +1,4 @@
-package com.example.pageflix.activities;
+package com.example.pageflix.activities.customer_activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -329,7 +329,7 @@ public void Update_button(View v) {
         }
     }
     public void backToPreviousScreen(View v){
-        Intent intent = new Intent(this, mainCustomer.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
+        Intent intent = new Intent(this, mainCustomer.class);// from Login com.example.pageflix.activities.librarian_activities.LoginLibrarian.Librarian screen to First screen
         startActivity(intent);
     }
 }

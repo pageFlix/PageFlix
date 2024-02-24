@@ -1,4 +1,4 @@
-package com.example.pageflix.activities;
+package com.example.pageflix.activities.librarian_activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

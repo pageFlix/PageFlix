@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".activities.SearchBooks">
+    tools:context=".activities.customer_activities.SearchBooks">
 
     <!-- Main content -->
     <androidx.constraintlayout.widget.ConstraintLayout

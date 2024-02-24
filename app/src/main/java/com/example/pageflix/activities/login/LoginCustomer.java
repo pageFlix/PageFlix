@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.pageflix.R;
 import com.example.pageflix.activities.FirstScreen;
 import com.example.pageflix.activities.main.mainCustomer;
-import com.example.pageflix.activities.registerCustomer;
+import com.example.pageflix.activities.customer_activities.registerCustomer;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

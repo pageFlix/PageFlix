@@ -19,7 +19,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
     private int selectedItem ;
     public LibraryAdapter(List<Library> libraries) {
         this.libraries = libraries;
-        this.selectedItem = 0 ;
+        this.selectedItem = -1 ;
     }
 
     @NonNull

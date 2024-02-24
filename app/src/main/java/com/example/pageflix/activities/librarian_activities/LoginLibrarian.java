@@ -1,4 +1,4 @@
-package com.example.pageflix.activities;
+package com.example.pageflix.activities.librarian_activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.FirstScreen;
 import com.example.pageflix.activities.main.mainLibrarian;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -212,7 +213,7 @@ LoginLibrarian extends AppCompatActivity {
         startActivity(intent);
     }
     public void backToFirstScreen(View v){
-        Intent intent = new Intent(this, FirstScreen.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
+        Intent intent = new Intent(this, FirstScreen.class);// from Login com.example.pageflix.activities.librarian_activities.LoginLibrarian.Librarian screen to First screen
         startActivity(intent);
     }
 

@@ -4,20 +4,19 @@
     <item android:state_selected="true">
         <shape android:shape="rectangle">
             <solid android:color="#9F5294FF" /> <!-- Set background color when selected -->
-            <corners android:radius="8dp" /> <!-- Set corner radius for a rounded look -->
-        </shape>
-    </item>
-    <!-- When library item is pressed -->
-    <item android:state_pressed="true">
-        <shape android:shape="rectangle">
-            <solid android:color="#80FFFFFF" /> <!-- Set semi-transparent background color when pressed -->
+            <stroke
+                android:width="2dp"
+                android:color="#FFFFFF" /> <!-- Add border when selected -->
             <corners android:radius="8dp" /> <!-- Set corner radius for a rounded look -->
         </shape>
     </item>
     <!-- Default state -->
-    <item android:state_selected="false">
+    <item>
         <shape android:shape="rectangle">
             <solid android:color="#FFFFFF" /> <!-- Set default background color -->
+            <stroke
+                android:width="2dp"
+                android:color="#E0E0E0" /> <!-- Add border in the default state -->
             <corners android:radius="8dp" /> <!-- Set corner radius for a rounded look -->
         </shape>
     </item>

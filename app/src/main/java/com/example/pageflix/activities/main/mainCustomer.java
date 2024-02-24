@@ -14,8 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pageflix.R;
 import com.example.pageflix.activities.FirstScreen;
-import com.example.pageflix.activities.SearchBooks;
-import com.example.pageflix.activities.Update_Customer_Profile;
+import com.example.pageflix.activities.customer_activities.SearchBooks;
+import com.example.pageflix.activities.customer_activities.Update_Customer_Profile;
 import com.example.pageflix.activities.customerMy_Books.customerBooks;
 import com.example.pageflix.activities.history.historyCustomer;
 import com.example.pageflix.entities.User;

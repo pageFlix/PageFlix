@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".activities.inStockScreen">
+    tools:context=".activities.librarian_activities.inStockScreen">
 
     <ListView
         android:id="@+id/listView"

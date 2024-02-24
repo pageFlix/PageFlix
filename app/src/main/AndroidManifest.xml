@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pageflix">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Location permissions -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Location permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -19,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PageFlix"
         tools:targetApi="31">
-
+        <activity
+            android:name=".activities.customer_activities.ReviewsActivity"
+            android:exported="false" />
         <!-- Add your Google Maps API key here -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -27,7 +27,7 @@
 
         <activity
             android:name=".activities.MapActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activities.customerMy_Books.bookReview"
             android:exported="false" />
@@ -47,27 +47,27 @@
             android:name=".activities.history.historyCustomer"
             android:exported="false" />
         <activity
-            android:name=".activities.SearchBooks$customeListrBooks"
+            android:name=".activities.customer_activities.SearchBooks$customeListrBooks"
             android:exported="false"
             android:label="@string/title_activity_custome_listr_books"
             android:theme="@style/Theme.PageFlix.NoActionBar" />
         <activity
-            android:name=".activities.Update_Customer_Profile"
+            android:name=".activities.customer_activities.Update_Customer_Profile"
             android:exported="false" />
         <activity
-            android:name=".activities.SearchBooks"
+            android:name=".activities.customer_activities.SearchBooks"
             android:exported="false" />
         <activity
-            android:name=".activities.Update_Librarian_Profile"
+            android:name=".activities.librarian_activities.Update_Librarian_Profile"
             android:label="Update Librarian Profile" />
         <activity
-            android:name=".activities.BookPopupActivity"
+            android:name=".activities.customer_activities.BookPopupActivity"
             android:label="BookPopupActivity" />
         <activity
-            android:name=".activities.screenRemoveBook"
+            android:name=".activities.librarian_activities.screenRemoveBook"
             android:exported="false" />
         <activity
-            android:name=".activities.inStockScreen"
+            android:name=".activities.librarian_activities.inStockScreen"
             android:exported="false" />
         <activity
             android:name=".activities.addBook.screenAddBookINFO"
@@ -82,14 +82,14 @@
             android:name=".activities.main.mainCustomer"
             android:exported="false" />
         <activity
-            android:name=".activities.registerLibrarian"
+            android:name=".activities.librarian_activities.registerLibrarian"
             android:exported="false" />
         <activity
-            android:name=".activities.registerCustomer"
+            android:name=".activities.customer_activities.registerCustomer"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.LoginLibrarian"
+            android:name=".activities.librarian_activities.LoginLibrarian"
             android:exported="false" />
         <activity
             android:name=".activities.login.LoginCustomer"

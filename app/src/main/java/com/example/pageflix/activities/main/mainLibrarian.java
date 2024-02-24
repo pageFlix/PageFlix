@@ -17,12 +17,12 @@ import android.widget.TextView;
 
 import com.example.pageflix.R;
 import com.example.pageflix.activities.FirstScreen;
-import com.example.pageflix.activities.Update_Librarian_Profile;
+import com.example.pageflix.activities.librarian_activities.Update_Librarian_Profile;
 import com.example.pageflix.activities.borrowedBooks.list_ordered_books;
 import com.example.pageflix.activities.history.historyLibrary;
 import com.example.pageflix.activities.addBook.screenAddBook;
-import com.example.pageflix.activities.inStockScreen;
-import com.example.pageflix.activities.screenRemoveBook;
+import com.example.pageflix.activities.librarian_activities.inStockScreen;
+import com.example.pageflix.activities.librarian_activities.screenRemoveBook;
 import com.example.pageflix.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +30,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import androidx.appcompat.widget.Toolbar;
 
 public class mainLibrarian extends AppCompatActivity {
     private TextView textView;
