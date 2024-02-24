@@ -35,19 +35,6 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/edEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/color_boarder"
-                android:drawableLeft="@drawable/baseline_email_24"
-                android:drawablePadding="8dp"
-                android:hint="E-mail"
-                android:padding="8dp"
-                android:textColor="@color/black" />
-
-
-            <EditText
                 android:id="@+id/edLibraryname"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

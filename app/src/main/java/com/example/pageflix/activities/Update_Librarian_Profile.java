@@ -52,7 +52,6 @@ public class Update_Librarian_Profile extends AppCompatActivity {
         dbRef = FirebaseDatabase.getInstance().getReference().child("Librarian");
 
         // Retrieve references to EditText fields
-        edEmail = findViewById(R.id.edEmail);
         edLibraryname = findViewById(R.id.edLibraryname);
         edCellphoneNumber = findViewById(R.id.edCellphoneNumber);
         edNumber = findViewById(R.id.edNumber);
@@ -94,13 +93,11 @@ public class Update_Librarian_Profile extends AppCompatActivity {
                     // Populate EditText fields with user data
                     User user = dataSnapshot.getValue(User.class);
                     if (user != null) {
-                        edEmail.setText(user.getEmail());
-                        edLibraryname.setText(user.getFirstName());
+                        edLibraryname.setText(user.getLibraryName());
                         edCellphoneNumber.setText(user.getCellNumber());
                         cityAutoComplete.setText(user.getCity());
                         streetAutoComplete.setText(user.getStreet());
                         edNumber.setText(user.getNumber());
-                        // Similarly, populate other EditText fields
                     }
                 }
             }
@@ -143,20 +140,20 @@ public class Update_Librarian_Profile extends AppCompatActivity {
 
     public void Update_button(View v) {
         Log.d("UpdateButton", "Button clicked");
-        String email = this.edEmail.getText().toString();
         String librariName = this.edLibraryname.getText().toString();
-        String cellNumber = this.edCellphoneNumber.getText().toString();
         String city = this.cityAutoComplete.getText().toString();
         String street = this.streetAutoComplete.getText().toString();
         String number = this.edNumber.getText().toString();
+        String cellNumber = this.edCellphoneNumber.getText().toString();
 
-        if (!TextUtils.isEmpty(email)  && !TextUtils.isEmpty(librariName) &&
+
+        if (!TextUtils.isEmpty(librariName) &&
                 !TextUtils.isEmpty(cellNumber) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(street) && !TextUtils.isEmpty(number)) {
 
             // Get the current user
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-            updateUserProfile(currentUser.getUid(), email,librariName, cellNumber, city, street, number);
+            updateUserProfile(currentUser.getUid(), currentUser.getEmail(),librariName, cellNumber, city, street, number);
 
         } else {
             Toast.makeText(this, "Please fill in all the required fields", Toast.LENGTH_SHORT).show();
@@ -166,15 +163,18 @@ public class Update_Librarian_Profile extends AppCompatActivity {
     private void updateUserProfile(String userId, String email, String libraryName, String cellNumber, String city, String street, String number) {
         // Create a User object with the updated information
         User updatedUser = new User(email, null, null, null, cellNumber, city, street, number,libraryName);
+        Intent intent = new Intent(this, mainLibrarian.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
 
         // Update the user's profile in the database
         dbRef.child(userId).setValue(updatedUser)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
+
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             // Update successful
                             Toast.makeText(Update_Librarian_Profile.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
                         } else {
                             // Update failed
                             Toast.makeText(Update_Librarian_Profile.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
