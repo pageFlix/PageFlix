@@ -34,6 +34,7 @@ public class mainCustomer extends AppCompatActivity {
         setContentView(R.layout.activity_main_customer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(""); // or getSupportActionBar().setTitle(null);
         showWelcomeText();
     }
     @Override

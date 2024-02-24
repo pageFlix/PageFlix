@@ -55,7 +55,7 @@ public class Update_Customer_Profile extends AppCompatActivity {
         dbRef = FirebaseDatabase.getInstance().getReference().child("Customer");
 
         // Retrieve references to EditText fields
-        edEmail = findViewById(R.id.edEmail);
+       // edEmail = findViewById(R.id.edEmail);
         edFirstname = findViewById(R.id.edFirstname);
         edLastname = findViewById(R.id.edLastname);
         edBirthday = findViewById(R.id.edBirthday);
@@ -106,7 +106,6 @@ public class Update_Customer_Profile extends AppCompatActivity {
                     // Populate EditText fields with user data
                     User user = dataSnapshot.getValue(User.class);
                     if (user != null) {
-                        edEmail.setText(user.getEmail());
                         edFirstname.setText(user.getFirstName());
                         edLastname.setText(user.getLastName());
                         edBirthday.setText(user.getBirthDay());
@@ -114,7 +113,6 @@ public class Update_Customer_Profile extends AppCompatActivity {
                         cityAutoComplete.setText(user.getCity());
                         streetAutoComplete.setText(user.getStreet());
                         edNumber.setText(user.getNumber());
-                        // Similarly, populate other EditText fields
                     }
                 }
             }
@@ -175,63 +173,8 @@ public class Update_Customer_Profile extends AppCompatActivity {
         });
     }
 
-
-//    public void Update_button(View v) {
-//        Log.d("UpdateButton", "Button clicked");
-//        String email = this.edEmail.getText().toString();
-//        String password = this.edPassword.getText().toString();
-//        String lastName = this.edLastname.getText().toString();
-//        String firstName = this.edFirstname.getText().toString();
-//        String birthDay = this.edBirthday.getText().toString();
-//        String cellNumber = this.edCellphoneNumber.getText().toString();
-//        String city = this.cityAutoComplete.getText().toString();
-//        String street = this.streetAutoComplete.getText().toString();
-//        String number = this.edNumber.getText().toString();
-//
-//        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(birthDay) &&
-//                !TextUtils.isEmpty(cellNumber) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(street) && !TextUtils.isEmpty(number)) {
-//            // Get the current user's ID
-//            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//
-//            // Fetch the current user's data from the database
-//            dbRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    if (dataSnapshot.exists()) {
-//                        User user = dataSnapshot.getValue(User.class);
-//                        if (user != null) {
-//                            // Update the user object with the new values
-//                            user.setEmail(email);
-//                            user.setPassword(password);
-//                            user.setLastName(lastName);
-//                            user.setFirstName(firstName);
-//                            user.setBirthDay(birthDay);
-//                            user.setCellNumber(cellNumber);
-//                            user.setCity(city);
-//                            user.setStreet(street);
-//                            user.setNumber(number);
-//
-//                            // Update the user's profile in the database
-//                            updateUserProfile(userId, user);
-//                            Intent intent = new Intent(getApplicationContext(), mainCustomer.class);
-//                            startActivity(intent);
-//                            Toast.makeText(getApplicationContext(), "Update Successful!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    // Handle error
-//                }
-//            });
-//        } else {
-//            Toast.makeText(this, "Please fill in all the required fields", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 public void Update_button(View v) {
     Log.d("UpdateButton", "Button clicked");
-    String email = this.edEmail.getText().toString();
     String lastName = this.edLastname.getText().toString();
     String firstName = this.edFirstname.getText().toString();
     String birthDay = this.edBirthday.getText().toString();
@@ -240,12 +183,12 @@ public void Update_button(View v) {
     String street = this.streetAutoComplete.getText().toString();
     String number = this.edNumber.getText().toString();
 
-    if (!TextUtils.isEmpty(email)  && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(birthDay) &&
+    if (!TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(birthDay) &&
             !TextUtils.isEmpty(cellNumber) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(street) && !TextUtils.isEmpty(number)) {
 
         // Get the current user
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        updateUserProfile(currentUser.getUid(), email, lastName, firstName, birthDay, cellNumber, city, street, number);
+        updateUserProfile(currentUser.getUid(), currentUser.getEmail(), lastName, firstName, birthDay, cellNumber, city, street, number);
 
     } else {
         Toast.makeText(this, "Please fill in all the required fields", Toast.LENGTH_SHORT).show();
@@ -255,6 +198,7 @@ public void Update_button(View v) {
     private void updateUserProfile(String userId, String email, String lastName, String firstName, String birthDay, String cellNumber, String city, String street, String number) {
         // Create a User object with the updated information
         User updatedUser = new User(email, firstName, lastName, birthDay, cellNumber, city, street, number,null);
+        Intent intent = new Intent(this, mainCustomer.class);// from Login com.example.pageflix.activities.LoginLibrarian.Librarian screen to First screen
 
         // Update the user's profile in the database
         dbRef.child(userId).setValue(updatedUser)
@@ -264,6 +208,7 @@ public void Update_button(View v) {
                         if (task.isSuccessful()) {
                             // Update successful
                             Toast.makeText(Update_Customer_Profile.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
                         } else {
                             // Update failed
                             Toast.makeText(Update_Customer_Profile.this, "Failed to update profile", Toast.LENGTH_SHORT).show();

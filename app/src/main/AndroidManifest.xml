@@ -18,9 +18,11 @@
         android:theme="@style/Theme.PageFlix"
         tools:targetApi="31">
         <activity
-            android:name=".activities.customer_activities.ReviewsActivity"
+            android:name=".adapter_block_item"
             android:exported="false" />
-        <!-- Add your Google Maps API key here -->
+        <activity
+            android:name=".activities.blocked_list"
+            android:exported="false" /> <!-- Add your Google Maps API key here -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCvD9cc_MS9Jkef4X12a8KsCHb7kDfXAa4" />
@@ -47,27 +49,27 @@
             android:name=".activities.history.historyCustomer"
             android:exported="false" />
         <activity
-            android:name=".activities.customer_activities.SearchBooks$customeListrBooks"
+            android:name=".activities.SearchBooks$customeListrBooks"
             android:exported="false"
             android:label="@string/title_activity_custome_listr_books"
             android:theme="@style/Theme.PageFlix.NoActionBar" />
         <activity
-            android:name=".activities.customer_activities.Update_Customer_Profile"
+            android:name=".activities.Update_Customer_Profile"
             android:exported="false" />
         <activity
-            android:name=".activities.customer_activities.SearchBooks"
+            android:name=".activities.SearchBooks"
             android:exported="false" />
         <activity
-            android:name=".activities.librarian_activities.Update_Librarian_Profile"
+            android:name=".activities.Update_Librarian_Profile"
             android:label="Update Librarian Profile" />
         <activity
-            android:name=".activities.customer_activities.BookPopupActivity"
+            android:name=".activities.BookPopupActivity"
             android:label="BookPopupActivity" />
         <activity
-            android:name=".activities.librarian_activities.screenRemoveBook"
+            android:name=".activities.screenRemoveBook"
             android:exported="false" />
         <activity
-            android:name=".activities.librarian_activities.inStockScreen"
+            android:name=".activities.inStockScreen"
             android:exported="false" />
         <activity
             android:name=".activities.addBook.screenAddBookINFO"
@@ -82,14 +84,14 @@
             android:name=".activities.main.mainCustomer"
             android:exported="false" />
         <activity
-            android:name=".activities.librarian_activities.registerLibrarian"
+            android:name=".activities.registerLibrarian"
             android:exported="false" />
         <activity
-            android:name=".activities.customer_activities.registerCustomer"
+            android:name=".activities.registerCustomer"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.librarian_activities.LoginLibrarian"
+            android:name=".activities.LoginLibrarian"
             android:exported="false" />
         <activity
             android:name=".activities.login.LoginCustomer"
