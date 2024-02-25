@@ -64,6 +64,7 @@
                     android:background="@drawable/color_boarder"
                     android:drawablePadding="8dp"
                     android:hint="Publication Year"
+                    android:inputType="number"
                     android:padding="8dp"
                     android:textColor="@color/black" />
                 <Button

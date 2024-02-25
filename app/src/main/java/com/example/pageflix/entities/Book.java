@@ -6,16 +6,17 @@ import java.util.Comparator;
 
 public class Book {
     public String title, author, category, year, description, ID;
-    public int count;
+    public int count , age;
     public Book() {
     }
-    public Book(String title, String author, String year, int count, String category, String description) {
+    public Book(String title, String author, String year, int count, String category, String description,int age) {
         this.author = author;
         this.category = category;
         this.year = year;
         this.description = description;
         this.title = title;
         this.count = count;
+        this.age = age;
     }
     public String getTitle() {
         return title;
@@ -51,6 +52,14 @@ public class Book {
                 ", description='" + description + '\'' +
                 ", count=" + count +
                 '}';
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     // Comparator for sorting by title

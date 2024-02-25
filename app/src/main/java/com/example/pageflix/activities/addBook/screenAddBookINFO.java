@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class screenAddBookINFO extends AppCompatActivity {
-    private EditText edDescription, edCategory;
+    private EditText edDescription, edCategory, edAge;
     private String title, author, year, libID;
     private String BOOKS = "Books"; // DataBase name for Librarians
     DatabaseReference bookDB, libDB;
@@ -32,6 +32,7 @@ public class screenAddBookINFO extends AppCompatActivity {
     private void init(){
         edDescription = findViewById(R.id.edDescription);
         edCategory = findViewById(R.id.edCategory);
+        edAge = findViewById(R.id.edAge);
         title = getIntent().getStringExtra("title");
         author = getIntent().getStringExtra("author");
         year = getIntent().getStringExtra("year");
@@ -41,10 +42,12 @@ public class screenAddBookINFO extends AppCompatActivity {
     }
     //    add in Books -> author, title, year, description , publication year + LibraryID
     public void addBook(View v) {
+        String ageS = edAge.getText().toString();
+        int age = Integer.valueOf(ageS);
         String description = edDescription.getText().toString();
         String category = edCategory.getText().toString();
-        Book newBook = new Book( title,author,  year, 1, category, description);
-        if (!TextUtils.isEmpty(description) &&  !TextUtils.isEmpty(category)) {
+        Book newBook = new Book( title,author,  year, 1, category, description,age);
+        if (!TextUtils.isEmpty(description) &&  !TextUtils.isEmpty(category) &&  !TextUtils.isEmpty(ageS)) {
             DatabaseReference newBookRef = bookDB.push();// create newBookRef for add data after adding book info
             newBookRef.setValue(newBook); // add data
             String bookID = newBookRef.getKey(); // get relevant Book key

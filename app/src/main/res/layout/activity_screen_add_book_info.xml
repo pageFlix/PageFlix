@@ -44,6 +44,17 @@ tools:context=".activities.addBook.screenAddBookINFO">
             android:hint="@string/category"
             android:padding="8dp"
             android:textColor="@color/black" />
+        <EditText
+            android:id="@+id/edAge"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/color_boarder"
+            android:drawablePadding="8dp"
+            android:hint="Age"
+            android:inputType="number"
+            android:padding="8dp"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/edDescription"
