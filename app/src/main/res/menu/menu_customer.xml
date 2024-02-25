@@ -11,6 +11,9 @@
         android:id="@+id/item_3"
         android:title="Rent History" />
     <item
+        android:id="@+id/item_5"
+        android:title="My Reviews" />
+    <item
         android:id="@+id/item_4"
         android:title="Sign out" />
 </menu>

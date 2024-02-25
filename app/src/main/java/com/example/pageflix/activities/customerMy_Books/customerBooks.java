@@ -3,6 +3,7 @@ package com.example.pageflix.activities.customerMy_Books;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -33,10 +34,11 @@ public class customerBooks extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private List<String> listData;
-    private List<String> list_temp_bookID;
+    private List<String> list_temp_bookID, filteredBooks;
     private DatabaseReference dbRef;
     private String customerID;
     private String USER_KEY = "Customer";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,16 +46,55 @@ public class customerBooks extends AppCompatActivity {
         init();
         getDataFromDB();
         setOnClickIten();
+        search();
     }
     public void init(){
         listView = findViewById(R.id.listView);
         listData = new ArrayList<>();
+        filteredBooks = new ArrayList<>();
         list_temp_bookID = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
         customerID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
         dbRef = FirebaseDatabase.getInstance().getReference(USER_KEY).child(customerID).child("Books");
     }
+    public void search() {
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setQueryHint("Search..."); // Set hint text
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filter(String searchText) {
+        filteredBooks.clear();
+        if (searchText.isEmpty()) {
+            // If the search text is empty, add all items from the original list to listData
+            getDataFromDB() ;
+        } else {
+            // If the search text is not empty, filter based on the search text
+            for (String bookInfo : listData) {
+                if (bookInfo.toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredBooks.add(bookInfo);
+                }
+            }
+        }
+        // Update the adapter with the new filtered list data
+        adapter.clear();
+        adapter.addAll(filteredBooks);
+        adapter.notifyDataSetChanged();
+    }
+
     private void getDataFromDB() {
         ValueEventListener vListener = new ValueEventListener() {
             @Override

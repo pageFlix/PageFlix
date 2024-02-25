@@ -17,6 +17,7 @@ import com.example.pageflix.activities.FirstScreen;
 import com.example.pageflix.activities.customer_activities.SearchBooks;
 import com.example.pageflix.activities.customer_activities.Update_Customer_Profile;
 import com.example.pageflix.activities.customerMy_Books.customerBooks;
+import com.example.pageflix.activities.customer_activities.reviews_list;
 import com.example.pageflix.activities.history.historyCustomer;
 import com.example.pageflix.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,6 +79,10 @@ public class mainCustomer extends AppCompatActivity {
         }
         if (id == R.id.item_4){
             Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
+            startActivity(intent);
+        }
+        if (id == R.id.item_5){
+            Intent intent = new Intent(this, reviews_list.class);// from Login Customer screen to First screen
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

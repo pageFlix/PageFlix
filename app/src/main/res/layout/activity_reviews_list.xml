@@ -7,15 +7,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".activities.customerMy_Books.customerBooks">
-    <ListView
-        android:id="@+id/listView"
+    tools:context=".activities.customer_activities.reviews_list">
+
+    <!-- Replace ListView with RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp" />
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -35,18 +38,6 @@
             android:text="@string/back"
             android:textSize="18sp"
             app:cornerRadius="20dp" />
-        <!-- SearchView -->
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:iconifiedByDefault="false"
-            android:queryHint="Search"
-            android:theme="@style/Widget.AppCompat.SearchView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
     </androidx.appcompat.widget.Toolbar>
-
 
 </LinearLayout>

@@ -18,6 +18,9 @@
         android:theme="@style/Theme.PageFlix"
         tools:targetApi="31">
         <activity
+            android:name=".activities.customer_activities.reviews_list"
+            android:exported="false" />
+        <activity
             android:name=".activities.librarian_activities.LibraryBookCountChange"
             android:exported="false" />
         <activity

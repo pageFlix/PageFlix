@@ -44,6 +44,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView customerNameTextView;
+
         public TextView reviewTextView;
         public RatingBar ratingBar;
 
