@@ -66,23 +66,24 @@
                     android:hint="Publication Year"
                     android:padding="8dp"
                     android:textColor="@color/black" />
-
+                <Button
+                    android:id="@+id/add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/coralPink"
+                    android:onClick="addBook"
+                    android:layout_gravity="center"
+                    android:rotationX="7"
+                    android:text="Add"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="18sp"
+                    app:cornerRadius="20dp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/coralPink"
-        android:onClick="addBook"
-        android:rotationX="7"
-        android:text="Add"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="18sp"
-        app:cornerRadius="20dp" />
+
 
     <Button
         android:id="@+id/back"

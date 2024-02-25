@@ -16,15 +16,35 @@
         android:layout_weight="1"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp" />
-    <Button
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:backgroundTint="@color/grey"
-        android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
-        android:onClick="backToPreviousScreen"
-        android:text="@string/back"
-        android:textSize="18sp"
-        app:cornerRadius="20dp" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/black">
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:backgroundTint="@color/grey"
+            android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+            android:onClick="backToPreviousScreen"
+            android:text="@string/back"
+            android:textSize="18sp"
+            app:cornerRadius="20dp" />
+        <!-- SearchView -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search"
+            android:theme="@style/Widget.AppCompat.SearchView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </androidx.appcompat.widget.Toolbar>
 </LinearLayout>

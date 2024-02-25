@@ -7,12 +7,15 @@ import androidx.appcompat.widget.SearchView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.borrowedBooks.showUser_fromRentsList;
 import com.example.pageflix.activities.main.mainLibrarian;
 import com.example.pageflix.entities.Book;
+import com.example.pageflix.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +29,7 @@ import java.util.List;
 public class inStockScreen extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
-    private List<String> listData;
+    private List<String> listData,list_tempID,list_tempTitle;
     private DatabaseReference dbRef;
     private String LibrarianID;
     private String USER_KEY = "Librarian";
@@ -40,11 +43,14 @@ public class inStockScreen extends AppCompatActivity {
         init();
         getDataFromDB();
         search();
+        setOnClickIten();
     }
 
     public void init() {
         listView = findViewById(R.id.listView);
         listData = new ArrayList<>();
+        list_tempID = new ArrayList<>();
+        list_tempTitle = new ArrayList<>();
         filteredBooks = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
@@ -105,6 +111,8 @@ public class inStockScreen extends AppCompatActivity {
                                 Book book = dataSnapshot.getValue(Book.class);
                                 if (book != null) {
                                     listData.add("Title: " + book.getTitle() + "\nAuthor: " + book.getAuthor() + "\nYear: " + book.getYear() + "\nCount: " + countBookInLib);
+                                    list_tempID.add(bookKey);
+                                    list_tempTitle.add(book.getTitle());
                                     adapter.notifyDataSetChanged();
                                 }
                             }
@@ -122,7 +130,18 @@ public class inStockScreen extends AppCompatActivity {
         dbRef.addValueEventListener(vListener);
     }
 
+    private void setOnClickIten(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), LibraryBookCountChange.class);
+                intent.putExtra("idBook",list_tempID.get(position));
+                intent.putExtra("title",list_tempTitle.get(position));
+                startActivity(intent);
+            }
+        });
 
+    }
     public void backToPreviousScreen(View v) {
         Intent intent = new Intent(this, mainLibrarian.class);// from Login Customer screen to First screen
         startActivity(intent);

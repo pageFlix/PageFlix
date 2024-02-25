@@ -18,9 +18,11 @@
         android:theme="@style/Theme.PageFlix"
         tools:targetApi="31">
         <activity
+            android:name=".activities.librarian_activities.LibraryBookCountChange"
+            android:exported="false" />
+        <activity
             android:name=".activities.customer_activities.ReviewsActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.librarian_activities.blocked_list"
             android:exported="false" />
@@ -50,7 +52,6 @@
         <activity
             android:name=".activities.history.historyCustomer"
             android:exported="false" />
-
         <activity
             android:name=".activities.customer_activities.Update_Customer_Profile"
             android:exported="false" />
