@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".activities.blocked_list">
+    tools:context=".activities.librarian_activities.blocked_list">
 
     <ListView
         android:id="@+id/listView"

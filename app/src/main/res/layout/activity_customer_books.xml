@@ -27,4 +27,5 @@
         android:text="@string/back"
         android:textSize="18sp"
         app:cornerRadius="20dp" />
+
 </LinearLayout>

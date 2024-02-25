@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@drawable/type3"
+        android:background="@drawable/type5"
         tools:context=".activities.librarian_activities.screenRemoveBook">
 
         <androidx.cardview.widget.CardView

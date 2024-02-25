@@ -2,6 +2,7 @@ package com.example.pageflix.activities.librarian_activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class inStockScreen extends AppCompatActivity {
     private String LibrarianID;
     private String USER_KEY = "Librarian";
     private String BOOK_KEY = "BooksID";
+    private List<String> filteredBooks ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +39,53 @@ public class inStockScreen extends AppCompatActivity {
         setContentView(R.layout.activity_in_stock_screen);
         init();
         getDataFromDB();
+        search();
     }
 
     public void init() {
         listView = findViewById(R.id.listView);
         listData = new ArrayList<>();
+        filteredBooks = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
         LibrarianID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
         dbRef = FirebaseDatabase.getInstance().getReference(USER_KEY).child(LibrarianID).child(BOOK_KEY);
+    }
+    public void search() {
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setQueryHint("Search..."); // Set hint text
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                    filter(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filter(String searchText) {
+        filteredBooks.clear();
+        if (searchText.isEmpty()) {
+            // If the search text is empty, add all items from the original list to listData
+            getDataFromDB() ;
+        } else {
+            // If the search text is not empty, filter based on the search text
+            for (String bookInfo : listData) {
+                if (bookInfo.toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredBooks.add(bookInfo);
+                }
+            }
+        }
+        // Update the adapter with the new filtered list data
+        adapter.clear();
+        adapter.addAll(filteredBooks);
+        adapter.notifyDataSetChanged();
     }
 
     private void getDataFromDB() {

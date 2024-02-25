@@ -22,7 +22,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".activities.blocked_list"
+            android:name=".activities.librarian_activities.blocked_list"
             android:exported="false" />
 
         <meta-data

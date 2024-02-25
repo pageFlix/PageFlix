@@ -21,6 +21,7 @@ import com.example.pageflix.activities.librarian_activities.Update_Librarian_Pro
 import com.example.pageflix.activities.borrowedBooks.list_ordered_books;
 import com.example.pageflix.activities.history.historyLibrary;
 import com.example.pageflix.activities.addBook.screenAddBook;
+import com.example.pageflix.activities.librarian_activities.blocked_list;
 import com.example.pageflix.activities.librarian_activities.inStockScreen;
 import com.example.pageflix.activities.librarian_activities.screenRemoveBook;
 import com.example.pageflix.entities.User;
@@ -40,6 +41,7 @@ public class mainLibrarian extends AppCompatActivity {
         setContentView(R.layout.activity_main_librarian);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(""); // or getSupportActionBar().setTitle(null);
         showWelcomeText();
     }
     @Override
@@ -86,6 +88,10 @@ public class mainLibrarian extends AppCompatActivity {
         }
         if (id == R.id.item_4){
             Intent intent = new Intent(this, FirstScreen.class);// from Login Customer screen to First screen
+            startActivity(intent);
+        }
+        if (id == R.id.item_5){
+            Intent intent = new Intent(this, blocked_list.class);// from Login Customer screen to First screen
             startActivity(intent);
         }
             return super.onOptionsItemSelected(item);

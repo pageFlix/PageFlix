@@ -1,4 +1,4 @@
-package com.example.pageflix.activities;
+package com.example.pageflix.activities.librarian_activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.pageflix.R;
-import com.example.pageflix.activities.borrowedBooks.showUser_fromRentsList;
 import com.example.pageflix.activities.main.mainLibrarian;
 import com.example.pageflix.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
