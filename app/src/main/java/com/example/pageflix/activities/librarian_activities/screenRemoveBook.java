@@ -22,10 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class screenRemoveBook extends AppCompatActivity {
-    private EditText edAuthor, edTitle, edPublicationYear;
+    private EditText edAuthor, edTitle, edPublicationYear,edCount;
     private DatabaseReference libDB, bookDB;
     private String BOOKS = "Books"; // DataBase name for Librarians
     private String LibrarianID;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,7 @@ public class screenRemoveBook extends AppCompatActivity {
         edAuthor = findViewById(R.id.edAuthor);
         edTitle = findViewById(R.id.edTitle);
         edPublicationYear = findViewById(R.id.edPublicationYear);
+        edCount = findViewById(R.id.edCount);
         LibrarianID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
         libDB = FirebaseDatabase.getInstance().getReference("Librarian").child(LibrarianID).child("BooksID");
         bookDB = FirebaseDatabase.getInstance().getReference(BOOKS);
@@ -49,8 +52,11 @@ public class screenRemoveBook extends AppCompatActivity {
     public void removeBook(View v){
         String author = edAuthor.getText().toString();
         String title = edTitle.getText().toString();
+        String count_string = edCount.getText().toString().trim();
         String year = edPublicationYear.getText().toString();
-        if (!TextUtils.isEmpty(author) &&  !TextUtils.isEmpty(title) && !TextUtils.isEmpty(year)) {
+        if (!TextUtils.isEmpty(author) &&  !TextUtils.isEmpty(title) && !TextUtils.isEmpty(year)&& !TextUtils.isEmpty(count_string)) {
+            int remove = Integer.valueOf(count_string);
+
             checkBookInGlobalDB(title, author, year, new CallbackFlag(){
                 @Override
                 public void checkBook(boolean bookFound, DatabaseReference db, int totalCount) {
@@ -65,9 +71,17 @@ public class screenRemoveBook extends AppCompatActivity {
                                 if(snapshot.hasChild(bookKey)) {
                                     int countBookInLib = snapshot.child(bookKey).child("count").getValue(Integer.class);
                                     if(countBookInLib >0 && totalCount>0) {
-                                        decreaseCount(db, totalCount);
-                                        decreaseCount(db.child("LibraryID").child(LibrarianID), countBookInLib);
-                                        decreaseCount(snapshot.child(bookKey).getRef(), countBookInLib);
+                                        int check = countBookInLib - remove;
+                                        if (check < 0) {
+                                            decreaseCount(db.child("LibraryID").child(LibrarianID), 0);
+                                            decreaseCount(snapshot.child(bookKey).getRef(), 0);
+                                            decreaseCount(db, (totalCount-countBookInLib));
+                                        }
+                                        else{
+                                            decreaseCount(db, (totalCount-remove));
+                                            decreaseCount(db.child("LibraryID").child(LibrarianID), check);
+                                            decreaseCount(snapshot.child(bookKey).getRef(), check);
+                                        }
                                         Toast.makeText(getApplicationContext(), "Book removed", Toast.LENGTH_SHORT).show();
                                     }
                                     else{
@@ -89,7 +103,7 @@ public class screenRemoveBook extends AppCompatActivity {
         }
     }
     private void decreaseCount(DatabaseReference dataBase, int CurrentCount){
-            dataBase.child("count").setValue(CurrentCount - 1); // Increment count by 1
+            dataBase.child("count").setValue(CurrentCount); // Increment count by 1
     }
     private void checkBookInGlobalDB(String title, String author, String year, CallbackFlag callback) {
         DatabaseReference bookDB = FirebaseDatabase.getInstance().getReference(BOOKS);
@@ -103,11 +117,6 @@ public class screenRemoveBook extends AppCompatActivity {
                     Book book = ds.getValue(Book.class);
                     if (book!=null && title.equalsIgnoreCase(book.getTitle()) && author.equalsIgnoreCase(book.getAuthor())
                             && year.equalsIgnoreCase(book.getYear()) && book.getCount() > 0) {
-                        //book count ++
-//                        bookToUpdateRef = ds.getRef(); // Reference to the book node
-//                        currentCount = ds.child("count").getValue(Integer.class); // Get current count
-//                        decreaseCount(bookToUpdateRef, currentCount);
-//                        String bookKey = ds.getKey();
                         bookToUpdateRef = ds.getRef(); // Reference to the book node
                         bookFound = true;
                         totalCount = book.getCount();

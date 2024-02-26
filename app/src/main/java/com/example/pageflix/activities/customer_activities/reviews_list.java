@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.pageflix.R;
+import com.example.pageflix.activities.customerMy_Books.bookReview;
 import com.example.pageflix.activities.main.mainCustomer;
 import com.example.pageflix.activities.main.mainLibrarian;
 import com.example.pageflix.adapters.ReviewAdapter;
@@ -91,7 +93,6 @@ public class reviews_list extends AppCompatActivity {
         };
         dbReview.addValueEventListener(vListener);
     }
-
     public void backToPreviousScreen(View v) {
         Intent intent = new Intent(this, mainCustomer.class);
         startActivity(intent);
