@@ -27,8 +27,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class list_ordered_books extends AppCompatActivity {
     private ListView listView;
@@ -114,8 +117,6 @@ public class list_ordered_books extends AppCompatActivity {
                 if (list_temp_user.size() > 0) list_temp_user.clear();// check if list clean
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String rentalKey = ds.getValue(String.class);
-//                    listData.add("Title: " + bookKey);
-//                    adapter.notifyDataSetChanged();
                     DatabaseReference rental_copy = rentals_Ref.child(rentalKey);
                     rental_copy.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -128,17 +129,30 @@ public class list_ordered_books extends AppCompatActivity {
                                 Date currentDate = new Date(rental.getTimestamp());
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                                 String formattedDate = dateFormat.format(currentDate);
+                                Date nowTime = new Date();
+                                long diffInMillies = nowTime.getTime() - currentDate.getTime();
+                                long diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMillies);
+
                                 bookInfo(idBook, new BookInfoCallback() {
                                     @Override
                                     public void onBookInfoReceived(Book book) {
                                         userInfo(idCustomer, new LibraryInfoCallback() {
                                             @Override
                                             public void onLibraryInfoReceived(User user) {
-                                                listData.add("Book: " + book.getTitle() + "\nCustomer: " + user.getFirstName() + " " + user.getLastName() + "\nDate: " + formattedDate);
+                                                listData.add("Book: " + book.getTitle() + "\nCustomer: " + user.getFirstName() + " " + user.getLastName() + "\nDate: " + formattedDate+"\nDays past: "+diffInDays);
                                                 list_temp_user.add(user);
                                                 list_temp_user2.add(idCustomer);
                                                 list_temp_user3.add(idBook);
                                                 list_temp_user4.add(rentalKey);
+                                                Comparator<String> comparator = new Comparator<String>() {
+                                                    @Override
+                                                    public int compare(String item1, String item2) {
+                                                        int diffInDays1 = Integer.parseInt(item1.split("Days past: ")[1]);
+                                                        int diffInDays2 = Integer.parseInt(item2.split("Days past: ")[1]);
+                                                        return Integer.compare(diffInDays2, diffInDays1);
+                                                    }
+                                                };
+                                                Collections.sort(listData, comparator);
                                                 adapter.notifyDataSetChanged();
                                             }
                                         });
