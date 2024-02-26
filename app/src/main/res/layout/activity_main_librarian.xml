@@ -83,6 +83,16 @@
             android:textAllCaps="false"
             android:textSize="17sp"
             app:cornerRadius="20dp" />
+            <Button
+                android:id="@+id/confirmationOrder"
+                android:layout_width="180dp"
+                android:layout_height="80dp"
+                android:backgroundTint="@color/sapphire"
+                android:onClick="confirmationOrder"
+                android:text="Confirmation Orders"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                app:cornerRadius="20dp" />
     <Button
         android:id="@+id/addBook"
         android:layout_width="180dp"

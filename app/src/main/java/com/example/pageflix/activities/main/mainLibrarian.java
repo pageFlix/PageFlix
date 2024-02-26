@@ -22,6 +22,7 @@ import com.example.pageflix.activities.borrowedBooks.list_ordered_books;
 import com.example.pageflix.activities.history.historyLibrary;
 import com.example.pageflix.activities.addBook.screenAddBook;
 import com.example.pageflix.activities.librarian_activities.blocked_list;
+import com.example.pageflix.activities.librarian_activities.confirmationOrders;
 import com.example.pageflix.activities.librarian_activities.inStockScreen;
 import com.example.pageflix.activities.librarian_activities.outStockList;
 import com.example.pageflix.activities.librarian_activities.screenRemoveBook;
@@ -152,7 +153,10 @@ public class mainLibrarian extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void confirmationOrder(View v){
+        Intent intent = new Intent(this, confirmationOrders.class);// from Login Customer screen to First screen
+        startActivity(intent);
+    }
     public void borrowedBooks(View v) {
         Intent intent = new Intent(this , list_ordered_books.class);
         startActivity(intent);

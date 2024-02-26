@@ -98,6 +98,12 @@
                 android:textAllCaps="false"
                 android:textSize="12sp"
                 app:cornerRadius="10dp" />
+            <ImageView
+                android:id="@+id/customImageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/logo"
+                android:layout_gravity="center"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
