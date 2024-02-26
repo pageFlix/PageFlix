@@ -47,7 +47,6 @@
                     android:id="@+id/edEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
                     android:background="@drawable/color_boarder"
                     android:drawableLeft="@drawable/baseline_email_24"
                     android:drawablePadding="8dp"
@@ -145,6 +144,7 @@
                     android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
                     android:drawablePadding="8dp"
                     android:hint="Number"
+                    android:inputType="number"
                     android:padding="8dp"
                     android:textColor="@color/black" />
 
@@ -157,6 +157,7 @@
                     android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
                     android:drawablePadding="8dp"
                     android:hint="Cellphone number"
+                    android:inputType="number"
                     android:padding="8dp"
                     android:textColor="@color/black" />
             </LinearLayout>
@@ -173,7 +174,6 @@
             android:id="@+id/Sign_Up"
             android:layout_width="125dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:backgroundTint="@color/coralPink"
             android:onClick="signupButton"
             android:rotationX="7"
@@ -192,7 +192,8 @@
         android:backgroundTint="@color/grey"
         android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
         android:onClick="backToPreviousScreen"
-        android:text="Back"
+        android:text="@string/back"
+        android:textAllCaps="false"
         android:textSize="18sp"
-        app:cornerRadius="13dp" />
+        app:cornerRadius="20dp" />
 </LinearLayout>

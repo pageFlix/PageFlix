@@ -13,7 +13,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="313dp"
         android:layout_height="537dp"
-        android:layout_margin="40dp"
         android:scrollbarThumbHorizontal="@android:drawable/btn_default"
         android:visibility="visible"
         app:cardCornerRadius="30dp"
@@ -121,6 +120,7 @@
                     android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
                     android:drawablePadding="8dp"
                     android:hint="Number"
+                    android:inputType="number"
                     android:padding="8dp"
                     android:textColor="@color/black" />
 
@@ -133,6 +133,7 @@
                     android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
                     android:drawablePadding="8dp"
                     android:hint="Cellphone number"
+                    android:inputType="number"
                     android:padding="8dp"
                     android:textColor="@color/black" />
             </LinearLayout>
@@ -144,7 +145,6 @@
         android:id="@+id/Update"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:backgroundTint="@color/coralPink"
         android:onClick="Update_button"
         android:rotationX="7"
@@ -162,6 +162,7 @@
         android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
         android:onClick="backToPreviousScreen"
         android:text="Back"
+        android:textAllCaps="false"
         android:textSize="18sp"
         app:cornerRadius="13dp" />
 </LinearLayout>

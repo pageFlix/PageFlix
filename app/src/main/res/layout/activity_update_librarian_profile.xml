@@ -84,6 +84,7 @@
                 android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
                 android:drawablePadding="8dp"
                 android:hint="Number"
+                android:inputType="number"
                 android:padding="8dp"
                 android:textColor="@color/black" />
             <EditText
@@ -95,6 +96,7 @@
                 android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
                 android:drawablePadding="8dp"
                 android:hint="Cellphone number"
+                android:inputType="number"
                 android:padding="8dp"
                 android:textColor="@color/black" />
 
@@ -117,13 +119,14 @@
 
     <Button
         android:id="@+id/back"
-        android:layout_width="118dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:backgroundTint="@color/grey"
         android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
         android:onClick="backToPreviousScreen"
-        android:text="Back"
+        android:text="@string/back"
+        android:textAllCaps="false"
         android:textSize="18sp"
         app:cornerRadius="20dp" />
 </LinearLayout>
