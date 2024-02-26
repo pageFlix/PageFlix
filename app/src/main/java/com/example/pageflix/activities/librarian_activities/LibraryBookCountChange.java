@@ -90,7 +90,7 @@ public class LibraryBookCountChange extends AppCompatActivity {
                 }
             });
             Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, inStockScreen.class);// from Login Customer screen to First screen
+            Intent intent = new Intent(this, mainLibrarian.class);// from Login Customer screen to First screen
             startActivity(intent);
         }
         else  {
@@ -147,7 +147,7 @@ public class LibraryBookCountChange extends AppCompatActivity {
                 }
             });
             Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, inStockScreen.class);// from Login Customer screen to First screen
+            Intent intent = new Intent(this, mainLibrarian.class);// from Login Customer screen to First screen
             startActivity(intent);
         }
         else  {
@@ -156,7 +156,6 @@ public class LibraryBookCountChange extends AppCompatActivity {
     }
 
     public void backToPreviousScreen(View v){
-        Intent intent = new Intent(this, inStockScreen.class);// from Login Customer screen to First screen
-        startActivity(intent);
+        finish();
     }
 }

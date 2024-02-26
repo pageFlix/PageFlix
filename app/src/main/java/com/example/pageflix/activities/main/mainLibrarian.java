@@ -23,6 +23,7 @@ import com.example.pageflix.activities.history.historyLibrary;
 import com.example.pageflix.activities.addBook.screenAddBook;
 import com.example.pageflix.activities.librarian_activities.blocked_list;
 import com.example.pageflix.activities.librarian_activities.inStockScreen;
+import com.example.pageflix.activities.librarian_activities.outStockList;
 import com.example.pageflix.activities.librarian_activities.screenRemoveBook;
 import com.example.pageflix.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,6 +93,10 @@ public class mainLibrarian extends AppCompatActivity {
         }
         if (id == R.id.item_5){
             Intent intent = new Intent(this, blocked_list.class);// from Login Customer screen to First screen
+            startActivity(intent);
+        }
+        if (id == R.id.item_6){
+            Intent intent = new Intent(this, outStockList.class);// from Login Customer screen to First screen
             startActivity(intent);
         }
             return super.onOptionsItemSelected(item);
