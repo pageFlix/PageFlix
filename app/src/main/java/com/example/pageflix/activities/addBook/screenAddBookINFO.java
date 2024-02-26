@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class screenAddBookINFO extends AppCompatActivity {
     private EditText edDescription, edCategory, edAge;
-    private String title, author, year, libID;
+    private String title, author, year, libID,countstring;
     private String BOOKS = "Books"; // DataBase name for Librarians
     DatabaseReference bookDB, libDB;
     @Override
@@ -37,6 +37,7 @@ public class screenAddBookINFO extends AppCompatActivity {
         author = getIntent().getStringExtra("author");
         year = getIntent().getStringExtra("year");
         libID = getIntent().getStringExtra("libID");
+        countstring = getIntent().getStringExtra("count_string");
         bookDB = FirebaseDatabase.getInstance().getReference(BOOKS);
         libDB = FirebaseDatabase.getInstance().getReference("Librarian").child(libID);
     }
@@ -44,15 +45,16 @@ public class screenAddBookINFO extends AppCompatActivity {
     public void addBook(View v) {
         String ageS = edAge.getText().toString();
         int age = Integer.valueOf(ageS);
+        int count = Integer.valueOf(countstring);
         String description = edDescription.getText().toString();
         String category = edCategory.getText().toString();
-        Book newBook = new Book( title,author,  year, 1, category, description,age);
+        Book newBook = new Book( title,author,  year, count, category, description,age);
         if (!TextUtils.isEmpty(description) &&  !TextUtils.isEmpty(category) &&  !TextUtils.isEmpty(ageS)) {
             DatabaseReference newBookRef = bookDB.push();// create newBookRef for add data after adding book info
             newBookRef.setValue(newBook); // add data
             String bookID = newBookRef.getKey(); // get relevant Book key
             HashMap<String, Integer> bookCount = new HashMap<>();// create count : 1
-            bookCount.put("count", 1);
+            bookCount.put("count", count);
 
             Map<String, Object> BookUpdates = new HashMap<>();// to avoid unique key creation
             Map<String, Object> LibraryIDupdates = new HashMap<>();// to avoid unique key creation

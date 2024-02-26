@@ -24,10 +24,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class screenAddBook extends AppCompatActivity{
-    private EditText edAuthor, edTitle, edPublicationYear;
+    private EditText edAuthor, edTitle, edPublicationYear,edCount;
     private DatabaseReference LibrarianDB, bookDB;
     private String BOOKS = "Books"; // DataBase name for Librarians
     private String LibrarianID;
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class screenAddBook extends AppCompatActivity{
         edAuthor = findViewById(R.id.edAuthor);
         edTitle = findViewById(R.id.edTitle);
         edPublicationYear = findViewById(R.id.edPublicationYear);
+        edCount = findViewById(R.id.edCount);
         LibrarianID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
         //Find right sub tree
         // Tree Librarian -> LibrarianID -> all info(name address...)
@@ -63,9 +65,11 @@ public class screenAddBook extends AppCompatActivity{
     */
     public void addBook(View v) {
         String author = edAuthor.getText().toString();
+        String count_string = edCount.getText().toString().trim();
         String title = edTitle.getText().toString();
         String year = edPublicationYear.getText().toString();
-        if (!TextUtils.isEmpty(author) &&  !TextUtils.isEmpty(title) && !TextUtils.isEmpty(year)) {
+        if (!TextUtils.isEmpty(author) &&  !TextUtils.isEmpty(title) && !TextUtils.isEmpty(year)&& !TextUtils.isEmpty(count_string)) {
+            count = Integer.valueOf(count_string);
             checkBookInGlobalDB(title, author, year, new CallbackFlag() {
                 @Override
                 public void checkBook(boolean bookFound,DatabaseReference db, int countbook1) {
@@ -82,7 +86,7 @@ public class screenAddBook extends AppCompatActivity{
                                 else {////////////////////////////////////////////---NOT IN DATA BASE LOCAL
                                     Toast.makeText(getApplicationContext(), "The book was added", Toast.LENGTH_SHORT).show();
                                     HashMap<String, Integer> bookCount = new HashMap<>();
-                                    bookCount.put("count", 1);
+                                    bookCount.put("count", count);
                                     if(db.getKey()!=null){
                                         String bookID = db.getKey();
                                         Map<String, Object> BookUpdates = new HashMap<>();// to avoid unique key creation
@@ -101,6 +105,7 @@ public class screenAddBook extends AppCompatActivity{
                         intent.putExtra("title", title);
                         intent.putExtra("author", author);
                         intent.putExtra("year", year);
+                        intent.putExtra("count_string", count_string);
                         intent.putExtra("libID", LibrarianID);
                         startActivity(intent);
                     }
@@ -108,7 +113,7 @@ public class screenAddBook extends AppCompatActivity{
             });
         }
         else{
-            Toast.makeText(this, "Write Author, Year and Title", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Write Author, Count,Year and Title", Toast.LENGTH_SHORT).show();
         }
     }
     private void checkBookInGlobalDB(String title, String author, String year, CallbackFlag callback) {
@@ -168,7 +173,7 @@ public class screenAddBook extends AppCompatActivity{
         booksRef.addListenerForSingleValueEvent(vListener);
     }
     private void addBookCounnt(DatabaseReference dataBase, int CurrentCount){
-        dataBase.child("count").setValue(CurrentCount + 1); // Increment count by 1
+        dataBase.child("count").setValue(CurrentCount + count); // Increment count by 1
     }
     public void backToPreviousScreen(View v){
         Intent intent = new Intent(this, mainLibrarian.class);// from Login Customer screen to First screen
