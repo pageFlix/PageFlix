@@ -37,6 +37,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         holder.titleTextView.setText(book.getTitle());
         holder.authorTextView.setText("Author: " + book.getAuthor());
         holder.yearTextView.setText("Publication Year: " + book.getYear());
+        holder.categoryTextView.setText("Category: " + book.getCategory());
 
         // Set click listener for book item
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +48,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
                 // Pass book details to popup window
                 intent.putExtra("title", book.getTitle());
                 intent.putExtra("author", book.getAuthor());
+                intent.putExtra("category", book.getCategory()) ;
                 intent.putExtra("year", book.getYear());
                 intent.putExtra("description", book.getDescription());
                 intent.putExtra("bookID", book.ID);
@@ -66,15 +68,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
     // ViewHolder class for each item in RecyclerView
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView;
-        TextView authorTextView;
-        TextView yearTextView;
+        TextView titleTextView, authorTextView, yearTextView, categoryTextView ;
 
         ViewHolder(View itemView) {
             super(itemView);
             // Initialize views
             titleTextView = itemView.findViewById(R.id.titleTextView);
             authorTextView = itemView.findViewById(R.id.authorTextView);
+            categoryTextView = itemView.findViewById(R.id.categoryTextView) ;
             yearTextView = itemView.findViewById(R.id.yearTextView);
         }
     }

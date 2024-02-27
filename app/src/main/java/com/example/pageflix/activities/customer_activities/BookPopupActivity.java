@@ -23,6 +23,7 @@ import com.example.pageflix.entities.Review;
 import com.example.pageflix.services.RentService;
 import com.example.pageflix.adapters.LibraryAdapter;
 import com.example.pageflix.entities.Library;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +38,7 @@ import java.util.Map;
 public class BookPopupActivity extends Activity {
 
     //----- Views variables -----
-    private TextView bookTitleTextView, bookAuthorTextView, bookYearTextView, bookDescriptionTextView;
+    private TextView bookTitleTextView, bookAuthorTextView, bookYearTextView, bookCategoryTextView, bookDescriptionTextView;
     private RecyclerView libraryRecyclerView;
     private Button rentButton, reviewsButton;
     private RatingBar bookRatingBar ;
@@ -67,7 +68,7 @@ public class BookPopupActivity extends Activity {
     }
 
     /** Adding each of the libraries containing the selected book.
-        Libs which do not contain the book will be not added to the list */
+     Libs which do not contain the book will be not added to the list */
     public void getLibrariesWithBook() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference booksRef = database.getReference("Books");
@@ -101,23 +102,23 @@ public class BookPopupActivity extends Activity {
     /** Gets a library by id, and adding it to the list of the libraries that hold the current book */
     private void getAndAddToList(String id){
         DatabaseReference librariesRef = FirebaseDatabase.getInstance().getReference("Librarian") ;
-            librariesRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        Library library = dataSnapshot.getValue(Library.class);
-                        if (library != null) {
-                            library.ID = dataSnapshot.getKey() ;
-                            libraries.add(library) ;
-                        }
+        librariesRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Library library = dataSnapshot.getValue(Library.class);
+                    if (library != null) {
+                        library.ID = dataSnapshot.getKey() ;
+                        libraries.add(library) ;
                     }
-                    adapter.notifyDataSetChanged();
                 }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            }) ;
+            }
+        }) ;
     }
 
     /** Gets all of the reviews of the current book and its average rating */
@@ -174,6 +175,7 @@ public class BookPopupActivity extends Activity {
         bookAuthorTextView = findViewById(R.id.bookAuthorTextView);
         bookYearTextView = findViewById(R.id.bookYearTextView);
         bookDescriptionTextView = findViewById(R.id.bookDescriptionTextView);
+        bookCategoryTextView = findViewById(R.id.bookCategoryTextView) ;
         rentButton = findViewById(R.id.rentButton);
         reviewsButton = findViewById(R.id.viewReviewsButton) ;
         bookRatingBar = findViewById(R.id.bookRatingBar) ;
@@ -194,11 +196,13 @@ public class BookPopupActivity extends Activity {
         String bookAuthor = getIntent().getStringExtra("author");
         String bookYear = getIntent().getStringExtra("year");
         String bookDescription = getIntent().getStringExtra("description");
+        String bookCategory = getIntent().getStringExtra("category") ;
         this.bookID = getIntent().getStringExtra("bookID") ;
         // Set book details to TextViews
         bookTitleTextView.setText(bookTitle);
         bookAuthorTextView.setText("Author: " + bookAuthor);
         bookYearTextView.setText("Publication Year: " + bookYear);
+        bookCategoryTextView.setText("Category: " + bookCategory);
         bookDescriptionTextView.setText("Description: " + bookDescription);
     }
 
@@ -209,33 +213,12 @@ public class BookPopupActivity extends Activity {
             public void onClick(View v) {
                 int selectedLibIndex = adapter.getSelectedItem();
                 if (selectedLibIndex != -1) {
-                    rentService.rent(libraries.get(selectedLibIndex).ID, bookID);
-                    // starting dialogAlert for navigation to library
-                    AlertDialog.Builder builder = new AlertDialog.Builder(BookPopupActivity.this);
-                    builder.setMessage("Do you want to start navigation to " + libraries.get(selectedLibIndex).getLibraryName())
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                // if the yes button was pressed then google maps will start with the
-                                // customer location and the library address
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    // Pass the address data to MapActivity
-                                    navigateToMapActivity(libraries.get(selectedLibIndex));
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Intent intent = new Intent(BookPopupActivity.this, customerBooks.class);
-                                    startActivity(intent);
-                                }
-                            });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                    validateAndRent(libraries.get(selectedLibIndex).ID, selectedLibIndex) ;
                 } else {
                     Toast.makeText(getApplicationContext(), "Please choose a library", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        }) ;
 
         //----- On reviews button pressed, open the reviews Activity -----
         reviewsButton.setOnClickListener(new View.OnClickListener() {
@@ -257,6 +240,50 @@ public class BookPopupActivity extends Activity {
         intent.putExtra("street", library.getStreet());
         intent.putExtra("number", library.getNumber());
         startActivity(intent);
+    }
+    private void validateAndRent(String libID, int selectedLibIndex) {
+        DatabaseReference blockedRef = FirebaseDatabase.getInstance().getReference("Blocklist") ;
+        String uid = FirebaseAuth.getInstance().getUid();
+        blockedRef.child(libID).child(uid).child("block").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Boolean isBlocked = snapshot.getValue(Boolean.class) ;
+                if(isBlocked != null){
+                    if(isBlocked){
+                        Toast.makeText(BookPopupActivity.this, "You have been blocked by the library, please contact them for further information.", Toast.LENGTH_LONG).show() ;
+                        return ;
+                    }
+                }
+                rentService.rent(libID, bookID);
+                // starting dialogAlert for navigation to library
+                AlertDialog.Builder builder = new AlertDialog.Builder(BookPopupActivity.this);
+                builder.setMessage("Order has been made successfully, Do you want to start navigation to " + libraries.get(selectedLibIndex).getLibraryName())
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            // if the yes button was pressed then google maps will start with the
+                            // customer location and the library address
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Pass the address data to MapActivity
+                                navigateToMapActivity(libraries.get(selectedLibIndex));
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(BookPopupActivity.this, customerBooks.class);
+                                startActivity(intent);
+                            }
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show() ;
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
 

@@ -6,6 +6,7 @@
     android:alpha="1"
     android:background="@drawable/selector_book_items">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
@@ -16,14 +17,25 @@
         android:clickable="true"
         android:focusable="true"/>
 
+    <!-- Category -->
     <TextView
-        android:id="@+id/authorTextView"
+        android:id="@+id/categoryTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:textColor="@color/black"
         android:layout_marginTop="8dp"/>
 
+    <!-- Author -->
+    <TextView
+        android:id="@+id/authorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="4dp"/>
+
+    <!-- Year -->
     <TextView
         android:id="@+id/yearTextView"
         android:layout_width="match_parent"

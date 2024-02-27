@@ -26,6 +26,12 @@
             android:layout_marginBottom="8dp"/>
 
         <TextView
+            android:id="@+id/bookCategoryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
             android:id="@+id/bookYearTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
