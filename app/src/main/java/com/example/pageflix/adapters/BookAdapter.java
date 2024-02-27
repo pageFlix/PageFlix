@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pageflix.activities.customer_activities.BookPopupActivity;
 import com.example.pageflix.R;
 import com.example.pageflix.entities.Book;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 

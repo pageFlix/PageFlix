@@ -1,13 +1,11 @@
 package com.example.pageflix.activities.customer_activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pageflix.R;
 import com.example.pageflix.adapters.BookAdapter;
 import com.example.pageflix.entities.Book;
+import com.example.pageflix.entities.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,37 +29,35 @@ import java.util.Collections;
 import java.util.List;
 
 public class SearchBooks extends AppCompatActivity {
-
-    private static final String TAG = "SearchBooksActivity";
-
     private RecyclerView recyclerView;
     private BookAdapter adapter;
-    private final List<Book> allBooksList = new ArrayList<>();
-    private List<Book> filteredBooks = new ArrayList<>();
+    private List<Book> allBooksList ;
+    private List<Book> filteredBooks ;
     private DatabaseReference booksRef;
-    private boolean isArrowUp ;
+    private Integer customerAge ;
 
-    private enum ResultsSort { BY_TITLE, BY_YEAR}
+    private enum ResultsSort { BY_TITLE, BY_YEAR, BY_CATEGORY}
     private enum ResultsOrder{ INCREASING, DECREASING }
 
     private ResultsOrder currentOrder ;
     private ResultsSort currentSort ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initVariables() ;
         setContentView(R.layout.activity_search_books);
-        Log.d(TAG, "onCreate: Activity created");
         setOrderSpinnerView();
-        // Initialize RecyclerView
         setupRecyclerView();
-
-        // Setup Firebase Database
         setupFirebaseDatabase();
-
-        // Setup SearchView
         setupSearchView();
         getBooksList();
+    }
 
+    private void initVariables(){
+        allBooksList = new ArrayList<>();
+        filteredBooks = new ArrayList<>();
+        setCustomerAge() ;
     }
 
     private void setOrderSpinnerView(){
@@ -86,14 +84,13 @@ public class SearchBooks extends AppCompatActivity {
         orderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // The item at position 'position' is selected
-                // Perform actions based on the selected item
                 String selectedItem = parent.getItemAtPosition(position).toString();
-                // Example: Log the selected item
                 if (selectedItem.equals("Title")){
                     currentSort = ResultsSort.BY_TITLE ;
                 }else if(selectedItem.equals("Publication Year")){
                     currentSort = ResultsSort.BY_YEAR ;
+                }else if(selectedItem.equals("Category")){
+                    currentSort = ResultsSort.BY_CATEGORY ;
                 }
                 updateListSorting();
             }
@@ -115,7 +112,6 @@ public class SearchBooks extends AppCompatActivity {
 
     // Setup Firebase Database
     private void setupFirebaseDatabase() {
-        Log.d(TAG, "setupFirebaseDatabase: Setting up Firebase Database");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         booksRef = database.getReference("Books");
     }
@@ -139,12 +135,10 @@ public class SearchBooks extends AppCompatActivity {
 
 
     private void getBooksList(){
-        Log.d(TAG, "showAllBooks: Showing all books");
         Query allBooksRef = booksRef.limitToFirst(1000);
         allBooksRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: Data changed");
                 // Iterate through each book in the dataSnapshot
                 for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
                     // Convert each book to a Book object and add it to the list
@@ -152,7 +146,9 @@ public class SearchBooks extends AppCompatActivity {
                     if (book != null) {
                         if(book.count > 0) {
                             book.ID = bookSnapshot.getKey();
-                            allBooksList.add(book);
+                            if(book.getAge() <= customerAge) {
+                                allBooksList.add(book);
+                            }
                         }
                     }
                 }
@@ -186,8 +182,6 @@ public class SearchBooks extends AppCompatActivity {
 
     // Handle Firebase database errors
     private void handleDatabaseError(DatabaseError databaseError) {
-        // Log error message
-        Log.e(TAG, "handleDatabaseError: Failed to read value.", databaseError.toException());
         // Display a toast message to the user
         Toast.makeText(SearchBooks.this, "Failed to retrieve data.", Toast.LENGTH_SHORT).show();
     }
@@ -200,8 +194,9 @@ public class SearchBooks extends AppCompatActivity {
             case BY_YEAR:
                 filteredBooks.sort(new Book.PublicationYearComparator());
                 break ;
+            case BY_CATEGORY:
+                filteredBooks.sort(new Book.CategoryComparator());
         }
-        Log.d("shit", "Current order:" + currentOrder) ;
         if(currentOrder == ResultsOrder.DECREASING) {
             Collections.reverse(filteredBooks);
         }
@@ -211,5 +206,43 @@ public class SearchBooks extends AppCompatActivity {
     private void reverseListAndNotify(){
         Collections.reverse(filteredBooks);
         adapter.notifyDataSetChanged();
+    }
+
+    private void setCustomerAge(){
+        String uid = FirebaseAuth.getInstance().getUid();
+        DatabaseReference customerRef = FirebaseDatabase.getInstance().getReference("Customer").child(uid);
+        customerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User customer = snapshot.getValue(User.class) ;
+                String birthDate = customer.getBirthDay() ;
+
+                // Split the birthdate string by "/"
+                String[] parts = birthDate.split("/");
+
+                // Extract day, month, and year
+                int birthDay = Integer.parseInt(parts[0]);
+                int birthMonth = Integer.parseInt(parts[1]);
+                int birthYear = Integer.parseInt(parts[2]);
+
+                // Get the current date
+                java.util.Calendar now = java.util.Calendar.getInstance();
+                int currentYear = now.get(java.util.Calendar.YEAR);
+                int currentMonth = now.get(java.util.Calendar.MONTH) + 1; // Months are zero-based
+                int currentDay = now.get(java.util.Calendar.DAY_OF_MONTH);
+
+                // Calculate age
+                int age = currentYear - birthYear;
+                if (birthMonth > currentMonth || (birthMonth == currentMonth && birthDay > currentDay)) {
+                    age--; // Subtract 1 if birthday hasn't occurred yet this year
+                }
+                customerAge = age ;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

@@ -241,6 +241,12 @@ public class BookPopupActivity extends Activity {
         intent.putExtra("number", library.getNumber());
         startActivity(intent);
     }
+
+    /** Validates the user isn't present in the blocked list of the library it has chosen
+     *  and initiates the rent operation.
+     * @param libID - The id of the library chosen by the user
+     * @param selectedLibIndex - The selected library index in the libs list
+     */
     private void validateAndRent(String libID, int selectedLibIndex) {
         DatabaseReference blockedRef = FirebaseDatabase.getInstance().getReference("Blocklist") ;
         String uid = FirebaseAuth.getInstance().getUid();
