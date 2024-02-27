@@ -3,7 +3,7 @@ package com.example.pageflix.entities;
 public class Rental {
     public String customerID, libraryID, bookID ;
     public long timestamp; // Add timestamp field
-    public boolean ifReturned;
+    public boolean ifReturned, ifAccept;
 
     public Rental() {
 
@@ -33,12 +33,13 @@ public class Rental {
         this.bookID = bookID;
     }
 
-    public Rental(String libraryID, String customerID, String bookID,long timestamp, boolean ifReturned) {
+    public Rental(String libraryID, String customerID, String bookID,long timestamp, boolean ifReturned,boolean ifAccept) {
         this.customerID = customerID;
         this.libraryID = libraryID;
         this.bookID = bookID;
         this.timestamp = timestamp; // Set timestamp
         this.ifReturned = ifReturned;
+        this.ifAccept = ifAccept;
     }
 
     public long getTimestamp() {
@@ -56,5 +57,13 @@ public class Rental {
 
     public void setIfReturned(boolean ifReturned) {
         this.ifReturned = ifReturned;
+    }
+
+    public boolean isIfAccept() {
+        return ifAccept;
+    }
+
+    public void setIfAccept(boolean ifAccept) {
+        this.ifAccept = ifAccept;
     }
 }

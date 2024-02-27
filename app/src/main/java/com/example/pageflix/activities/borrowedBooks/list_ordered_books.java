@@ -70,8 +70,6 @@ public class list_ordered_books extends AppCompatActivity {
         LibrarianID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
         rental_conectRef = FirebaseDatabase.getInstance().getReference(RENTAL_CONNECTION).child(LibrarianID);
         rentals_Ref = FirebaseDatabase.getInstance().getReference(RENTALS);
-        customer_Ref = FirebaseDatabase.getInstance().getReference(CUSTOMER);
-        books_Ref = FirebaseDatabase.getInstance().getReference(BOOKS);
     }
     public void search() {
         SearchView searchView = findViewById(R.id.searchView);
@@ -123,7 +121,7 @@ public class list_ordered_books extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Rental rental = dataSnapshot.getValue(Rental.class);
                             assert rental != null;
-                            if (rental.isIfReturned() == false) {
+                            if (rental.isIfReturned() == false && rental.isIfAccept() == true) {
                                 String idBook = rental.getBookID();
                                 String idCustomer = rental.getCustomerID();
                                 Date currentDate = new Date(rental.getTimestamp());
