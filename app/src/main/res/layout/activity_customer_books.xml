@@ -36,17 +36,6 @@
             android:textAllCaps="false"
             android:textSize="18sp"
             app:cornerRadius="20dp" />
-        <!-- SearchView -->
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:iconifiedByDefault="false"
-            android:queryHint="Search"
-            android:theme="@style/Widget.AppCompat.SearchView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
     </androidx.appcompat.widget.Toolbar>
 
 
