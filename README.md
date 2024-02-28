@@ -29,13 +29,21 @@ PageFlix provides customers with a wide range of libraries where they can search
 For libraries, PageFlix offers convenience and simplicity in full library management. Every action on books is automatically recorded and updates the inventory.
 
 # Screnshots
-![Start Screen](pictures/StartScreen.jpg)
-![Login Screen](pictures/LoginScreen.jpg)
 
-![Customer SignUp](pictures/CustomerSignUp.jpg)
-![Librarian SignUp](pictures/LibrarianSignUp.jpg)
+<p align="center">
+  <img src="pictures/StartScreen.jpg">
+  <img src="pictures/LoginScreen.jpg">
+</p>
 
-![Customer Review](pictures/CustomerReview.jpg)
-![Search Books](pictures/SearchBookScreen.jpg)
+
+<p align="center">
+  <img src="pictures/CustomerSignUp.jpg">
+  <img src="pictures/LibrarianSignUp.jpg">
+</p>
+<p align="center">
+  <img src="pictures/CustomerReview.jpg">
+  <img src="pictures/SearchBookScreen.jpg">
+</p>
+
 
 
