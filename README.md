@@ -1,5 +1,8 @@
 # PageFlix
-![PageFlix logo](pictures/PageFlix_logo.jpg)
+<p align="center">
+  <img src="pictures/PageFlix_logo.jpg">
+</p>
+
 
 PageFlix aims to make libraries more accessible to customers. The system maintains a list of registered libraries, each of which can manage its book inventory and track real-time book rentals in the application.
 
