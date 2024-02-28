@@ -80,4 +80,8 @@ public class Library {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    public String getAddress(){
+        return getCity() + ", " + getStreet() + " " + getNumber() ;
+    }
 }

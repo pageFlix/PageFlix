@@ -33,7 +33,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Library library = libraries.get(position);
         holder.libraryNameTextView.setText(library.getLibraryName());
-        holder.libraryDistanceView.setText("Distance: ");
+        holder.libraryAddressView.setText("Address: " + library.getAddress());
         final int clickedPosition = position;
 
         // Set the selected state based on the position
@@ -60,12 +60,12 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView libraryNameTextView ;
-        TextView libraryDistanceView ;
+        TextView libraryAddressView ;
 
         ViewHolder(View itemView) {
             super(itemView);
             libraryNameTextView = itemView.findViewById(R.id.nameTextView);
-            libraryDistanceView = itemView.findViewById(R.id.distanceTextView);
+            libraryAddressView = itemView.findViewById(R.id.addressTextView);
         }
     }
 
