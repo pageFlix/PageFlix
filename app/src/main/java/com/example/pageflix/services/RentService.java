@@ -103,7 +103,7 @@ public class RentService {
         Date currentDate = new Date();
         // Convert Date object to milliseconds since epoch
         long currentTimeMillis = currentDate.getTime();
-        Rental rental = new Rental(libID, customerID, bookID,currentTimeMillis,false);
+        Rental rental = new Rental(libID, customerID, bookID,currentTimeMillis,false,false);
         rentalRef.setValue(rental).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

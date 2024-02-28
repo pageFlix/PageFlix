@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.pageflix.entities.Book;
@@ -19,10 +22,113 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class screenAddBookINFO extends AppCompatActivity {
-    private EditText edDescription, edCategory, edAge;
+    private EditText edDescription, edAge;
     private String title, author, year, libID,countstring;
     private String BOOKS = "Books"; // DataBase name for Librarians
     DatabaseReference bookDB, libDB;
+    private Spinner spCategory;
+    private AutoCompleteTextView edCategory;
+
+    private String[] categories = {
+            "Action/Adventure fiction",
+            "Children’s fiction",
+            "Classic fiction",
+            "Contemporary fiction",
+            "Comedy",
+            "Fantasy",
+            "Dark fantasy",
+            "Drama",
+            "Fairy tales",
+            "Folktales",
+            "Heroic fantasy",
+            "High fantasy",
+            "Historical fantasy",
+            "Low fantasy",
+            "Magical realism",
+            "Mythic fantasy",
+            "Urban fantasy",
+            "Graphic novel",
+            "Historical fiction",
+            "Horror",
+            "Body horror",
+            "Comedy horror",
+            "Gothic horror",
+            "Lovecraftian/Cosmic horror",
+            "Paranormal horror",
+            "Post-apocalyptic horror",
+            "Psychological horror",
+            "Quiet horror",
+            "Slasher",
+            "LGBTQ+",
+            "Literary fiction",
+            "Mystery",
+            "Caper",
+            "Cozy mystery",
+            "Gumshoe/Detective mystery",
+            "Historical mystery",
+            "Howdunnits",
+            "Locked room mystery",
+            "Noir",
+            "Procedural/Hard-boiled mystery",
+            "Supernatural mystery",
+            "New adult",
+            "Romance",
+            "Contemporary romance",
+            "Dark romance",
+            "Erotic romance",
+            "Fantasy romance (Romantasy)",
+            "Gothic romance",
+            "Historical romance",
+            "Paranormal romance",
+            "Regency",
+            "Romantic comedy",
+            "Romantic suspense",
+            "Sci-fi romance",
+            "Satire",
+            "Science fiction",
+            "Apocalyptic sci-fi",
+            "Colonization sci-fi",
+            "Hard sci-fi",
+            "Military sci-fi",
+            "Mind uploading sci-fi",
+            "Parallel world sci-fi",
+            "Soft sci-fi",
+            "Space opera",
+            "Space western",
+            "Steampunk",
+            "Short story",
+            "Thriller",
+            "Action thriller",
+            "Conspiracy thriller",
+            "Disaster thriller",
+            "Espionage thriller",
+            "Forensic thriller",
+            "Historical thriller",
+            "Legal thriller",
+            "Paranormal thriller",
+            "Psychological thriller",
+            "Religious thriller",
+            "Western",
+            "Women’s fiction",
+            "Young adult",
+            "Art & photography",
+            "Autobiography/Memoir",
+            "Biography",
+            "Essays",
+            "Food & drink",
+            "History",
+            "How-To/Guides",
+            "Humanities & social sciences",
+            "Humor",
+            "Parenting",
+            "Philosophy",
+            "Religion & spirituality",
+            "Science & technology",
+            "Self-help",
+            "Travel",
+            "True crime"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +146,12 @@ public class screenAddBookINFO extends AppCompatActivity {
         countstring = getIntent().getStringExtra("count_string");
         bookDB = FirebaseDatabase.getInstance().getReference(BOOKS);
         libDB = FirebaseDatabase.getInstance().getReference("Librarian").child(libID);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, categories);
+
+        // Apply the adapter to the AutoCompleteTextView
+        edCategory.setAdapter(adapter);
     }
     //    add in Books -> author, title, year, description , publication year + LibraryID
     public void addBook(View v) {

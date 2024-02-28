@@ -145,11 +145,11 @@ public class registerLibrarian extends AppCompatActivity {
         String userId = fbAuth.getCurrentUser().getUid();
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("email", email);
-        userMap.put("LibraryName", LibraryName);
-        userMap.put("City", City);
-        userMap.put("Street", street);
-        userMap.put("Number", Number);
-        userMap.put("CellNumber", CellNumber);
+        userMap.put("libraryName", LibraryName);
+        userMap.put("city", City);
+        userMap.put("street", street);
+        userMap.put("number", Number);
+        userMap.put("cellNumber", CellNumber);
 
 
         dbRef.child(userId).setValue(userMap);

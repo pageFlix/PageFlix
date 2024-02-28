@@ -42,7 +42,7 @@ public class inStockScreen extends AppCompatActivity {
         setContentView(R.layout.activity_in_stock_screen);
         init();
         getDataFromDB();
-        search();
+//        search();
         setOnClickIten();
     }
 
@@ -57,42 +57,42 @@ public class inStockScreen extends AppCompatActivity {
         LibrarianID = FirebaseAuth.getInstance().getCurrentUser().getUid(); //find LibrarianID (unique key)
         dbRef = FirebaseDatabase.getInstance().getReference(USER_KEY).child(LibrarianID).child(BOOK_KEY);
     }
-    public void search() {
-        SearchView searchView = findViewById(R.id.searchView);
-        searchView.setQueryHint("Search..."); // Set hint text
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                    filter(newText);
-                return true;
-            }
-        });
-    }
-
-    private void filter(String searchText) {
-        filteredBooks.clear();
-        if (searchText.isEmpty()) {
-            // If the search text is empty, add all items from the original list to listData
-            getDataFromDB() ;
-        } else {
-            // If the search text is not empty, filter based on the search text
-            for (String bookInfo : listData) {
-                if (bookInfo.toLowerCase().contains(searchText.toLowerCase())) {
-                    filteredBooks.add(bookInfo);
-                }
-            }
-        }
-        // Update the adapter with the new filtered list data
-        adapter.clear();
-        adapter.addAll(filteredBooks);
-        adapter.notifyDataSetChanged();
-    }
+//    public void search() {
+//        SearchView searchView = findViewById(R.id.searchView);
+//        searchView.setQueryHint("Search..."); // Set hint text
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                    filter(newText);
+//                return true;
+//            }
+//        });
+//    }
+//
+//    private void filter(String searchText) {
+//        filteredBooks.clear();
+//        if (searchText.isEmpty()) {
+//            // If the search text is empty, add all items from the original list to listData
+//            getDataFromDB() ;
+//        } else {
+//            // If the search text is not empty, filter based on the search text
+//            for (String bookInfo : listData) {
+//                if (bookInfo.toLowerCase().contains(searchText.toLowerCase())) {
+//                    filteredBooks.add(bookInfo);
+//                }
+//            }
+//        }
+//        // Update the adapter with the new filtered list data
+//        adapter.clear();
+//        adapter.addAll(filteredBooks);
+//        adapter.notifyDataSetChanged();
+//    }
 
     private void getDataFromDB() {
         ValueEventListener vListener = new ValueEventListener() {
@@ -142,6 +142,7 @@ public class inStockScreen extends AppCompatActivity {
         });
 
     }
+
     public void backToPreviousScreen(View v) {
         Intent intent = new Intent(this, mainLibrarian.class);// from Login Customer screen to First screen
         startActivity(intent);

@@ -89,7 +89,7 @@
                 android:layout_height="80dp"
                 android:backgroundTint="@color/sapphire"
                 android:onClick="confirmationOrder"
-                android:text="Confirmation Orders"
+                android:text="Orders Confirmation"
                 android:textAllCaps="false"
                 android:textSize="14sp"
                 app:cornerRadius="20dp" />

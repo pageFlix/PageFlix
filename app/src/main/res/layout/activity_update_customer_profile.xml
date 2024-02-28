@@ -29,7 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/color_boarder"
                 android:orientation="vertical"
                 android:padding="12dp">
 
@@ -145,6 +144,7 @@
         android:id="@+id/Update"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/coralPink"
         android:onClick="Update_button"
         android:rotationX="7"

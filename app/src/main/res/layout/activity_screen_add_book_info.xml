@@ -33,16 +33,15 @@ tools:context=".activities.addBook.screenAddBookINFO">
             android:textColor="@color/sapphire"
             android:textSize="28sp"
             android:textStyle="bold" />
-
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/edCategory"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/color_boarder"
-            android:drawablePadding="8dp"
-            android:hint="@string/category"
-            android:padding="8dp"
+            android:completionThreshold="1"
+            android:hint="Category"
+           android:padding="8dp"
             android:textColor="@color/black" />
         <EditText
             android:id="@+id/edAge"
